@@ -3,10 +3,11 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="author" content="Seth Bertlshofer" />
+        <meta name="author" content="Ryan Frazier" />
 
         <title>Lemmings</title>
 
-        <link rel="stylesheet" href="styles.css" />
+        <link rel="stylesheet" href="./styles/main.css" />
     </head>
     <body>
         <div id="main-window">
@@ -41,6 +42,7 @@
                 <span><h1>About</h1><div class="back-btn" onclick="Lemmings.input.ButtonClick('')"> < Back</div></span>
                 <p>Developed by</p>
                 <p>Seth Bertlshofer A00933231</p>
+                <p>Ryan Frazier</p>
             </div>
         </div>
         <div id="score-section"></div>
@@ -56,24 +58,16 @@
             <div onclick="Lemmings.input.ButtonClick('unPause')"> Resume </div>
             <div onclick="Lemmings.input.ButtonClick('quit')"> Quit </div>
         </div>
-        <div id="background-shield"></div>
     </body>
 
     <!-- libraries -->
-    <script type="text/javascript" src="./js/lib/underscore-min.js"></script>
+    <script type="text/javascript" src="./js/lib/lodash.min.js"></script>
     <script type="text/javascript" src="./js/lib/input.js"></script>
-    <script type="text/javascript" src="./js/lib/random.js"></script>
-    <script type="text/javascript" src="./js/lib/particleSystem.js"></script>
+    <script type="text/javascript" src="./js/lib/random_generator.js"></script>
+    <script type="text/javascript" src="./js/lib/particle_system.js"></script>
 
     <!-- game elements -->
-    <script type="text/javascript" src="./js/graphics.js"></script>
-    <script type="text/javascript" src="./js/components.js"></script>
-    <script type="text/javascript" src="./js/breakout.js"></script>
-    <script type="text/javascript" src="./js/gameLoop.js"></script>
+    <script type="text/javascript" src="./js/game_loop.js"></script>
 
     <!-- menu items -->
-    <script type="text/javascript" src="./js/menu/mainMenu.js"></script>
-    <script type="text/javascript" src="./js/menu/highScores.js"></script>
-    <script type="text/javascript" src="./js/menu/help.js"></script>
-    <script type="text/javascript" src="./js/menu/about.js"></script>
 </html>

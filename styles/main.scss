@@ -1,0 +1,111 @@
+$btn-width: 48px;
+$btn-height: 62px;
+$canvas-width: 700px;
+$canvas-height: 400px;
+$mini-map-scale: 0.2;
+
+//colors
+$green: #00AD2F;
+
+body {
+    background-image: url("../images/footer_lodyas.png");
+    color: $green;
+    font-style: Aria;
+}
+canvas {
+    border: 2px solid black;
+}
+#header {
+    width: 100%;
+    text-align: center;
+}
+#return-to-main-menu {
+    position: fixed;
+    top: 0;
+    a {
+        text-decoration: none;
+        color: $green;
+        font-style: Aria;
+        font-size: 2em;
+    }
+}
+#game-field {
+    width: $canvas-width;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+#game-screen {
+    position: relative;
+    width: $canvas-width;
+    display: initial;
+}
+#canvas {
+    width: $canvas-width;
+    height: $canvas-height;
+    background-color: black;
+}
+#mini-map {
+    width: $canvas-width * $mini-map-scale;
+    height: $canvas-height * $mini-map-scale;
+    z-index: 1;
+    position: absolute;
+    bottom: 4px;
+    right: 0;
+    background-color: grey;
+ }
+#status-bar {
+    margin : .5em 0 .5em 0;
+    font-size: 1.5em;
+    div {
+        display: inline;
+        padding: 0 2em 0 2em;
+    }
+}
+.bump:hover {
+    position: relative;
+    left: 1px;
+    bottom: 1px;
+    box-shadow: 2px 2px 2px black;
+}
+.bump-text:hover {
+    position: relative;
+    left: 1px;
+    bottom: 1px;
+    text-shadow: 2px 2px 2px black;
+}
+#control-panel {
+    text-align: center;
+    button {
+        width: $btn-width;
+        height: $btn-height;
+        border: none;
+        color: black;
+        position: relative;
+        .status {
+            position: absolute;
+            top: .3em;
+            left: 1em;
+        }
+
+        &:hover {
+            cursor: pointer;
+            opacity: 0.8;
+        }
+    }
+    ul>li {
+        display: inline-block;
+        padding: 0;
+        margin: -2px;
+        @for $i from 1 through 12 {
+            &:nth-child(#{$i}) > button {
+                background: url("/images/lemming_buttons.png") (($i - 1)*$btn-width) 0;
+            }
+        }
+    }
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+}

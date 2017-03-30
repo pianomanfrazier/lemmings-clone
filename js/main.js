@@ -20,7 +20,7 @@ page('/help', ()=>{
     eApp.innerHTML = help({title : "help"});
 });
 page('/highscores', ()=>{
-    eApp.innerHTML = highscores({title : "highscores", highscores : [45, 23, 12]});
+    eApp.innerHTML = highscores({title : "highscores", highscores : [45, 23, 12, 9, 6, 3]});
 });
 
 page();

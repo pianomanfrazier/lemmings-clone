@@ -63,6 +63,13 @@ canvas {
   bottom: 1px;
   text-shadow: 2px 2px 2px black; }
 
+button.active {
+  position: relative;
+  left: -1px;
+  bottom: -1px;
+  box-shadow: 2px 2px 2px black;
+  opacity: 0.5; }
+
 #control-panel {
   text-align: center; }
   #control-panel button {

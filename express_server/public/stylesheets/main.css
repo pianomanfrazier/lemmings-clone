@@ -82,8 +82,7 @@ button.active {
       top: .3em;
       left: 1em; }
     #control-panel button:hover {
-      cursor: pointer;
-      opacity: 0.8; }
+      cursor: pointer; }
   #control-panel ul > li {
     display: inline-block;
     padding: 0;

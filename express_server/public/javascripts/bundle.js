@@ -224,11 +224,11 @@ module.exports = HandlebarsCompiler.template({"compiler":[7,">= 4.0.0"],"main":f
     var stack1, helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
   return ((stack1 = container.invokePartial(partials["./_return.hbs"],depth0,{"name":"./_return.hbs","data":data,"helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
-    + "<h1>"
+    + "\n<div class=\"content-well\">\n    <h1>"
     + alias4(((helper = (helper = helpers.title || (depth0 != null ? depth0.title : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"title","hash":{},"data":data}) : helper)))
-    + "</h1>\n<p>Welcome to "
+    + "</h1>\n    <p>Welcome to "
     + alias4(((helper = (helper = helpers.title || (depth0 != null ? depth0.title : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"title","hash":{},"data":data}) : helper)))
-    + "</p>\n";
+    + "</p>\n</div>\n";
 },"usePartial":true,"useData":true});
 
 },{"./_return.hbs":3,"hbsfy/runtime":28}],5:[function(require,module,exports){
@@ -251,27 +251,27 @@ var HandlebarsCompiler = require('hbsfy/runtime');
 var partial$0 = require('./_return.hbs');
 HandlebarsCompiler.registerPartial('./_return.hbs', partial$0);
 module.exports = HandlebarsCompiler.template({"1":function(container,depth0,helpers,partials,data) {
-    return "        <li>"
+    return "            <li>"
     + container.escapeExpression(container.lambda(depth0, depth0))
     + "</li>\n";
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1, helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
   return ((stack1 = container.invokePartial(partials["./_return.hbs"],depth0,{"name":"./_return.hbs","data":data,"helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
-    + "<h1>"
+    + "\n<div class=\"content-well\">\n    <h1>"
     + alias4(((helper = (helper = helpers.title || (depth0 != null ? depth0.title : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"title","hash":{},"data":data}) : helper)))
-    + "</h1>\n<p>Welcome to "
+    + "</h1>\n    <p>Welcome to "
     + alias4(((helper = (helper = helpers.title || (depth0 != null ? depth0.title : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"title","hash":{},"data":data}) : helper)))
-    + "</p>\n\n<ol>\n"
+    + "</p>\n    <ol>\n"
     + ((stack1 = helpers.each.call(alias1,(depth0 != null ? depth0.highscores : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-    + "</ol>\n";
+    + "    </ol>\n</div>\n";
 },"usePartial":true,"useData":true});
 
 },{"./_return.hbs":3,"hbsfy/runtime":28}],8:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    return "<ul>\n    <li>\n        <a href=\"/game\">New Game</a>\n    </li>\n    <li>\n        <a href=\"/about\">About</a>\n    </li>\n    <li>\n        <a href=\"/help\">Help</a>\n    </li>\n    <li>\n        <a href=\"/highscores\">High Scores</a>\n    </li>\n</ul>\n";
+    return "<ul id=\"main-menu\">\n    <li class=\"btn bump\">\n        <a href=\"/game\">New Game</a>\n    </li>\n    <li class=\"btn bump\">\n        <a href=\"/about\">About</a>\n    </li>\n    <li class=\"btn bump\">\n        <a href=\"/help\">Help</a>\n    </li>\n    <li class=\"btn bump\">\n        <a href=\"/highscores\">High Scores</a>\n    </li>\n</ul>\n";
 },"useData":true});
 
 },{"hbsfy/runtime":28}],9:[function(require,module,exports){

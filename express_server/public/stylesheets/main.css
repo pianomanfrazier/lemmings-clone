@@ -1,7 +1,7 @@
 body {
   background-image: url("../images/footer_lodyas.png");
   color: #00AD2F;
-  font-style: Aria; }
+  font-family: Georgia; }
 
 canvas {
   border: 2px solid black; }
@@ -16,7 +16,6 @@ canvas {
   #return-to-main-menu a {
     text-decoration: none;
     color: #00AD2F;
-    font-style: Aria;
     font-size: 2em; }
 
 #game-field {
@@ -61,7 +60,7 @@ canvas {
   position: relative;
   left: 1px;
   bottom: 1px;
-  text-shadow: 2px 2px 2px black; }
+  text-shadow: 1px 1px 2px white; }
 
 button.active {
   position: relative;
@@ -117,5 +116,65 @@ button.active {
     list-style-type: none;
     margin: 0;
     padding: 0; }
+
+#main-menu {
+  margin-top: 3em; }
+  #main-menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0; }
+
+#main-menu li {
+  list-style: none;
+  margin-left: auto;
+  margin-right: auto; }
+
+#main-menu a {
+  text-decoration: none;
+  color: black;
+  width: 100%;
+  display: inline-block; }
+
+.btn {
+  background: #00AD2F;
+  background-image: -webkit-linear-gradient(top, #00AD2F, #004713);
+  background-image: -moz-linear-gradient(top, #00AD2F, #004713);
+  background-image: -ms-linear-gradient(top, #00AD2F, #004713);
+  background-image: -o-linear-gradient(top, #00AD2F, #004713);
+  background-image: linear-gradient(to bottom, #00AD2F, #004713);
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  color: #ffffff;
+  font-size: 28px;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+  width: 10em;
+  margin-bottom: 1.5em;
+  text-align: center;
+  box-shadow: 2px 2px 4px black; }
+  .btn a {
+    text-decoration: none; }
+  .btn:hover {
+    background: #14ff54;
+    background-image: -webkit-linear-gradient(top, #14ff54, #00AD2F);
+    background-image: -moz-linear-gradient(top, #14ff54, #00AD2F);
+    background-image: -ms-linear-gradient(top, #14ff54, #00AD2F);
+    background-image: -o-linear-gradient(top, #14ff54, #00AD2F);
+    background-image: linear-gradient(to bottom, #14ff54, #00AD2F);
+    text-decoration: none;
+    box-shadow: 2px 2px 4px white; }
+
+.content-well {
+  border-radius: 6px;
+  background-color: rgba(255, 255, 255, 0.5);
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1em;
+  box-shadow: 2px 2px 4px black;
+  text-align: left;
+  margin-top: 3em;
+  color: black; }
 
 /*# sourceMappingURL=main.css.map */

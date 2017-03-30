@@ -5,10 +5,7 @@ var help = require("./views/help.hbs");
 var highscores = require("./views/highscores.hbs");
 var about = require("./views/about.hbs");
 
-
-
 var eApp = document.getElementById("app");
-
 
 page('/', ()=>{
     eApp.innerHTML = index({});

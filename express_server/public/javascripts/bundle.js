@@ -188,10 +188,7 @@ var help = require("./views/help.hbs");
 var highscores = require("./views/highscores.hbs");
 var about = require("./views/about.hbs");
 
-
-
 var eApp = document.getElementById("app");
-
 
 page('/', ()=>{
     eApp.innerHTML = index({});
@@ -211,15 +208,22 @@ page('/highscores', ()=>{
 
 page();
 
-},{"./views/about.hbs":3,"./views/game.hbs":4,"./views/help.hbs":5,"./views/highscores.hbs":6,"./views/index.hbs":7,"page":30}],3:[function(require,module,exports){
+},{"./views/about.hbs":4,"./views/game.hbs":5,"./views/help.hbs":6,"./views/highscores.hbs":7,"./views/index.hbs":8,"page":30}],3:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
-var partial$0 = require('./p_return.hbs');
-HandlebarsCompiler.registerPartial('./p_return.hbs', partial$0);
+module.exports = HandlebarsCompiler.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+    return "<div  id=\"return-to-main-menu\">\n    <a class=\"bump-text\" href=\"/\">&larr; Main Menu</a>\n</div>\n";
+},"useData":true});
+
+},{"hbsfy/runtime":28}],4:[function(require,module,exports){
+// hbsfy compiled Handlebars template
+var HandlebarsCompiler = require('hbsfy/runtime');
+var partial$0 = require('./_return.hbs');
+HandlebarsCompiler.registerPartial('./_return.hbs', partial$0);
 module.exports = HandlebarsCompiler.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1, helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
-  return ((stack1 = container.invokePartial(partials["./p_return.hbs"],depth0,{"name":"./p_return.hbs","data":data,"helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
+  return ((stack1 = container.invokePartial(partials["./_return.hbs"],depth0,{"name":"./_return.hbs","data":data,"helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
     + "<h1>"
     + alias4(((helper = (helper = helpers.title || (depth0 != null ? depth0.title : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"title","hash":{},"data":data}) : helper)))
     + "</h1>\n<p>Welcome to "
@@ -227,25 +231,25 @@ module.exports = HandlebarsCompiler.template({"compiler":[7,">= 4.0.0"],"main":f
     + "</p>\n";
 },"usePartial":true,"useData":true});
 
-},{"./p_return.hbs":8,"hbsfy/runtime":28}],4:[function(require,module,exports){
+},{"./_return.hbs":3,"hbsfy/runtime":28}],5:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
-var partial$0 = require('./p_return.hbs');
-HandlebarsCompiler.registerPartial('./p_return.hbs', partial$0);
+var partial$0 = require('./_return.hbs');
+HandlebarsCompiler.registerPartial('./_return.hbs', partial$0);
 module.exports = HandlebarsCompiler.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1;
 
-  return ((stack1 = container.invokePartial(partials["./p_return.hbs"],depth0,{"name":"./p_return.hbs","data":data,"helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
+  return ((stack1 = container.invokePartial(partials["./_return.hbs"],depth0,{"name":"./_return.hbs","data":data,"helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
     + "<div id=\"game-field\">\n    <div id=\"game-screen\">\n        <canvas id=\"canvas\"></canvas>\n        <canvas id=\"mini-map\"></canvas>\n    </div>\n    <div id=\"status-bar\">\n        <div id=\"timer\">\n            Time : 00:00\n        </div>\n        <div id=\"out\">\n            OUT : 22\n        </div>\n        <div id=\"in\">\n            IN : 0%\n        </div>\n    </div>\n    <div id=\"control-panel\">\n        <ul>\n            <li>\n                <button class=\"bump\" id=\"btn1\" onclick=\"alert('clicked')\"></button>\n            </li>\n            <li>\n                <button class=\"bump\" id=\"btn2\" onclick=\"alert('clicked')\"></button>\n            </li>\n            <li>\n                <button class=\"bump\" id=\"btn3\" onclick=\"alert('clicked')\">\n                    <div class=\"status\">\n                        123\n                    </div>\n                </button>\n            </li>\n            <li>\n                <button class=\"bump\" id=\"btn4\" onclick=\"alert('clicked')\">\n                    <div class=\"status\">\n                        123\n                    </div>\n                </button>\n            </li>\n            <li>\n                <button class=\"bump\" id=\"btn5\" onclick=\"alert('clicked')\">\n                    <div class=\"status\">\n                        123\n                    </div>\n                </button>\n            </li>\n            <li>\n                <button class=\"bump\" id=\"btn6\" onclick=\"alert('clicked')\">\n                    <div class=\"status\">\n                        123\n                    </div>\n                </button>\n            </li>\n            <li>\n                <button class=\"bump\" id=\"btn7\" onclick=\"alert('clicked')\">\n                    <div class=\"status\">\n                        123\n                    </div>\n                </button>\n            </li>\n            <li>\n                <button class=\"bump\" id=\"btn8\" onclick=\"alert('clicked')\">\n                    <div class=\"status\">\n                        123\n                    </div>\n                </button>\n            </li>\n            <li>\n                <button class=\"bump\" id=\"btn9\" onclick=\"alert('clicked')\">\n                    <div class=\"status\">\n                        123\n                    </div>\n                </button>\n            </li>\n            <li>\n                <button class=\"bump\" id=\"btn10\" onclick= \"alert('clicked')\">\n                    <div class=\"status\">\n                        123\n                    </div>\n                </button>\n            </li>\n            <li>\n                <button class=\"bump\" id=\"btn11\" onclick=\"alert('clicked')\">\n                    <div class=\"status\">\n                        50\n                    </div>\n                 </button>\n            </li>\n            <li>\n                <button class=\"bump\" id=\"btn12\" onclick=\"alert('clicked')\">\n                    <div class=\"status\">\n                        50\n                    </div>\n                </button>\n            </li>\n        </ul>\n    </div>\n</div>\n<script src=\"/javascripts/bundle.js\"></script>\n\n";
 },"usePartial":true,"useData":true});
 
-},{"./p_return.hbs":8,"hbsfy/runtime":28}],5:[function(require,module,exports){
-arguments[4][3][0].apply(exports,arguments)
-},{"./p_return.hbs":8,"dup":3,"hbsfy/runtime":28}],6:[function(require,module,exports){
+},{"./_return.hbs":3,"hbsfy/runtime":28}],6:[function(require,module,exports){
+arguments[4][4][0].apply(exports,arguments)
+},{"./_return.hbs":3,"dup":4,"hbsfy/runtime":28}],7:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
-var partial$0 = require('./p_return.hbs');
-HandlebarsCompiler.registerPartial('./p_return.hbs', partial$0);
+var partial$0 = require('./_return.hbs');
+HandlebarsCompiler.registerPartial('./_return.hbs', partial$0);
 module.exports = HandlebarsCompiler.template({"1":function(container,depth0,helpers,partials,data) {
     return "        <li>"
     + container.escapeExpression(container.lambda(depth0, depth0))
@@ -253,7 +257,7 @@ module.exports = HandlebarsCompiler.template({"1":function(container,depth0,help
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1, helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
-  return ((stack1 = container.invokePartial(partials["./p_return.hbs"],depth0,{"name":"./p_return.hbs","data":data,"helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
+  return ((stack1 = container.invokePartial(partials["./_return.hbs"],depth0,{"name":"./_return.hbs","data":data,"helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
     + "<h1>"
     + alias4(((helper = (helper = helpers.title || (depth0 != null ? depth0.title : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"title","hash":{},"data":data}) : helper)))
     + "</h1>\n<p>Welcome to "
@@ -263,18 +267,11 @@ module.exports = HandlebarsCompiler.template({"1":function(container,depth0,help
     + "</ol>\n";
 },"usePartial":true,"useData":true});
 
-},{"./p_return.hbs":8,"hbsfy/runtime":28}],7:[function(require,module,exports){
+},{"./_return.hbs":3,"hbsfy/runtime":28}],8:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     return "<ul>\n    <li>\n        <a href=\"/game\">New Game</a>\n    </li>\n    <li>\n        <a href=\"/about\">About</a>\n    </li>\n    <li>\n        <a href=\"/help\">Help</a>\n    </li>\n    <li>\n        <a href=\"/highscores\">High Scores</a>\n    </li>\n</ul>\n";
-},"useData":true});
-
-},{"hbsfy/runtime":28}],8:[function(require,module,exports){
-// hbsfy compiled Handlebars template
-var HandlebarsCompiler = require('hbsfy/runtime');
-module.exports = HandlebarsCompiler.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    return "<div  id=\"return-to-main-menu\">\n    <a class=\"bump-text\" href=\"/\">&larr; Main Menu</a>\n</div>\n";
 },"useData":true});
 
 },{"hbsfy/runtime":28}],9:[function(require,module,exports){

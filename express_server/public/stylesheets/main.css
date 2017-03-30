@@ -55,7 +55,7 @@ canvas {
   position: relative;
   left: 1px;
   bottom: 1px;
-  box-shadow: 2px 2px 2px black; }
+  box-shadow: -2px 2px 2px black; }
 
 .bump-text:hover {
   position: relative;
@@ -67,7 +67,7 @@ button.active {
   position: relative;
   left: -1px;
   bottom: -1px;
-  box-shadow: 2px 2px 2px black;
+  box-shadow: 1px -1px 1px black;
   opacity: 0.5; }
 
 #control-panel {

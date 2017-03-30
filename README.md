@@ -31,3 +31,14 @@ A Lemmings clone using HTML5 and Javascript
 
 
 # notes
+
+## Tooling
+
+- nodemon to run the server and refresh when changes happen
+  - run nodemon in the express-server directory
+- browser-sync to refresh to web page when pages happen
+  - run `browser-sync start --proxy "localhost:3000" --files "game_dev_final"`
+- sass to compile scss in styles/ don't mess with the styles in the express server
+  - run `sass --watch styles/main.scss:express_server/public/stylesheets/main.css`
+
+Now a better way to do this would be to set up Gulp or some task runner and do this all in one command. I have had problems with easily getting gulp to work consistantly/easily.

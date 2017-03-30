@@ -40,5 +40,8 @@ A Lemmings clone using HTML5 and Javascript
   - run `browser-sync start --proxy "localhost:3000" --files "game_dev_final"`
 - sass to compile scss in styles/ don't mess with the styles in the express server
   - run `sass --watch styles/main.scss:express_server/public/stylesheets/main.css`
+- watchify to run browserify as changes are made
+  - run `watchify -t [ hbsfy -t ] js/main.js -o express_server/public/javascripts/bundle.js -v` 
+  - you need `[hbsfy -t]` to get the handlebars templates
 
 Now a better way to do this would be to set up Gulp or some task runner and do this all in one command. I have had problems with easily getting gulp to work consistantly/easily.

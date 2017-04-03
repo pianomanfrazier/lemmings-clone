@@ -1,12 +1,39 @@
 {
+  "name": "Lemmings",
+  "author": "Seth Bertlshofer & Ryan Frazier",
   "dependencies": {
+    "browser-sync": "^2.18.8",
+    "browserify-shim": "^3.8.14",
+    "chai": "^3.5.0",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.1",
+    "gulp-browserify": "^0.5.1",
+    "gulp-jshint": "^2.0.4",
+    "gulp-less": "^3.3.0",
+    "gulp-minify-css": "^1.2.4",
+    "gulp-mocha-phantomjs": "^0.12.1",
+    "gulp-nodemon": "^2.2.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^3.1.0",
+    "gulp-uglify": "^2.1.2",
     "handlebars": "^4.0.6",
     "jquery": "^3.2.1",
+    "jshint": "^2.9.4",
     "lodash": "^4.17.4",
+    "mocha": "^3.2.0",
     "page": "^1.7.1"
   },
   "devDependencies": {
     "browserify-handlebars": "^1.0.0",
     "hbsfy": "^2.7.0"
+  },
+  "browserify-shim": {
+    "lodash": "_",
+    "jquery": "$"
+  },
+  "browserify": {
+    "transform": [
+      "browserify-shim"
+    ]
   }
 }

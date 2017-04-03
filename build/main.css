@@ -1,0 +1,177 @@
+body {
+  background-image: url("../images/footer_lodyas.png");
+  color: #00AD2F;
+  font-family: Georgia; }
+
+canvas {
+  border: 2px solid black; }
+
+#header {
+  width: 100%;
+  text-align: center; }
+
+#return-to-main-menu {
+  position: fixed;
+  top: 0; }
+  #return-to-main-menu a {
+    text-decoration: none;
+    color: #00AD2F;
+    font-size: 2em; }
+
+#game-field {
+  width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center; }
+
+#game-screen {
+  position: relative;
+  width: 700px;
+  display: initial; }
+
+#canvas {
+  width: 700px;
+  height: 400px;
+  background-color: black; }
+
+#mini-map {
+  width: 140px;
+  height: 80px;
+  z-index: 1;
+  position: absolute;
+  bottom: 4px;
+  right: 0;
+  background-color: grey; }
+
+#status-bar {
+  margin: .5em 0 .5em 0;
+  font-size: 1.5em; }
+  #status-bar div {
+    display: inline;
+    padding: 0 2em 0 2em; }
+
+.bump:hover {
+  position: relative;
+  left: 1px;
+  bottom: 1px;
+  box-shadow: -2px 2px 2px black; }
+
+.bump-text:hover {
+  position: relative;
+  left: 1px;
+  bottom: 1px;
+  text-shadow: 1px 1px 2px white; }
+
+button.active {
+  position: relative;
+  left: -1px;
+  bottom: -1px;
+  box-shadow: 1px -1px 1px black;
+  opacity: 0.5; }
+
+#control-panel {
+  text-align: center; }
+  #control-panel button {
+    width: 48px;
+    height: 62px;
+    border: none;
+    color: black;
+    position: relative; }
+    #control-panel button .status {
+      position: absolute;
+      top: .3em;
+      left: 1em; }
+    #control-panel button:hover {
+      cursor: pointer; }
+  #control-panel ul > li {
+    display: inline-block;
+    padding: 0;
+    margin: -2px; }
+    #control-panel ul > li:nth-child(1) > button {
+      background: url("/images/lemming_buttons.png") 0px 0; }
+    #control-panel ul > li:nth-child(2) > button {
+      background: url("/images/lemming_buttons.png") 48px 0; }
+    #control-panel ul > li:nth-child(3) > button {
+      background: url("/images/lemming_buttons.png") 96px 0; }
+    #control-panel ul > li:nth-child(4) > button {
+      background: url("/images/lemming_buttons.png") 144px 0; }
+    #control-panel ul > li:nth-child(5) > button {
+      background: url("/images/lemming_buttons.png") 192px 0; }
+    #control-panel ul > li:nth-child(6) > button {
+      background: url("/images/lemming_buttons.png") 240px 0; }
+    #control-panel ul > li:nth-child(7) > button {
+      background: url("/images/lemming_buttons.png") 288px 0; }
+    #control-panel ul > li:nth-child(8) > button {
+      background: url("/images/lemming_buttons.png") 336px 0; }
+    #control-panel ul > li:nth-child(9) > button {
+      background: url("/images/lemming_buttons.png") 384px 0; }
+    #control-panel ul > li:nth-child(10) > button {
+      background: url("/images/lemming_buttons.png") 432px 0; }
+    #control-panel ul > li:nth-child(11) > button {
+      background: url("/images/lemming_buttons.png") 480px 0; }
+    #control-panel ul > li:nth-child(12) > button {
+      background: url("/images/lemming_buttons.png") 528px 0; }
+  #control-panel ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0; }
+
+#main-menu {
+  margin-top: 3em; }
+  #main-menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0; }
+
+#main-menu li {
+  list-style: none;
+  margin-left: auto;
+  margin-right: auto; }
+
+#main-menu a {
+  text-decoration: none;
+  color: black;
+  width: 100%;
+  display: inline-block; }
+
+.btn {
+  background: #00AD2F;
+  background-image: -webkit-linear-gradient(top, #00AD2F, #004713);
+  background-image: -moz-linear-gradient(top, #00AD2F, #004713);
+  background-image: -ms-linear-gradient(top, #00AD2F, #004713);
+  background-image: -o-linear-gradient(top, #00AD2F, #004713);
+  background-image: linear-gradient(to bottom, #00AD2F, #004713);
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  color: #ffffff;
+  font-size: 28px;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+  width: 10em;
+  margin-bottom: 1.5em;
+  text-align: center;
+  box-shadow: 2px 2px 4px black; }
+  .btn a {
+    text-decoration: none; }
+  .btn:hover {
+    background: #14ff54;
+    background-image: -webkit-linear-gradient(top, #14ff54, #00AD2F);
+    background-image: -moz-linear-gradient(top, #14ff54, #00AD2F);
+    background-image: -ms-linear-gradient(top, #14ff54, #00AD2F);
+    background-image: -o-linear-gradient(top, #14ff54, #00AD2F);
+    background-image: linear-gradient(to bottom, #14ff54, #00AD2F);
+    text-decoration: none;
+    box-shadow: 2px 2px 4px white; }
+
+.content-well {
+  border-radius: 6px;
+  background-color: rgba(255, 255, 255, 0.5);
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1em;
+  box-shadow: 2px 2px 4px black;
+  text-align: left;
+  margin-top: 3em;
+  color: black; }

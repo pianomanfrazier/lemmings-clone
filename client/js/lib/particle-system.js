@@ -1,3 +1,5 @@
+var random = require('./random-generator');
+var _ = require('lodash');
 
 function ParticleSystem(spec, graphics) {
     'use strict';
@@ -21,12 +23,12 @@ function ParticleSystem(spec, graphics) {
     that.create = ()=>{
         let particle = {
             image: spec.image,
-            size: Random.nextGaussian(10, 4),
+            size: random.nextGaussian(10, 4),
             center: {x: spec.center.x, y: spec.center.y},
-            direction: Random.nextCircleVector(),
-            speed: Random.nextGaussian(spec.speed.mean, spec.speed.stdev), // pixels per second
+            direction: random.nextCircleVector(),
+            speed: random.nextGaussian(spec.speed.mean, spec.speed.stdev), // pixels per second
             rotation: 0,
-            lifetime: Random.nextGaussian(spec.lifetime.mean, spec.lifetime.stdev),	// How long the particle should live, in seconds
+            lifetime: random.nextGaussian(spec.lifetime.mean, spec.lifetime.stdev),	// How long the particle should live, in seconds
             alive: 0	// How long the particle has been alive, in seconds
         };
 

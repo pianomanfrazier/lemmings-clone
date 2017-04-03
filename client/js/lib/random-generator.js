@@ -59,4 +59,6 @@ let Random = (()=>{
         nextCircleVector,
         nextGaussian
     };
-})();
+});
+
+module.export = Random;

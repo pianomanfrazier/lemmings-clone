@@ -122,21 +122,25 @@ gulp.task('sass', ()=>{
 });
 
 
-gulp.task('serve', ()=>{
-  'use strict';
-
-  // nodemon to run the server and refresh when changes happen
-  let stream = nodemon({
-    script: './server/app.js',
-
-  }).on('restart', ()=>{
-    console.log('restarted!');
-    // gulp.src('./server/app.js');
-  }).on('crash', ()=>{
-    console.log('app crashed! restarting in 10 seconds');
-    stream.emit('restart', 10);
-  });
-});
+//unable to start the server because it has different set of dependencies
+//start it manually and browserSync will work just fine
+//gulp.task('serve', ()=>{
+//  'use strict';
+//    process.chdir('./server/');
+//    console.log("cwd: ", process.cwd());
+//
+//  // nodemon to run the server and refresh when changes happen
+//  let stream = nodemon({
+//    script: './bin/www',
+//
+//  }).on('restart', ()=>{
+//    console.log('restarted!');
+//    // gulp.src('./bin/www');
+//  }).on('crash', ()=>{
+//    console.log('app crashed! restarting in 10 seconds');
+//    stream.emit('restart', 10);
+//  });
+//});
 
 gulp.task('browserSync', ()=>{
   'use strict';
@@ -160,4 +164,4 @@ gulp.task('watch', ()=>{
 // ********* Tasks *********
 // gulp.task('build', ['uglify', 'minify']);
 // gulp.task('build', ['minify']);
-gulp.task('default', ['serve', 'browserSync', 'sass', 'watch']);
+gulp.task('default', ['browserSync', 'sass', 'watch']);

@@ -2,10 +2,20 @@
 
 <div class="content-well">
     <h1>{{title}}</h1>
-    <p>Welcome to {{title}}</p>
+
+{{#if highscores}}
     <ol>
         {{#each highscores}}
-            <li>{{this}}</li>
+            <li>{{this.user}} ....... {{this.score}}</li>
         {{/each}}
     </ol>
+{{else if error}}
+    <p>
+        {{error}}
+    </p>
+{{else}}
+    <p>
+        No High Scores!
+    </p>
+{{/if}}
 </div>

@@ -204,40 +204,42 @@ page('/game', ()=>{
 page('/about', ()=>{
     'use strict';
 
-    eApp.innerHTML = about({title : "about"});
+    eApp.innerHTML = about({title : "About"});
 });
 page('/help', ()=>{
     'use strict';
 
-    eApp.innerHTML = help({title : "help"});
+    eApp.innerHTML = help({title : "Help"});
 });
 page('/highscores', ()=>{
     'use strict';
-
-    eApp.innerHTML = highscores({title : "highscores", highscores : [45, 23, 12, 9, 6, 3]});
-    console.log("highscores");
-    $.ajax({
-        type: "POST",
-        url: '/api/score',
-        data: {score : 10,
-               user : "Jim Bob"},
-        dataType: 'json'
-    }).done(function(data) {
-        console.log(data);
-    });
+    eApp.innerHTML = highscores({title : "Highscores"});
+    //$.ajax({
+    //    type: "POST",
+    //    dataType: 'json',
+    //    data: {user:"Sponge Bob", score:"2345"},
+    //    url: '/api/score',
+    //    error: function(e) {
+    //        console.log(e);
+    //    }
+    //}).done(function(data) {
+    //    console.log(data);
+    //});
     $.ajax({
         type: "GET",
         dataType: 'json',
-        url: '/api',
-        success: function() {
-            console.log("json request gotten");
-        },
+        url: '/api/highscores',
         error: function(e) {
             console.log(e);
         }
     }).done(function(data) {
+        eApp.innerHTML = highscores({title : "Highscores", highscores : data});
         console.log(data);
+    }).fail((e)=>{
+        eApp.innerHTML = highscores({title : "Highscores", error: "Server connection error"});
+        console.log(e);
     });
+
 });
 
 page();
@@ -255,14 +257,12 @@ var HandlebarsCompiler = require('hbsfy/runtime');
 var partial$0 = require('./_return.hbs');
 HandlebarsCompiler.registerPartial('./_return.hbs', partial$0);
 module.exports = HandlebarsCompiler.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    var stack1, helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
+    var stack1, helper;
 
   return ((stack1 = container.invokePartial(partials["./_return.hbs"],depth0,{"name":"./_return.hbs","data":data,"helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
     + "\n<div class=\"content-well\">\n    <h1>"
-    + alias4(((helper = (helper = helpers.title || (depth0 != null ? depth0.title : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"title","hash":{},"data":data}) : helper)))
-    + "</h1>\n    <p>Welcome to "
-    + alias4(((helper = (helper = helpers.title || (depth0 != null ? depth0.title : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"title","hash":{},"data":data}) : helper)))
-    + "</p>\n</div>\n";
+    + container.escapeExpression(((helper = (helper = helpers.title || (depth0 != null ? depth0.title : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : {},{"name":"title","hash":{},"data":data}) : helper)))
+    + "</h1>\n    <p>\n        Lemmings clone by Ryan Frazier & Seth Bertlshofer\n    </p>\n    <p>\n        Images from Lemmings screen shots taken from Google Search\n    </p>\n</div>\n";
 },"usePartial":true,"useData":true});
 
 },{"./_return.hbs":3,"hbsfy/runtime":28}],5:[function(require,module,exports){
@@ -278,27 +278,59 @@ module.exports = HandlebarsCompiler.template({"compiler":[7,">= 4.0.0"],"main":f
 },"usePartial":true,"useData":true});
 
 },{"./_return.hbs":3,"hbsfy/runtime":28}],6:[function(require,module,exports){
-arguments[4][4][0].apply(exports,arguments)
-},{"./_return.hbs":3,"dup":4,"hbsfy/runtime":28}],7:[function(require,module,exports){
+// hbsfy compiled Handlebars template
+var HandlebarsCompiler = require('hbsfy/runtime');
+var partial$0 = require('./_return.hbs');
+HandlebarsCompiler.registerPartial('./_return.hbs', partial$0);
+module.exports = HandlebarsCompiler.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+    var stack1, helper;
+
+  return ((stack1 = container.invokePartial(partials["./_return.hbs"],depth0,{"name":"./_return.hbs","data":data,"helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
+    + "\n<div class=\"content-well\">\n    <h1>"
+    + container.escapeExpression(((helper = (helper = helpers.title || (depth0 != null ? depth0.title : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : {},{"name":"title","hash":{},"data":data}) : helper)))
+    + "</h1>\n    <p>\n        Click the buttons to save the lemmings. Try to save as many as you can.\n    </p>\n</div>\n";
+},"usePartial":true,"useData":true});
+
+},{"./_return.hbs":3,"hbsfy/runtime":28}],7:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 var partial$0 = require('./_return.hbs');
 HandlebarsCompiler.registerPartial('./_return.hbs', partial$0);
 module.exports = HandlebarsCompiler.template({"1":function(container,depth0,helpers,partials,data) {
-    return "            <li>"
-    + container.escapeExpression(container.lambda(depth0, depth0))
+    var stack1;
+
+  return "    <ol>\n"
+    + ((stack1 = helpers.each.call(depth0 != null ? depth0 : {},(depth0 != null ? depth0.highscores : depth0),{"name":"each","hash":{},"fn":container.program(2, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "    </ol>\n";
+},"2":function(container,depth0,helpers,partials,data) {
+    var alias1=container.lambda, alias2=container.escapeExpression;
+
+  return "            <li>"
+    + alias2(alias1((depth0 != null ? depth0.user : depth0), depth0))
+    + " ....... "
+    + alias2(alias1((depth0 != null ? depth0.score : depth0), depth0))
     + "</li>\n";
+},"4":function(container,depth0,helpers,partials,data) {
+    var stack1;
+
+  return ((stack1 = helpers["if"].call(depth0 != null ? depth0 : {},(depth0 != null ? depth0.error : depth0),{"name":"if","hash":{},"fn":container.program(5, data, 0),"inverse":container.program(7, data, 0),"data":data})) != null ? stack1 : "");
+},"5":function(container,depth0,helpers,partials,data) {
+    var helper;
+
+  return "    <p>\n        "
+    + container.escapeExpression(((helper = (helper = helpers.error || (depth0 != null ? depth0.error : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : {},{"name":"error","hash":{},"data":data}) : helper)))
+    + "\n    </p>\n";
+},"7":function(container,depth0,helpers,partials,data) {
+    return "    <p>\n        No High Scores!\n    </p>\n";
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    var stack1, helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
+    var stack1, helper, alias1=depth0 != null ? depth0 : {};
 
   return ((stack1 = container.invokePartial(partials["./_return.hbs"],depth0,{"name":"./_return.hbs","data":data,"helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
     + "\n<div class=\"content-well\">\n    <h1>"
-    + alias4(((helper = (helper = helpers.title || (depth0 != null ? depth0.title : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"title","hash":{},"data":data}) : helper)))
-    + "</h1>\n    <p>Welcome to "
-    + alias4(((helper = (helper = helpers.title || (depth0 != null ? depth0.title : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"title","hash":{},"data":data}) : helper)))
-    + "</p>\n    <ol>\n"
-    + ((stack1 = helpers.each.call(alias1,(depth0 != null ? depth0.highscores : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-    + "    </ol>\n</div>\n";
+    + container.escapeExpression(((helper = (helper = helpers.title || (depth0 != null ? depth0.title : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(alias1,{"name":"title","hash":{},"data":data}) : helper)))
+    + "</h1>\n\n"
+    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.highscores : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.program(4, data, 0),"data":data})) != null ? stack1 : "")
+    + "</div>\n";
 },"usePartial":true,"useData":true});
 
 },{"./_return.hbs":3,"hbsfy/runtime":28}],8:[function(require,module,exports){

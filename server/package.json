@@ -1,6 +1,10 @@
 {
   "scripts": {
+<<<<<<< HEAD
     "start": "node server.js"
+=======
+    "start" : "node server.js" 
+>>>>>>> master
   },
   "dependencies": {
     "body-parser": "^1.17.1",

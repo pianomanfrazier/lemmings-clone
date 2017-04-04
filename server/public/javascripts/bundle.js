@@ -262,7 +262,7 @@ module.exports = HandlebarsCompiler.template({"compiler":[7,">= 4.0.0"],"main":f
   return ((stack1 = container.invokePartial(partials["./_return.hbs"],depth0,{"name":"./_return.hbs","data":data,"helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
     + "\n<div class=\"content-well\">\n    <h1>"
     + container.escapeExpression(((helper = (helper = helpers.title || (depth0 != null ? depth0.title : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : {},{"name":"title","hash":{},"data":data}) : helper)))
-    + "</h1>\n    <p>\n        Lemmings clone by Ryan Frazier & Seth Bertlshofer\n    </p>\n    <p>\n        Images from Lemmings screen shots taken from Google Search\n    </p>\n</div>\n";
+    + "</h1>\n    <p>\n        Lemmings clone by Ryan Frazier & Seth Bertlshofer\n    </p>\n    <p>\n        Images from Lemmings screen shots taken from Google Search\n    </p>\n    <p>\n        Many thanks to <a href=\"http://www.widgetworx.com/projects/sl.html\">SpriteLib</a> for the blocks and texture sprites.\n    </p>\n</div>\n";
 },"usePartial":true,"useData":true});
 
 },{"./_return.hbs":3,"hbsfy/runtime":28}],5:[function(require,module,exports){

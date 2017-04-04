@@ -5,34 +5,10 @@ var rename = require('gulp-rename');
 // Servers
 var browserSync = require('browser-sync').create();
 
-// Build Dependencies
-var browserify = require('gulp-browserify');
-var uglify = require('gulp-uglify');
-var handlebars = require('gulp-handlebars');
-
 // Style Dependencies
 var sass = require('gulp-sass');
 
 // ********* Server *********
-gulp.task('templates', ()=>{
-  'use strict';
-
-  return gulp.src('./client/**/*.hbs')
-    .pipe(handlebars())
-    .pipe(rename('bundle.js'))
-    .pipe(gulp.dest('./server/public/javascripts'));
-});
-
-gulp.task('js', ['templates'], ()=>{
-  'use strict';
-
-  return gulp.src('./client/**/*.js')
-      .pipe(browserify())
-      .pipe(uglify())
-      .pipe(rename('bundle.js'))
-      .pipe(gulp.dest('./server/public/javascripts'));
-});
-
 
 gulp.task('sass', ()=>{
   'use strict';
@@ -58,7 +34,6 @@ gulp.task('browserSync', ()=>{
 gulp.task('watch', ()=>{
   'use strict';
 
-  gulp.watch("./client/**/*.js", ['js']);
   gulp.watch("./client/styles/*.scss", ['sass']);
   gulp.watch("./client/*.html").on('change', browserSync.reload);
 });

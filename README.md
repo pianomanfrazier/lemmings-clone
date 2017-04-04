@@ -32,6 +32,64 @@ A Lemmings clone using HTML5 and Javascript
 
 # notes
 
+## Lemming
+
+### API notes
+
+lemming.on('click').activate(type)
+
+  - manage the type numbers in menu bar
+
+lemming.on('hover').drawBox()
+
+### Component Design
+
+- TYPE
+  - through surfaces
+    - digger 
+    - picker
+    - basher
+  - builder -- num of bricks
+  - blocker -- for lifetime of lemming
+  - umbrella -- activate when falling
+  - climber -- activate when hits a wall
+  - bomb -- can be chosen at any time, explodes with countdown, activates explosion particles
+  
+- GAME CONTROLS
+  - pause game
+  - quit game -- A-bomb
+  - release rate
+    - increase
+    - decrease
+    
+- Ways to die
+  - drown (ie contact with water)
+  - fall and splat
+  - suicide bomb
+  - traps
+  
+- BLOCKS
+  - dirt
+  - stone
+  - steel
+  - water
+  - trap
+  - ornamental (no collision detection)
+  
+- WORLD representation
+  - json config
+  - 2d array of types
+  - pan view with mouse
+  - on click and drag
+  - on click show grab hand
+  
+- mini-map
+  - need abstract representation of world (lemmings, platforms)
+  - pass in game model
+  - viewing frame (red box)
+  - lemmings (green dots)
+  - platforms (brown mass)
+
 ## Tooling
 
 - nodemon to run the server and refresh when changes happen

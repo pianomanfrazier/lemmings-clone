@@ -1,4 +1,5 @@
 var page = require("page");
+var $ = require("jquery");
 var index = require("./js/views/index.hbs");
 var game = require("./js/views/game.hbs");
 var help = require("./js/views/help.hbs");
@@ -20,17 +21,42 @@ page('/game', ()=>{
 page('/about', ()=>{
     'use strict';
 
-    eApp.innerHTML = about({title : "about"});
+    eApp.innerHTML = about({title : "About"});
 });
 page('/help', ()=>{
     'use strict';
 
-    eApp.innerHTML = help({title : "help"});
+    eApp.innerHTML = help({title : "Help"});
 });
 page('/highscores', ()=>{
     'use strict';
+    eApp.innerHTML = highscores({title : "Highscores"});
+    //$.ajax({
+    //    type: "POST",
+    //    dataType: 'json',
+    //    data: {user:"Sponge Bob", score:"2345"},
+    //    url: '/api/score',
+    //    error: function(e) {
+    //        console.log(e);
+    //    }
+    //}).done(function(data) {
+    //    console.log(data);
+    //});
+    $.ajax({
+        type: "GET",
+        dataType: 'json',
+        url: '/api/highscores',
+        error: function(e) {
+            console.log(e);
+        }
+    }).done(function(data) {
+        eApp.innerHTML = highscores({title : "Highscores", highscores : data});
+        console.log(data);
+    }).fail((e)=>{
+        eApp.innerHTML = highscores({title : "Highscores", error: "Database connection error"});
+        console.log(e);
+    });
 
-    eApp.innerHTML = highscores({title : "highscores", highscores : [45, 23, 12, 9, 6, 3]});
 });
 
 page();

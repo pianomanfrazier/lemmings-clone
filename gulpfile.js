@@ -49,7 +49,6 @@ gulp.task('watch', ()=>{
   'use strict';
 
   gulp.watch("./client/**/*.js", ['js']);
-
   gulp.watch("./client/styles/*.scss", ['sass']);
   gulp.watch("./client/*.html").on('change', browserSync.reload);
 });

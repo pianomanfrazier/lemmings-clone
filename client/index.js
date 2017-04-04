@@ -53,7 +53,7 @@ page('/highscores', ()=>{
         eApp.innerHTML = highscores({title : "Highscores", highscores : data});
         console.log(data);
     }).fail((e)=>{
-        eApp.innerHTML = highscores({title : "Highscores", error: "Database connection error"});
+        eApp.innerHTML = highscores({title : "Highscores", error: "Server connection error"});
         console.log(e);
     });
 

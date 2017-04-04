@@ -236,7 +236,7 @@ page('/highscores', ()=>{
         eApp.innerHTML = highscores({title : "Highscores", highscores : data});
         console.log(data);
     }).fail((e)=>{
-        eApp.innerHTML = highscores({title : "Highscores", error: "Database connection error"});
+        eApp.innerHTML = highscores({title : "Highscores", error: "Server connection error"});
         console.log(e);
     });
 
@@ -257,14 +257,12 @@ var HandlebarsCompiler = require('hbsfy/runtime');
 var partial$0 = require('./_return.hbs');
 HandlebarsCompiler.registerPartial('./_return.hbs', partial$0);
 module.exports = HandlebarsCompiler.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    var stack1, helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
+    var stack1, helper;
 
   return ((stack1 = container.invokePartial(partials["./_return.hbs"],depth0,{"name":"./_return.hbs","data":data,"helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
     + "\n<div class=\"content-well\">\n    <h1>"
-    + alias4(((helper = (helper = helpers.title || (depth0 != null ? depth0.title : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"title","hash":{},"data":data}) : helper)))
-    + "</h1>\n    <p>Welcome to "
-    + alias4(((helper = (helper = helpers.title || (depth0 != null ? depth0.title : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"title","hash":{},"data":data}) : helper)))
-    + "</p>\n</div>\n";
+    + container.escapeExpression(((helper = (helper = helpers.title || (depth0 != null ? depth0.title : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : {},{"name":"title","hash":{},"data":data}) : helper)))
+    + "</h1>\n    <p>\n        Lemmings clone by Ryan Frazier & Seth Bertlshofer\n    </p>\n    <p>\n        Images from Lemmings screen shots taken from Google Search\n    </p>\n</div>\n";
 },"usePartial":true,"useData":true});
 
 },{"./_return.hbs":3,"hbsfy/runtime":28}],5:[function(require,module,exports){
@@ -280,8 +278,20 @@ module.exports = HandlebarsCompiler.template({"compiler":[7,">= 4.0.0"],"main":f
 },"usePartial":true,"useData":true});
 
 },{"./_return.hbs":3,"hbsfy/runtime":28}],6:[function(require,module,exports){
-arguments[4][4][0].apply(exports,arguments)
-},{"./_return.hbs":3,"dup":4,"hbsfy/runtime":28}],7:[function(require,module,exports){
+// hbsfy compiled Handlebars template
+var HandlebarsCompiler = require('hbsfy/runtime');
+var partial$0 = require('./_return.hbs');
+HandlebarsCompiler.registerPartial('./_return.hbs', partial$0);
+module.exports = HandlebarsCompiler.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+    var stack1, helper;
+
+  return ((stack1 = container.invokePartial(partials["./_return.hbs"],depth0,{"name":"./_return.hbs","data":data,"helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
+    + "\n<div class=\"content-well\">\n    <h1>"
+    + container.escapeExpression(((helper = (helper = helpers.title || (depth0 != null ? depth0.title : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : {},{"name":"title","hash":{},"data":data}) : helper)))
+    + "</h1>\n    <p>\n        Click the buttons to save the lemmings. Try to save as many as you can.\n    </p>\n</div>\n";
+},"usePartial":true,"useData":true});
+
+},{"./_return.hbs":3,"hbsfy/runtime":28}],7:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 var partial$0 = require('./_return.hbs');

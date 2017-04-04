@@ -1,5 +1,5 @@
-let Graphics = require("Graphics.js");
-let canvas = require("Globals.js").canvas;
+let Graphics = require("./Graphics.js");
+let canvas = require("./Globals.js").canvas;
 
 let GameLoop = {};
 
@@ -53,3 +53,5 @@ GameLoop.run = function(game) {
 
 	  window.requestAnimationFrame(gameLoop);
 };
+
+module.exports = GameLoop;

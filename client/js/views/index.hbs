@@ -1,14 +1,16 @@
-<ul id="main-menu">
-    <li class="btn bump">
-        <a href="/game">New Game</a>
-    </li>
-    <li class="btn bump">
-        <a href="/about">About</a>
-    </li>
-    <li class="btn bump">
-        <a href="/help">Help</a>
-    </li>
-    <li class="btn bump">
-        <a href="/highscores">High Scores</a>
-    </li>
-</ul>
+{{> ./main.hbs }}
+{{> ./about.hbs }}
+{{> ./help.hbs }}
+
+<div id="HighScoresScreen">
+    {{> ./highscores.hbs }}
+</div>
+
+{{> ./game.hbs }}
+
+<div style="display:none">
+    <img id="lemming_sprites" alt="sprite sheet" src="images/lemming_sprites.png">
+    <img id="lemming_traps" alt="sprite sheet" src="images/lemming_traps.png">
+    <img id="block1_sprites" alt="sprite sheet" src="images/blocks1.png">
+    <img id="block2_sprites" alt="sprite sheet" src="images/blocks2.png">
+</div>

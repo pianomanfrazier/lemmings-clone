@@ -1,3 +1,15 @@
+#GameScreen {
+  display: none; }
+
+#AboutScreen {
+  display: none; }
+
+#HelpScreen {
+  display: none; }
+
+#HighScoresScreen {
+  display: none; }
+
 body {
   background-image: url("../images/footer_lodyas.png");
   color: #00AD2F;

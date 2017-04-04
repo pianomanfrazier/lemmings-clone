@@ -8,6 +8,19 @@ $mini-map-scale: 0.2;
 $green: #00AD2F;
 $yellow: #EEFD4E;
 
+#GameScreen {
+    display: none;
+}
+#AboutScreen {
+    display: none;
+}
+#HelpScreen {
+    display: none;
+}
+#HighScoresScreen {
+    display: none;
+}
+
 body {
     background-image: url("../images/footer_lodyas.png");
     color: $green;

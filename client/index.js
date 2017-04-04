@@ -1,47 +1,77 @@
 var page = require("page");
 var $ = require("jquery");
 var index = require("./js/views/index.hbs");
-var game = require("./js/views/game.hbs");
-var help = require("./js/views/help.hbs");
 var highscores = require("./js/views/highscores.hbs");
-var about = require("./js/views/about.hbs");
 
 var eApp = document.getElementById("app");
+eApp.innerHTML = index({});
+var eMainScreen = $("#MainScreen");
+var eGameScreen = $("#GameScreen");
+var eAboutScreen = $("#AboutScreen");
+var eHelpScreen = $("#HelpScreen");
+var eHighScoresScreen = $("#HighScoresScreen");
+var screens = [eGameScreen, eAboutScreen, eHelpScreen, eHighScoresScreen];
+
+var Sprite = require("./js/Sprite.js");
+
+var image = document.getElementById("lemming_sprites");
+var loop = require("./js/GameLoop.js");
+var sprite;
+image.onload = function() {
+    console.log("image loaded");
+    console.log(image);
+    var w = 16;
+    var h = 10;
+    sprite = Sprite({
+        img: image,
+        center: {x: 300, y: 300},
+        startX: 0, //top left corner of sprite
+        startY: 0,
+        numFrames: 8,
+        frameNumber: 0, //starts out as zero but will change as it gets updated
+        frameWidth: w,
+        frameHeight: h,
+        spacer: 2, //sprite sheets have a spacer between sprites
+        animationRate: 200,
+        width: w ,
+        height: h
+    });
+    console.log(sprite);
+};
+console.log(image);
+
 
 page('/', ()=>{
     'use strict';
 
-    eApp.innerHTML = index({});
+    screens.forEach(function(el){
+        el.slideUp();
+    });
+    eMainScreen.slideDown();
 });
 page('/game', ()=>{
     'use strict';
+    eMainScreen.slideUp();
+    eGameScreen.slideDown();
 
-    eApp.innerHTML = game({});
+    loop.run(sprite);
 });
 page('/about', ()=>{
     'use strict';
-
-    eApp.innerHTML = about({title : "About"});
+    eMainScreen.slideUp();
+    eAboutScreen.slideDown();
 });
 page('/help', ()=>{
     'use strict';
-
-    eApp.innerHTML = help({title : "Help"});
+    eMainScreen.slideUp();
+    eHelpScreen.slideDown();
 });
 page('/highscores', ()=>{
     'use strict';
-    eApp.innerHTML = highscores({title : "Highscores"});
-    //$.ajax({
-    //    type: "POST",
-    //    dataType: 'json',
-    //    data: {user:"Sponge Bob", score:"2345"},
-    //    url: '/api/score',
-    //    error: function(e) {
-    //        console.log(e);
-    //    }
-    //}).done(function(data) {
-    //    console.log(data);
-    //});
+    eMainScreen.slideUp();
+    eHighScoresScreen.slideDown();
+
+    eHighScoresScreen.html(highscores({title : "Highscores"}));
     $.ajax({
         type: "GET",
         dataType: 'json',
@@ -50,10 +80,10 @@ page('/highscores', ()=>{
             console.log(e);
         }
     }).done(function(data) {
-        eApp.innerHTML = highscores({title : "Highscores", highscores : data});
+        eHighScoresScreen.html(highscores({title : "Highscores", highscores : data}));
         console.log(data);
     }).fail((e)=>{
-        eApp.innerHTML = highscores({title : "Highscores", error: "Server connection error"});
+        eHighScoresScreen.html(highscores({title : "Highscores", error: "Server connection error"}));
         console.log(e);
     });
 

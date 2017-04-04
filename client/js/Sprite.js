@@ -14,7 +14,7 @@
 //        sprite.dh
 //    );
 ////////////////////////////////
-let Graphics = require("Globals").graphics;
+let Graphics = require("./Globals.js").graphics;
 
 let Sprite = function(spec) {
     'use strict';
@@ -22,6 +22,8 @@ let Sprite = function(spec) {
     let accumTime = 0;
     let frameNumber = 0;
     let numFrames = spec.numFrames;
+    that.img = spec.img;
+    console.log(that.img);
 
     that.update = function(elapsedTime) {
         accumTime += elapsedTime;
@@ -33,20 +35,23 @@ let Sprite = function(spec) {
                 frameNumber = 0;
             }
         }
+        //console.log("calling update");
     };
     //need to ensure that the image is ready
     that.render = function() {
         Graphics.drawSprite({
-            img: spec.image,
-            sx: spec.startX + (spec.frameWidth + spec.spacer) * frameNumber,
+            center: { x: spec.center.x, y: spec.center.y},
+            image: that.img,
+            sx: spec.startX + (spec.frameWidth + spec.spacer ) * frameNumber,
             sy: spec.startY,
             sw: spec.frameHeight,
             sh: spec.frameWidth,
             dx: spec.center.x - spec.width/2,
             dy: spec.center.y - spec.height/2,
-            dw: spec.width,
-            dh: spec.height
+            dw: spec.center.x + spec.width/2,
+            dh: spec.center.y + spec.height/2
         });
+    //console.log("calling render");
     };
 
     return that;

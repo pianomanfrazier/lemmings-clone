@@ -8,12 +8,22 @@ var browserSync = require('browser-sync').create();
 // Build Dependencies
 var browserify = require('gulp-browserify');
 var uglify = require('gulp-uglify');
+var handlebars = require('gulp-handlebars');
 
 // Style Dependencies
 var sass = require('gulp-sass');
 
 // ********* Server *********
-gulp.task('js', ()=>{
+gulp.task('templates', ()=>{
+  'use strict';
+
+  return gulp.src('./client/**/*.hbs')
+    .pipe(handlebars())
+    .pipe(rename('bundle.js'))
+    .pipe(gulp.dest('./server/public/javascripts'));
+});
+
+gulp.task('js', ['templates'], ()=>{
   'use strict';
 
   return gulp.src('./client/**/*.js')

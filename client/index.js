@@ -14,8 +14,15 @@ var screens = [eGameScreen, eAboutScreen, eHelpScreen, eHighScoresScreen];
 
 var Sprite = require("./js/Sprite.js");
 
-var image = document.getElementById("lemming_sprites");
-var blocker = document.getElementById("lemming_umbrella");
+var walking = document.getElementById("lemming_walking");
+var blocker = document.getElementById("lemming_blocking");
+var umbrella = document.getElementById("lemming_umbrella");
+var exploding = document.getElementById("lemming_exploding");
+var climbing = document.getElementById("lemming_climbing");
+var splat = document.getElementById("lemming_splatting");
+
+var images = [walking, blocker, umbrella, exploding, climbing, splat];
+
 var loop = require("./js/GameLoop.js");
 
 var testGame = {
@@ -34,25 +41,21 @@ var testGame = {
     },
     init: function() {
         'use strict';
-        var w = 85;
-        var h = 85;
-        for (var i = 0; i < 10; i++) {
-            for (var j = 0; j < 10; j++) {
-                testGame.lemmings.push( Sprite({
-                    reverse: false,
-                    img: blocker,
-                    center: {x: i * w + 100, y: j * h + 100},
-                    width: w, //width to be drawn
-                    height: h,
-                    startX: 0, //top left corner of sprite
-                    startY: 0,
-                    frameWidth: w, //width of image
-                    frameHeight: h,
-                    numFrames: 12,
-                    animationRate: 200
-                }));
-            }
-        }
+        var w = 80;
+        var h = 50;
+        testGame.lemmings.push( Sprite({
+            reverse: false,
+            img: images[5],
+            center: {x: w + 500, y: h + 500},
+            width: w, //width to be drawn
+            height: h,
+            startX: 0, //top left corner of sprite
+            startY: 0,
+            frameWidth: w, //width of image
+            frameHeight: h,
+            numFrames: 16,
+            animationRate: 200
+        }));
     }
 };
 blocker.onload = function() {

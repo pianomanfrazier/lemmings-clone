@@ -197,8 +197,15 @@ var screens = [eGameScreen, eAboutScreen, eHelpScreen, eHighScoresScreen];
 
 var Sprite = require("./js/Sprite.js");
 
-var image = document.getElementById("lemming_sprites");
-var blocker = document.getElementById("lemming_umbrella");
+var walking = document.getElementById("lemming_walking");
+var blocker = document.getElementById("lemming_blocking");
+var umbrella = document.getElementById("lemming_umbrella");
+var exploding = document.getElementById("lemming_exploding");
+var climbing = document.getElementById("lemming_climbing");
+var splat = document.getElementById("lemming_splatting");
+
+var images = [walking, blocker, umbrella, exploding, climbing, splat];
+
 var loop = require("./js/GameLoop.js");
 
 var testGame = {
@@ -217,25 +224,21 @@ var testGame = {
     },
     init: function() {
         'use strict';
-        var w = 85;
-        var h = 85;
-        for (var i = 0; i < 10; i++) {
-            for (var j = 0; j < 10; j++) {
-                testGame.lemmings.push( Sprite({
-                    reverse: false,
-                    img: blocker,
-                    center: {x: i * w + 100, y: j * h + 100},
-                    width: w, //width to be drawn
-                    height: h,
-                    startX: 0, //top left corner of sprite
-                    startY: 0,
-                    frameWidth: w, //width of image
-                    frameHeight: h,
-                    numFrames: 12,
-                    animationRate: 200
-                }));
-            }
-        }
+        var w = 80;
+        var h = 50;
+        testGame.lemmings.push( Sprite({
+            reverse: false,
+            img: images[5],
+            center: {x: w + 500, y: h + 500},
+            width: w, //width to be drawn
+            height: h,
+            startX: 0, //top left corner of sprite
+            startY: 0,
+            frameWidth: w, //width of image
+            frameHeight: h,
+            numFrames: 16,
+            animationRate: 200
+        }));
     }
 };
 blocker.onload = function() {
@@ -560,8 +563,8 @@ let Sprite = function(spec) {
             image: spec.img,
             sx: spec.startX + (spec.frameWidth * frameNumber),
             sy: spec.startY,
-            sw: spec.frameHeight,
-            sh: spec.frameWidth,
+            sw: spec.frameWidth,
+            sh: spec.frameHeight,
             dx: spec.center.x - spec.width/2,
             dy: spec.center.y - spec.height/2,
             dw: spec.width,
@@ -689,7 +692,7 @@ module.exports = HandlebarsCompiler.template({"compiler":[7,">= 4.0.0"],"main":f
     + ((stack1 = container.invokePartial(partials["./highscores.hbs"],depth0,{"name":"./highscores.hbs","data":data,"indent":"    ","helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
     + "</div>\n\n"
     + ((stack1 = container.invokePartial(partials["./game.hbs"],depth0,{"name":"./game.hbs","data":data,"helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
-    + "\n<div style=\"display:none\">\n    <img id=\"lemming_sprites\" alt=\"sprite sheet\" src=\"images/lemming_walking.png\">\n    <img id=\"lemming_blocking\" alt=\"sprite sheet\" src=\"images/lemming_blocking.png\">\n    <img id=\"lemming_umbrella\" alt=\"sprite sheet\" src=\"images/lemming_umbrella.png\">\n    <img id=\"lemming_exploding\" alt=\"sprite sheet\" src=\"images/lemming_exploding.png\">\n</div>\n";
+    + "\n<div style=\"display:none\">\n    <img id=\"lemming_walking\" alt=\"sprite sheet\" src=\"images/lemming_walking.png\">\n    <img id=\"lemming_blocking\" alt=\"sprite sheet\" src=\"images/lemming_blocking.png\">\n    <img id=\"lemming_umbrella\" alt=\"sprite sheet\" src=\"images/lemming_umbrella.png\">\n    <img id=\"lemming_exploding\" alt=\"sprite sheet\" src=\"images/lemming_exploding.png\">\n    <img id=\"lemming_climbing\" alt=\"sprite sheet\" src=\"images/lemming_climbing.png\">\n    <img id=\"lemming_splatting\" alt=\"sprite sheet\" src=\"images/lemming_splatting.png\">\n</div>\n";
 },"usePartial":true,"useData":true});
 
 },{"./about.hbs":8,"./game.hbs":9,"./help.hbs":10,"./highscores.hbs":11,"./main.hbs":13,"hbsfy/runtime":33}],13:[function(require,module,exports){

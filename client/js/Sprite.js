@@ -27,7 +27,7 @@ let Sprite = function(spec) {
         accumTime += elapsedTime;
         if (accumTime > spec.animationRate) {
             accumTime = 0;
-            if (frameNumber < numFrames) {
+            if (frameNumber < numFrames - 1) {
                 frameNumber++;
             } else {
                 frameNumber = 0;
@@ -37,6 +37,7 @@ let Sprite = function(spec) {
     //need to ensure that the image is ready
     that.render = function() {
         Graphics.drawSprite({
+            reverse: spec.reverse,
             center: { x: spec.center.x, y: spec.center.y},
             image: spec.img,
             sx: spec.startX + (spec.frameWidth * frameNumber),

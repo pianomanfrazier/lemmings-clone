@@ -15,6 +15,7 @@ var screens = [eGameScreen, eAboutScreen, eHelpScreen, eHighScoresScreen];
 var Sprite = require("./js/Sprite.js");
 
 var image = document.getElementById("lemming_sprites");
+var blocker = document.getElementById("lemming_umbrella");
 var loop = require("./js/GameLoop.js");
 
 var testGame = {
@@ -33,12 +34,13 @@ var testGame = {
     },
     init: function() {
         'use strict';
-        var w = 50;
-        var h = 50;
+        var w = 85;
+        var h = 85;
         for (var i = 0; i < 10; i++) {
             for (var j = 0; j < 10; j++) {
                 testGame.lemmings.push( Sprite({
-                    img: image,
+                    reverse: false,
+                    img: blocker,
                     center: {x: i * w + 100, y: j * h + 100},
                     width: w, //width to be drawn
                     height: h,
@@ -46,16 +48,17 @@ var testGame = {
                     startY: 0,
                     frameWidth: w, //width of image
                     frameHeight: h,
-                    numFrames: 7,
+                    numFrames: 12,
                     animationRate: 200
                 }));
             }
         }
     }
 };
-image.onload = function() {
+blocker.onload = function() {
     'use strict';
     console.log("image ready");
+    testGame.init();
 };
 
 page('/', ()=>{
@@ -71,7 +74,6 @@ page('/game', ()=>{
     eMainScreen.slideUp();
     eGameScreen.slideDown();
 
-    testGame.init();
     loop.run(testGame);
 });
 page('/about', ()=>{

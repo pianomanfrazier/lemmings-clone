@@ -32,6 +32,20 @@ A Lemmings clone using HTML5 and Javascript
 
 # notes
 
+## Sprite Sheets
+
+- one animation strip per image
+- animation rate 200
+
+- umbrella
+  - 85x85 with 12 frames
+- walker
+  - 50x50 with 8 frames
+- exploding
+  - 50x50 with 14 frames
+- blocker
+  - 50x50 with 16 frames
+
 ## Lemming
 
 ### API notes

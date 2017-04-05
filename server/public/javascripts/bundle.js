@@ -198,6 +198,7 @@ var screens = [eGameScreen, eAboutScreen, eHelpScreen, eHighScoresScreen];
 var Sprite = require("./js/Sprite.js");
 
 var image = document.getElementById("lemming_sprites");
+var blocker = document.getElementById("lemming_umbrella");
 var loop = require("./js/GameLoop.js");
 
 var testGame = {
@@ -216,12 +217,13 @@ var testGame = {
     },
     init: function() {
         'use strict';
-        var w = 50;
-        var h = 50;
+        var w = 85;
+        var h = 85;
         for (var i = 0; i < 10; i++) {
             for (var j = 0; j < 10; j++) {
                 testGame.lemmings.push( Sprite({
-                    img: image,
+                    reverse: false,
+                    img: blocker,
                     center: {x: i * w + 100, y: j * h + 100},
                     width: w, //width to be drawn
                     height: h,
@@ -229,16 +231,17 @@ var testGame = {
                     startY: 0,
                     frameWidth: w, //width of image
                     frameHeight: h,
-                    numFrames: 7,
+                    numFrames: 12,
                     animationRate: 200
                 }));
             }
         }
     }
 };
-image.onload = function() {
+blocker.onload = function() {
     'use strict';
     console.log("image ready");
+    testGame.init();
 };
 
 page('/', ()=>{
@@ -254,7 +257,6 @@ page('/game', ()=>{
     eMainScreen.slideUp();
     eGameScreen.slideDown();
 
-    testGame.init();
     loop.run(testGame);
 });
 page('/about', ()=>{
@@ -453,6 +455,9 @@ var Graphics = function(canvas) {
         if (spec.rotation) {
             context.rotate(spec.rotation);
         }
+        if(spec.reverse) {
+            context.scale(-1,1);
+        }
 		    context.translate(-spec.center.x, -spec.center.y);
         //console.log(spec);
 		    context.drawImage(
@@ -540,7 +545,7 @@ let Sprite = function(spec) {
         accumTime += elapsedTime;
         if (accumTime > spec.animationRate) {
             accumTime = 0;
-            if (frameNumber < numFrames) {
+            if (frameNumber < numFrames - 1) {
                 frameNumber++;
             } else {
                 frameNumber = 0;
@@ -550,6 +555,7 @@ let Sprite = function(spec) {
     //need to ensure that the image is ready
     that.render = function() {
         Graphics.drawSprite({
+            reverse: spec.reverse,
             center: { x: spec.center.x, y: spec.center.y},
             image: spec.img,
             sx: spec.startX + (spec.frameWidth * frameNumber),
@@ -683,7 +689,7 @@ module.exports = HandlebarsCompiler.template({"compiler":[7,">= 4.0.0"],"main":f
     + ((stack1 = container.invokePartial(partials["./highscores.hbs"],depth0,{"name":"./highscores.hbs","data":data,"indent":"    ","helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
     + "</div>\n\n"
     + ((stack1 = container.invokePartial(partials["./game.hbs"],depth0,{"name":"./game.hbs","data":data,"helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
-    + "\n<div style=\"display:none\">\n    <img id=\"lemming_sprites\" alt=\"sprite sheet\" src=\"images/lemming_walking.png\">\n</div>\n";
+    + "\n<div style=\"display:none\">\n    <img id=\"lemming_sprites\" alt=\"sprite sheet\" src=\"images/lemming_walking.png\">\n    <img id=\"lemming_blocking\" alt=\"sprite sheet\" src=\"images/lemming_blocking.png\">\n    <img id=\"lemming_umbrella\" alt=\"sprite sheet\" src=\"images/lemming_umbrella.png\">\n    <img id=\"lemming_exploding\" alt=\"sprite sheet\" src=\"images/lemming_exploding.png\">\n</div>\n";
 },"usePartial":true,"useData":true});
 
 },{"./about.hbs":8,"./game.hbs":9,"./help.hbs":10,"./highscores.hbs":11,"./main.hbs":13,"hbsfy/runtime":33}],13:[function(require,module,exports){

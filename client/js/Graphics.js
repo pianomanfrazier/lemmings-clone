@@ -87,8 +87,7 @@ var Graphics = function(canvas) {
             context.rotate(spec.rotation);
         }
 		    context.translate(-spec.center.x, -spec.center.y);
-        console.log(spec);
-
+        //console.log(spec);
 		    context.drawImage(
 			      spec.image,
             spec.sx,

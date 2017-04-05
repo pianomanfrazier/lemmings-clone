@@ -16,30 +16,47 @@ var Sprite = require("./js/Sprite.js");
 
 var image = document.getElementById("lemming_sprites");
 var loop = require("./js/GameLoop.js");
-var sprite;
-image.onload = function() {
-    console.log("image loaded");
-    console.log(image);
-    var w = 16;
-    var h = 10;
-    sprite = Sprite({
-        img: image,
-        center: {x: 300, y: 300},
-        startX: 0, //top left corner of sprite
-        startY: 0,
-        numFrames: 8,
-        frameNumber: 0, //starts out as zero but will change as it gets updated
-        frameWidth: w,
-        frameHeight: h,
-        spacer: 2, //sprite sheets have a spacer between sprites
-        animationRate: 200,
-        width: w ,
-        height: h
-    });
-    console.log(sprite);
-};
-console.log(image);
 
+var testGame = {
+    lemmings : [],
+    update: function(elapsedTime) {
+        'use strict';
+        this.lemmings.forEach(function(l){
+            l.update(elapsedTime);
+        });
+    },
+    render: function() {
+        'use strict';
+        this.lemmings.forEach(function(l){
+            l.render();
+        });
+    },
+    init: function() {
+        'use strict';
+        var w = 50;
+        var h = 50;
+        for (var i = 0; i < 10; i++) {
+            for (var j = 0; j < 10; j++) {
+                testGame.lemmings.push( Sprite({
+                    img: image,
+                    center: {x: i * w + 100, y: j * h + 100},
+                    width: w, //width to be drawn
+                    height: h,
+                    startX: 0, //top left corner of sprite
+                    startY: 0,
+                    frameWidth: w, //width of image
+                    frameHeight: h,
+                    numFrames: 7,
+                    animationRate: 200
+                }));
+            }
+        }
+    }
+};
+image.onload = function() {
+    'use strict';
+    console.log("image ready");
+};
 
 page('/', ()=>{
     'use strict';
@@ -54,7 +71,8 @@ page('/game', ()=>{
     eMainScreen.slideUp();
     eGameScreen.slideDown();
 
-    loop.run(sprite);
+    testGame.init();
+    loop.run(testGame);
 });
 page('/about', ()=>{
     'use strict';

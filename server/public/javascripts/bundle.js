@@ -203,8 +203,13 @@ var umbrella = document.getElementById("lemming_umbrella");
 var exploding = document.getElementById("lemming_exploding");
 var climbing = document.getElementById("lemming_climbing");
 var splat = document.getElementById("lemming_splatting");
+var drowning = document.getElementById("lemming_drowning");
+var builder = document.getElementById("lemming_builder");
+var timeup = document.getElementById("lemming_timeup");
+var digging = document.getElementById("lemming_digging");
 
-var images = [walking, blocker, umbrella, exploding, climbing, splat];
+
+var images = [walking, blocker, umbrella, exploding, climbing, splat, drowning,builder, timeup, digging];
 
 var loop = require("./js/GameLoop.js");
 
@@ -224,11 +229,11 @@ var testGame = {
     },
     init: function() {
         'use strict';
-        var w = 80;
-        var h = 50;
+        var w = 64;
+        var h = w;
         testGame.lemmings.push( Sprite({
             reverse: false,
-            img: images[5],
+            img: images[9],
             center: {x: w + 500, y: h + 500},
             width: w, //width to be drawn
             height: h,
@@ -237,7 +242,7 @@ var testGame = {
             frameWidth: w, //width of image
             frameHeight: h,
             numFrames: 16,
-            animationRate: 200
+            animationRate: 150
         }));
     }
 };
@@ -692,7 +697,7 @@ module.exports = HandlebarsCompiler.template({"compiler":[7,">= 4.0.0"],"main":f
     + ((stack1 = container.invokePartial(partials["./highscores.hbs"],depth0,{"name":"./highscores.hbs","data":data,"indent":"    ","helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
     + "</div>\n\n"
     + ((stack1 = container.invokePartial(partials["./game.hbs"],depth0,{"name":"./game.hbs","data":data,"helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
-    + "\n<div style=\"display:none\">\n    <img id=\"lemming_walking\" alt=\"sprite sheet\" src=\"images/lemming_walking.png\">\n    <img id=\"lemming_blocking\" alt=\"sprite sheet\" src=\"images/lemming_blocking.png\">\n    <img id=\"lemming_umbrella\" alt=\"sprite sheet\" src=\"images/lemming_umbrella.png\">\n    <img id=\"lemming_exploding\" alt=\"sprite sheet\" src=\"images/lemming_exploding.png\">\n    <img id=\"lemming_climbing\" alt=\"sprite sheet\" src=\"images/lemming_climbing.png\">\n    <img id=\"lemming_splatting\" alt=\"sprite sheet\" src=\"images/lemming_splatting.png\">\n</div>\n";
+    + "\n<div style=\"display:none\">\n    <img id=\"lemming_walking\" alt=\"sprite sheet\" src=\"images/lemming_walking.png\">\n    <img id=\"lemming_blocking\" alt=\"sprite sheet\" src=\"images/lemming_blocking.png\">\n    <img id=\"lemming_umbrella\" alt=\"sprite sheet\" src=\"images/lemming_umbrella.png\">\n    <img id=\"lemming_exploding\" alt=\"sprite sheet\" src=\"images/lemming_exploding.png\">\n    <img id=\"lemming_climbing\" alt=\"sprite sheet\" src=\"images/lemming_climbing.png\">\n    <img id=\"lemming_splatting\" alt=\"sprite sheet\" src=\"images/lemming_splatting.png\">\n    <img id=\"lemming_drowning\" alt=\"sprite sheet\" src=\"images/lemming_drowning.png\">\n    <img id=\"lemming_builder\" alt=\"sprite sheet\" src=\"images/lemming_builder.png\">\n    <img id=\"lemming_timeup\" alt=\"sprite sheet\" src=\"images/lemming_timeup.png\">\n    <img id=\"lemming_digging\" alt=\"sprite sheet\" src=\"images/lemming_digging2.png\">\n</div>\n";
 },"usePartial":true,"useData":true});
 
 },{"./about.hbs":8,"./game.hbs":9,"./help.hbs":10,"./highscores.hbs":11,"./main.hbs":13,"hbsfy/runtime":33}],13:[function(require,module,exports){

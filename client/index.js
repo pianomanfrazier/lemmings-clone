@@ -20,8 +20,13 @@ var umbrella = document.getElementById("lemming_umbrella");
 var exploding = document.getElementById("lemming_exploding");
 var climbing = document.getElementById("lemming_climbing");
 var splat = document.getElementById("lemming_splatting");
+var drowning = document.getElementById("lemming_drowning");
+var builder = document.getElementById("lemming_builder");
+var timeup = document.getElementById("lemming_timeup");
+var digging = document.getElementById("lemming_digging");
 
-var images = [walking, blocker, umbrella, exploding, climbing, splat];
+
+var images = [walking, blocker, umbrella, exploding, climbing, splat, drowning,builder, timeup, digging];
 
 var loop = require("./js/GameLoop.js");
 
@@ -41,11 +46,11 @@ var testGame = {
     },
     init: function() {
         'use strict';
-        var w = 80;
-        var h = 50;
+        var w = 64;
+        var h = w;
         testGame.lemmings.push( Sprite({
             reverse: false,
-            img: images[5],
+            img: images[9],
             center: {x: w + 500, y: h + 500},
             width: w, //width to be drawn
             height: h,
@@ -54,7 +59,7 @@ var testGame = {
             frameWidth: w, //width of image
             frameHeight: h,
             numFrames: 16,
-            animationRate: 200
+            animationRate: 150
         }));
     }
 };

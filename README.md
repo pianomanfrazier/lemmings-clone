@@ -51,6 +51,15 @@ A Lemmings clone using HTML5 and Javascript
   - 8-16 climb over ridge animation
 - splatting
   - 80x50 with 16 frames
+- drowning
+  - 50x50 with 16 frames
+- builder
+  - 64x64 with 16 frames
+- digger
+  - 64x64 with 16 frames
+  - speed 150
+- timeup
+  - 50x50 with 16 frames
 
 ## Lemming
 

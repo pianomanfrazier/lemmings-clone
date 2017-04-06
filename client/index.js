@@ -24,9 +24,11 @@ var drowning = document.getElementById("lemming_drowning");
 var builder = document.getElementById("lemming_builder");
 var timeup = document.getElementById("lemming_timeup");
 var digging = document.getElementById("lemming_digging");
+var trap_10tons = document.getElementById("lemming_trap_10tons");
+var trap_hanging = document.getElementById("lemming_trap_hanging");
 
 
-var images = [walking, blocker, umbrella, exploding, climbing, splat, drowning,builder, timeup, digging];
+var images = [walking, blocker, umbrella, exploding, climbing, splat, drowning,builder, timeup, digging, trap_10tons, trap_hanging];
 
 var loop = require("./js/GameLoop.js");
 
@@ -46,11 +48,11 @@ var testGame = {
     },
     init: function() {
         'use strict';
-        var w = 64;
-        var h = w;
+        var w = 107;
+        var h = 250;
         testGame.lemmings.push( Sprite({
             reverse: false,
-            img: images[9],
+            img: images[11],
             center: {x: w + 500, y: h + 500},
             width: w, //width to be drawn
             height: h,
@@ -58,12 +60,27 @@ var testGame = {
             startY: 0,
             frameWidth: w, //width of image
             frameHeight: h,
-            numFrames: 16,
-            animationRate: 150
+            numFrames: 34,
+            animationRate: 200
+        }));
+        w = 192;
+        h = 250;
+        testGame.lemmings.push( Sprite({
+            reverse: false,
+            img: images[10],
+            center: {x: w + 200, y: h + 200},
+            width: w, //width to be drawn
+            height: h,
+            startX: 0, //top left corner of sprite
+            startY: 0,
+            frameWidth: w, //width of image
+            frameHeight: h,
+            numFrames: 12,
+            animationRate: 200
         }));
     }
 };
-blocker.onload = function() {
+trap_10tons.onload = function() {
     'use strict';
     console.log("image ready");
     testGame.init();

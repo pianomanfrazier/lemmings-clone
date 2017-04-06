@@ -47,7 +47,7 @@ let Sprite = function(spec) {
             dx: spec.center.x - spec.width/2,
             dy: spec.center.y - spec.height/2,
             dw: spec.width,
-            dh: spec.width
+            dh: spec.height
         });
     };
 

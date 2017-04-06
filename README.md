@@ -60,6 +60,13 @@ A Lemmings clone using HTML5 and Javascript
   - speed 150
 - timeup
   - 50x50 with 16 frames
+  
+### Trap sprites
+
+- 10tons
+  - 192x250 with 12 frames
+- haning
+  - 107x250 with 34 frames
 
 ## Lemming
 

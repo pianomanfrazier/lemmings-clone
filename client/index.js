@@ -26,9 +26,11 @@ var timeup = document.getElementById("lemming_timeup");
 var digging = document.getElementById("lemming_digging");
 var trap_10tons = document.getElementById("lemming_trap_10tons");
 var trap_hanging = document.getElementById("lemming_trap_hanging");
+var entrance_gate = document.getElementById("entrance_gate");
+var end_gate = document.getElementById("end_gate");
 
 
-var images = [walking, blocker, umbrella, exploding, climbing, splat, drowning,builder, timeup, digging, trap_10tons, trap_hanging];
+var images = [walking, blocker, umbrella, exploding, climbing, splat, drowning,builder, timeup, digging, trap_10tons, trap_hanging, entrance_gate, end_gate];
 
 var loop = require("./js/GameLoop.js");
 
@@ -78,9 +80,54 @@ var testGame = {
             numFrames: 12,
             animationRate: 200
         }));
+        w = 50;
+        h = w;
+        testGame.lemmings.push( Sprite({
+            reverse: false,
+            img: images[0],
+            center: {x: w + 100, y: h + 100},
+            width: w, //width to be drawn
+            height: h,
+            startX: 0, //top left corner of sprite
+            startY: 0,
+            frameWidth: w, //width of image
+            frameHeight: h,
+            numFrames: 8,
+            animationRate: 200
+        }));
+        w = 100;
+        h = 70;
+        testGame.lemmings.push( Sprite({
+            reverse: false,
+            img: images[12],
+            center: {x: w + 700, y: h + 700},
+            width: w, //width to be drawn
+            height: h,
+            startX: 0, //top left corner of sprite
+            startY: 0,
+            frameWidth: w, //width of image
+            frameHeight: h,
+            numFrames: 10,
+            animationRate: 100
+        }));
+        w = 100;
+        h = 70;
+        testGame.lemmings.push( Sprite({
+            reverse: false,
+            img: images[13],
+            center: {x: w + 300, y: h + 700},
+            width: w, //width to be drawn
+            height: h,
+            startX: 0, //top left corner of sprite
+            startY: 0,
+            frameWidth: w, //width of image
+            frameHeight: h,
+            numFrames: 6,
+            animationRate: 100
+        }));
     }
 };
-trap_10tons.onload = function() {
+end_gate.onload = function() {
     'use strict';
     console.log("image ready");
     testGame.init();

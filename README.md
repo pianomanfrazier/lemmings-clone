@@ -67,6 +67,13 @@ A Lemmings clone using HTML5 and Javascript
   - 192x250 with 12 frames
 - haning
   - 107x250 with 34 frames
+  
+### GATES
+
+- opening
+  - 100x70 with 10 frames
+- closing
+  - 100x70 with 6 frames
 
 ## Lemming
 

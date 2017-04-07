@@ -209,9 +209,11 @@ var timeup = document.getElementById("lemming_timeup");
 var digging = document.getElementById("lemming_digging");
 var trap_10tons = document.getElementById("lemming_trap_10tons");
 var trap_hanging = document.getElementById("lemming_trap_hanging");
+var entrance_gate = document.getElementById("entrance_gate");
+var end_gate = document.getElementById("end_gate");
 
 
-var images = [walking, blocker, umbrella, exploding, climbing, splat, drowning,builder, timeup, digging, trap_10tons, trap_hanging];
+var images = [walking, blocker, umbrella, exploding, climbing, splat, drowning,builder, timeup, digging, trap_10tons, trap_hanging, entrance_gate, end_gate];
 
 var loop = require("./js/GameLoop.js");
 
@@ -261,9 +263,54 @@ var testGame = {
             numFrames: 12,
             animationRate: 200
         }));
+        w = 50;
+        h = w;
+        testGame.lemmings.push( Sprite({
+            reverse: false,
+            img: images[0],
+            center: {x: w + 100, y: h + 100},
+            width: w, //width to be drawn
+            height: h,
+            startX: 0, //top left corner of sprite
+            startY: 0,
+            frameWidth: w, //width of image
+            frameHeight: h,
+            numFrames: 8,
+            animationRate: 200
+        }));
+        w = 100;
+        h = 70;
+        testGame.lemmings.push( Sprite({
+            reverse: false,
+            img: images[12],
+            center: {x: w + 700, y: h + 700},
+            width: w, //width to be drawn
+            height: h,
+            startX: 0, //top left corner of sprite
+            startY: 0,
+            frameWidth: w, //width of image
+            frameHeight: h,
+            numFrames: 10,
+            animationRate: 100
+        }));
+        w = 100;
+        h = 70;
+        testGame.lemmings.push( Sprite({
+            reverse: false,
+            img: images[13],
+            center: {x: w + 300, y: h + 700},
+            width: w, //width to be drawn
+            height: h,
+            startX: 0, //top left corner of sprite
+            startY: 0,
+            frameWidth: w, //width of image
+            frameHeight: h,
+            numFrames: 6,
+            animationRate: 100
+        }));
     }
 };
-trap_10tons.onload = function() {
+end_gate.onload = function() {
     'use strict';
     console.log("image ready");
     testGame.init();
@@ -714,7 +761,7 @@ module.exports = HandlebarsCompiler.template({"compiler":[7,">= 4.0.0"],"main":f
     + ((stack1 = container.invokePartial(partials["./highscores.hbs"],depth0,{"name":"./highscores.hbs","data":data,"indent":"    ","helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
     + "</div>\n\n"
     + ((stack1 = container.invokePartial(partials["./game.hbs"],depth0,{"name":"./game.hbs","data":data,"helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
-    + "\n<div style=\"display:none\">\n    <img id=\"lemming_walking\" alt=\"sprite sheet\" src=\"images/lemming_walking.png\">\n    <img id=\"lemming_blocking\" alt=\"sprite sheet\" src=\"images/lemming_blocking.png\">\n    <img id=\"lemming_umbrella\" alt=\"sprite sheet\" src=\"images/lemming_umbrella.png\">\n    <img id=\"lemming_exploding\" alt=\"sprite sheet\" src=\"images/lemming_exploding.png\">\n    <img id=\"lemming_climbing\" alt=\"sprite sheet\" src=\"images/lemming_climbing.png\">\n    <img id=\"lemming_splatting\" alt=\"sprite sheet\" src=\"images/lemming_splatting.png\">\n    <img id=\"lemming_drowning\" alt=\"sprite sheet\" src=\"images/lemming_drowning.png\">\n    <img id=\"lemming_builder\" alt=\"sprite sheet\" src=\"images/lemming_builder.png\">\n    <img id=\"lemming_timeup\" alt=\"sprite sheet\" src=\"images/lemming_timeup.png\">\n    <img id=\"lemming_digging\" alt=\"sprite sheet\" src=\"images/lemming_digging.png\">\n    <img id=\"lemming_trap_10tons\" alt=\"sprite sheet\" src=\"images/lemming_trap_10tons.png\">\n    <img id=\"lemming_trap_hanging\" alt=\"sprite sheet\" src=\"images/lemming_trap_hanging.png\">\n</div>\n";
+    + "\n<div style=\"display:none\">\n    <img id=\"lemming_walking\" alt=\"sprite sheet\" src=\"images/lemming_walking.png\">\n    <img id=\"lemming_blocking\" alt=\"sprite sheet\" src=\"images/lemming_blocking.png\">\n    <img id=\"lemming_umbrella\" alt=\"sprite sheet\" src=\"images/lemming_umbrella.png\">\n    <img id=\"lemming_exploding\" alt=\"sprite sheet\" src=\"images/lemming_exploding.png\">\n    <img id=\"lemming_climbing\" alt=\"sprite sheet\" src=\"images/lemming_climbing.png\">\n    <img id=\"lemming_splatting\" alt=\"sprite sheet\" src=\"images/lemming_splatting.png\">\n    <img id=\"lemming_drowning\" alt=\"sprite sheet\" src=\"images/lemming_drowning.png\">\n    <img id=\"lemming_builder\" alt=\"sprite sheet\" src=\"images/lemming_builder.png\">\n    <img id=\"lemming_timeup\" alt=\"sprite sheet\" src=\"images/lemming_timeup.png\">\n    <img id=\"lemming_digging\" alt=\"sprite sheet\" src=\"images/lemming_digging.png\">\n    <img id=\"lemming_trap_10tons\" alt=\"sprite sheet\" src=\"images/lemming_trap_10tons.png\">\n    <img id=\"lemming_trap_hanging\" alt=\"sprite sheet\" src=\"images/lemming_trap_hanging.png\">\n    <img id=\"entrance_gate\" alt=\"sprite sheet\" src=\"images/entrance_gate.png\">\n    <img id=\"end_gate\" alt=\"sprite sheet\" src=\"images/end_gate.png\">\n</div>\n";
 },"usePartial":true,"useData":true});
 
 },{"./about.hbs":8,"./game.hbs":9,"./help.hbs":10,"./highscores.hbs":11,"./main.hbs":13,"hbsfy/runtime":33}],13:[function(require,module,exports){

@@ -1,14 +1,11 @@
-var _ = require('lodash');
+import * as _       from 'lodash';
 
-var Lemmings = {
-    screens: {}
-};
 var KeyEvent;
 
-Lemmings.input = ((screens)=>{
+let input = (screens)=>{
     'use strict';
 
-    var cancelNextRequest = false;
+    let cancelNextRequest = false;
 
     function Keyboard() {
         let that = {
@@ -42,47 +39,8 @@ Lemmings.input = ((screens)=>{
         return that;
     }
 
-    function ShowScreen(id) {
-        var screen = 0,
-            active = null;
-
-        // Remove the active state from all screens.  There should only be one...
-        active = document.getElementsByClassName('active');
-        for (screen = 0; screen < active.length; screen++) {
-            active[screen].classList.remove('active');
-        }
-
-        // Tell the screen to start actively running
-        screens[id].run();
-
-        // Then, set the new screen to be active
-        document.getElementById(id).classList.add('active');
-    }
-
     function ButtonClick(id) {
         switch(id) {
-            case 'id-game-play-back':
-                cancelNextRequest = true;
-                ShowScreen('main-menu');
-                break;
-
-            case 'newGame':
-                cancelNextRequest = false;
-                ShowScreen('game-play');
-                break;
-
-            case 'high-scores':
-                ShowScreen('high-scores');
-                break;
-
-            case 'help':
-                ShowScreen('help');
-                break;
-
-            case 'about':
-                ShowScreen('about');
-                break;
-
             case 'unPause':
                 document.getElementById('paused-section').style.display = 'none';
                 document.getElementById('background-shield').style.display = 'none';
@@ -93,7 +51,6 @@ Lemmings.input = ((screens)=>{
                 document.getElementById('name-section').style.display = 'none';
                 document.getElementById('background-shield').style.display = 'none';
                 screens['game-play'].saveScore();
-                ShowScreen('main-menu');
                 break;
 
             case 'quit':
@@ -101,22 +58,24 @@ Lemmings.input = ((screens)=>{
                 document.getElementById('name-section').style.display = 'none';
                 document.getElementById('paused-section').style.display = 'none';
                 document.getElementById('background-shield').style.display = 'none';
-                ShowScreen('main-menu');
                 break;
 
             default:
-                ShowScreen('main-menu');
         }
+    }
+
+    function mouseClick(spec) {
+
     }
 
     return {
         cancelNextRequest,
 
         Keyboard,
-        ShowScreen,
         ButtonClick,
+        mouseClick
     };
-})(Lemmings.screens);
+};
 
 //------------------------------------------------------------------
 //
@@ -242,3 +201,5 @@ if (typeof KeyEvent === 'undefined') {
         DOM_VK_META: 224
     };
 }
+
+module.export = {input, KeyEvent};

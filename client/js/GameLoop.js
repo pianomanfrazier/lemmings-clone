@@ -37,21 +37,21 @@ GameLoop.run = function(game) {
         graphics.clear();
         game.render();
     }
-	  function gameLoop(time) {
-		    GameLoop.rafID = window.requestAnimationFrame(gameLoop);
-		    let elapsedTime = (time - lastTimeStamp);
+    function gameLoop(time) {
+        GameLoop.rafID = window.requestAnimationFrame(gameLoop);
+        let elapsedTime = (time - lastTimeStamp);
 
-        accumtime += elapsedTime;
-        if (accumtime > timeframe) {
-            update(accumtime);
-		        render();
-            accumtime = 0;
-        }
+    accumtime += elapsedTime;
+    if (accumtime > timeframe) {
+        update(accumtime);
+            render();
+        accumtime = 0;
+    }
 
-        lastTimeStamp = time;
-	  }
+    lastTimeStamp = time;
+    }
 
-	  window.requestAnimationFrame(gameLoop);
+    window.requestAnimationFrame(gameLoop);
 };
 
 module.exports = GameLoop;

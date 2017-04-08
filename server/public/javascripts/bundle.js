@@ -517,7 +517,7 @@ var Graphics = function(canvas) {
     // sw = frameWidth
     // sh = frameHeight
     // dx = destination x (ie the location to be drawn on canvas, top left corner)
-    // dy = destination y 
+    // dy = destination y
     // dw = destination w
     // dh = destination h
 	  function drawSprite(spec) {

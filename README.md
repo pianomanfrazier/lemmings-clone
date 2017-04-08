@@ -32,6 +32,107 @@ A Lemmings clone using HTML5 and Javascript
 
 # notes
 
+## Sprite Sheets
+
+- one animation strip per image
+- animation rate 200
+
+- walker
+  - 50x50 with 8 frames
+- blocker
+  - 50x50 with 16 frames
+- umbrella
+  - 85x85 with 12 frames
+- exploding
+  - 50x50 with 14 frames
+- climber
+  - 55x55 with 16 frames
+  - first 7 climbing
+  - 8-16 climb over ridge animation
+- splatting
+  - 80x50 with 16 frames
+- drowning
+  - 50x50 with 16 frames
+- builder
+  - 64x64 with 16 frames
+- digger
+  - 64x64 with 16 frames
+  - speed 150
+- timeup
+  - 50x50 with 16 frames
+  
+### Trap sprites
+
+- 10tons
+  - 192x250 with 12 frames
+- haning
+  - 107x250 with 34 frames
+  
+### GATES
+
+- opening
+  - 100x70 with 10 frames
+- closing
+  - 100x70 with 6 frames
+
+## Lemming
+
+### API notes
+
+lemming.on('click').activate(type)
+
+  - manage the type numbers in menu bar
+
+lemming.on('hover').drawBox()
+
+### Component Design
+
+- TYPE
+  - through surfaces
+    - digger 
+    - picker
+    - basher
+  - builder -- num of bricks
+  - blocker -- for lifetime of lemming
+  - umbrella -- activate when falling
+  - climber -- activate when hits a wall
+  - bomb -- can be chosen at any time, explodes with countdown, activates explosion particles
+  
+- GAME CONTROLS
+  - pause game
+  - quit game -- A-bomb
+  - release rate
+    - increase
+    - decrease
+    
+- Ways to die
+  - drown (ie contact with water)
+  - fall and splat
+  - suicide bomb
+  - traps
+  
+- BLOCKS
+  - dirt
+  - stone
+  - steel
+  - water
+  - trap
+  - ornamental (no collision detection)
+  
+- WORLD representation
+  - json config
+  - 2d array of types
+  - pan view with mouse
+  - on click and drag
+  - on click show grab hand
+  
+- mini-map
+  - need abstract representation of world (lemmings, platforms)
+  - pass in game model
+  - viewing frame (red box)
+  - lemmings (green dots)
+  - platforms (brown mass)
+
 ## Tooling
 
 - nodemon to run the server and refresh when changes happen

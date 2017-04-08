@@ -1,14 +1,31 @@
-<ul id="main-menu">
-    <li class="btn bump">
-        <a href="/game">New Game</a>
-    </li>
-    <li class="btn bump">
-        <a href="/about">About</a>
-    </li>
-    <li class="btn bump">
-        <a href="/help">Help</a>
-    </li>
-    <li class="btn bump">
-        <a href="/highscores">High Scores</a>
-    </li>
-</ul>
+{{> ./main.hbs }}
+{{> ./about.hbs }}
+{{> ./help.hbs }}
+
+<div id="HighScoresScreen">
+    {{> ./highscores.hbs }}
+</div>
+
+{{> ./game.hbs }}
+
+<div style="display:none">
+    <img id="lemming_walking" alt="sprite sheet" src="images/lemming_walking.png">
+    <img id="lemming_blocking" alt="sprite sheet" src="images/lemming_blocking.png">
+    <img id="lemming_umbrella" alt="sprite sheet" src="images/lemming_umbrella.png">
+    <img id="lemming_exploding" alt="sprite sheet" src="images/lemming_exploding.png">
+    <img id="lemming_climbing" alt="sprite sheet" src="images/lemming_climbing.png">
+    <img id="lemming_splatting" alt="sprite sheet" src="images/lemming_splatting.png">
+    <img id="lemming_drowning" alt="sprite sheet" src="images/lemming_drowning.png">
+    <img id="lemming_builder" alt="sprite sheet" src="images/lemming_builder.png">
+    <img id="lemming_timeup" alt="sprite sheet" src="images/lemming_timeup.png">
+    <img id="lemming_digging" alt="sprite sheet" src="images/lemming_digging.png">
+    <img id="lemming_trap_10tons" alt="sprite sheet" src="images/lemming_trap_10tons.png">
+    <img id="lemming_trap_hanging" alt="sprite sheet" src="images/lemming_trap_hanging.png">
+    <img id="entrance_gate" alt="sprite sheet" src="images/entrance_gate.png">
+    <img id="end_gate" alt="sprite sheet" src="images/end_gate.png">
+    {{!--
+    <img id="lemming_traps" alt="sprite sheet" src="images/lemming_traps.png">
+    <img id="block1_sprites" alt="sprite sheet" src="images/blocks1.png">
+    <img id="block2_sprites" alt="sprite sheet" src="images/blocks2.png">
+    --}}
+</div>

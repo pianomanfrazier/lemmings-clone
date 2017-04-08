@@ -184,47 +184,169 @@ process.umask = function() { return 0; };
 var page = require("page");
 var $ = require("jquery");
 var index = require("./js/views/index.hbs");
-var game = require("./js/views/game.hbs");
-var help = require("./js/views/help.hbs");
 var highscores = require("./js/views/highscores.hbs");
-var about = require("./js/views/about.hbs");
 
 var eApp = document.getElementById("app");
+eApp.innerHTML = index({});
+var eMainScreen = $("#MainScreen");
+var eGameScreen = $("#GameScreen");
+var eAboutScreen = $("#AboutScreen");
+var eHelpScreen = $("#HelpScreen");
+var eHighScoresScreen = $("#HighScoresScreen");
+var screens = [eGameScreen, eAboutScreen, eHelpScreen, eHighScoresScreen];
+
+var Sprite = require("./js/Sprite.js");
+
+var walking = document.getElementById("lemming_walking");
+var blocker = document.getElementById("lemming_blocking");
+var umbrella = document.getElementById("lemming_umbrella");
+var exploding = document.getElementById("lemming_exploding");
+var climbing = document.getElementById("lemming_climbing");
+var splat = document.getElementById("lemming_splatting");
+var drowning = document.getElementById("lemming_drowning");
+var builder = document.getElementById("lemming_builder");
+var timeup = document.getElementById("lemming_timeup");
+var digging = document.getElementById("lemming_digging");
+var trap_10tons = document.getElementById("lemming_trap_10tons");
+var trap_hanging = document.getElementById("lemming_trap_hanging");
+var entrance_gate = document.getElementById("entrance_gate");
+var end_gate = document.getElementById("end_gate");
+
+
+var images = [walking, blocker, umbrella, exploding, climbing, splat, drowning,builder, timeup, digging, trap_10tons, trap_hanging, entrance_gate, end_gate];
+
+var loop = require("./js/GameLoop.js");
+
+var testGame = {
+    lemmings : [],
+    update: function(elapsedTime) {
+        'use strict';
+        this.lemmings.forEach(function(l){
+            l.update(elapsedTime);
+        });
+    },
+    render: function() {
+        'use strict';
+        this.lemmings.forEach(function(l){
+            l.render();
+        });
+    },
+    init: function() {
+        'use strict';
+        var w = 107;
+        var h = 250;
+        testGame.lemmings.push( Sprite({
+            reverse: false,
+            img: images[11],
+            center: {x: w + 500, y: h + 500},
+            width: w, //width to be drawn
+            height: h,
+            startX: 0, //top left corner of sprite
+            startY: 0,
+            frameWidth: w, //width of image
+            frameHeight: h,
+            numFrames: 34,
+            animationRate: 200
+        }));
+        w = 192;
+        h = 250;
+        testGame.lemmings.push( Sprite({
+            reverse: false,
+            img: images[10],
+            center: {x: w + 200, y: h + 200},
+            width: w, //width to be drawn
+            height: h,
+            startX: 0, //top left corner of sprite
+            startY: 0,
+            frameWidth: w, //width of image
+            frameHeight: h,
+            numFrames: 12,
+            animationRate: 200
+        }));
+        w = 50;
+        h = w;
+        testGame.lemmings.push( Sprite({
+            reverse: false,
+            img: images[0],
+            center: {x: w + 100, y: h + 100},
+            width: w, //width to be drawn
+            height: h,
+            startX: 0, //top left corner of sprite
+            startY: 0,
+            frameWidth: w, //width of image
+            frameHeight: h,
+            numFrames: 8,
+            animationRate: 200
+        }));
+        w = 100;
+        h = 70;
+        testGame.lemmings.push( Sprite({
+            reverse: false,
+            img: images[12],
+            center: {x: w + 700, y: h + 700},
+            width: w, //width to be drawn
+            height: h,
+            startX: 0, //top left corner of sprite
+            startY: 0,
+            frameWidth: w, //width of image
+            frameHeight: h,
+            numFrames: 10,
+            animationRate: 100
+        }));
+        w = 100;
+        h = 70;
+        testGame.lemmings.push( Sprite({
+            reverse: false,
+            img: images[13],
+            center: {x: w + 300, y: h + 700},
+            width: w, //width to be drawn
+            height: h,
+            startX: 0, //top left corner of sprite
+            startY: 0,
+            frameWidth: w, //width of image
+            frameHeight: h,
+            numFrames: 6,
+            animationRate: 100
+        }));
+    }
+};
+end_gate.onload = function() {
+    'use strict';
+    console.log("image ready");
+    testGame.init();
+};
 
 page('/', ()=>{
     'use strict';
 
-    eApp.innerHTML = index({});
+    screens.forEach(function(el){
+        el.slideUp();
+    });
+    eMainScreen.slideDown();
 });
 page('/game', ()=>{
     'use strict';
+    eMainScreen.slideUp();
+    eGameScreen.slideDown();
 
-    eApp.innerHTML = game({});
+    loop.run(testGame);
 });
 page('/about', ()=>{
     'use strict';
-
-    eApp.innerHTML = about({title : "About"});
+    eMainScreen.slideUp();
+    eAboutScreen.slideDown();
 });
 page('/help', ()=>{
     'use strict';
-
-    eApp.innerHTML = help({title : "Help"});
+    eMainScreen.slideUp();
+    eHelpScreen.slideDown();
 });
 page('/highscores', ()=>{
     'use strict';
-    eApp.innerHTML = highscores({title : "Highscores"});
-    //$.ajax({
-    //    type: "POST",
-    //    dataType: 'json',
-    //    data: {user:"Sponge Bob", score:"2345"},
-    //    url: '/api/score',
-    //    error: function(e) {
-    //        console.log(e);
-    //    }
-    //}).done(function(data) {
-    //    console.log(data);
-    //});
+    eMainScreen.slideUp();
+    eHighScoresScreen.slideDown();
+
+    eHighScoresScreen.html(highscores({title : "Highscores"}));
     $.ajax({
         type: "GET",
         dataType: 'json',
@@ -233,10 +355,10 @@ page('/highscores', ()=>{
             console.log(e);
         }
     }).done(function(data) {
-        eApp.innerHTML = highscores({title : "Highscores", highscores : data});
+        eHighScoresScreen.html(highscores({title : "Highscores", highscores : data}));
         console.log(data);
     }).fail((e)=>{
-        eApp.innerHTML = highscores({title : "Highscores", error: "Server connection error"});
+        eHighScoresScreen.html(highscores({title : "Highscores", error: "Server connection error"}));
         console.log(e);
     });
 
@@ -244,14 +366,294 @@ page('/highscores', ()=>{
 
 page();
 
-},{"./js/views/about.hbs":4,"./js/views/game.hbs":5,"./js/views/help.hbs":6,"./js/views/highscores.hbs":7,"./js/views/index.hbs":8,"jquery":30,"page":31}],3:[function(require,module,exports){
+},{"./js/GameLoop.js":3,"./js/Sprite.js":6,"./js/views/highscores.hbs":11,"./js/views/index.hbs":12,"jquery":35,"page":36}],3:[function(require,module,exports){
+let Graphics = require("./Graphics.js");
+let canvas = require("./Globals.js").canvas;
+
+let GameLoop = {};
+
+GameLoop.rafID = 0;
+GameLoop.isRunning = false;
+
+GameLoop.graphics = Graphics(canvas);
+
+GameLoop.stop = function() {
+    'use strict';
+    //console.log("stop loop");
+    //Game.graphics.clear();
+    window.cancelAnimationFrame(GameLoop.rafID);
+    GameLoop.isRunning = false;
+};
+
+GameLoop.run = function(game) {
+    'use strict';
+    //prevents multiple game loops
+    if(GameLoop.isRunning) return;
+    GameLoop.isRunning = true;
+
+    let graphics = GameLoop.graphics;
+    let lastTimeStamp = performance.now();
+
+    //FPS for game loop
+    let accumtime = 0;
+    let FPS = 60;
+    let timeframe = 1000/FPS;
+
+    function update(elapsedTime) {
+        game.update(elapsedTime);
+    }
+    function render() {
+        graphics.clear();
+        game.render();
+    }
+	  function gameLoop(time) {
+		    GameLoop.rafID = window.requestAnimationFrame(gameLoop);
+		    let elapsedTime = (time - lastTimeStamp);
+
+        accumtime += elapsedTime;
+        if (accumtime > timeframe) {
+            update(accumtime);
+		        render();
+            accumtime = 0;
+        }
+
+        lastTimeStamp = time;
+	  }
+
+	  window.requestAnimationFrame(gameLoop);
+};
+
+module.exports = GameLoop;
+
+},{"./Globals.js":4,"./Graphics.js":5}],4:[function(require,module,exports){
+let Graphics = require("./Graphics.js");
+
+let Globals = {};
+
+Globals.canvas = document.getElementById('canvas');
+Globals.canvas.width = 1000;
+Globals.canvas.height = 1000;
+
+Globals.graphics = Graphics(Globals.canvas);
+
+module.exports = Globals;
+
+},{"./Graphics.js":5}],5:[function(require,module,exports){
+// this creates a graphics object specific to a canvas element passed in
+//////////////////////////////////////////////
+// API call
+//////////////////////////////////////////////
+//Game.canvas = document.getElementById('canvas');
+//Game.context = canvas.getContext('2d');
+//Game.canvas.width = 1000;
+//Game.canvas.height = 1000;
+//Game.boardGraphics = Graphics(canvas)
+//////////////////////////////////////////////
+// TODO:
+//      need a way to render sprites
+//      sprite.render()
+//      sprite.update(elapsedTime)
+//
+//      Game.sprite = Sprite({
+//          img: spriteSheetImg,
+//          startX: x, //top left corner of sprite
+//          startY: y,
+//          numFrames: n,
+//          frameNumber: 0, //starts out as zero but will change as it gets updated
+//          frameWidth: w,
+//          frameHeight: h,
+//          spacer: w, //sprite sheets have a spacer between sprites
+//          animationRate: s
+//       })
+//
+//////////////////////////////////////////////
+
+var Graphics = function(canvas) {
+    'use strict';
+
+    let context = canvas.getContext('2d');
+
+	  CanvasRenderingContext2D.prototype.clear = function() {
+		    this.save();
+		    this.setTransform(1, 0, 0, 1, 0, 0);
+		    this.clearRect(0, 0, canvas.width, canvas.height);
+		    this.restore();
+	  };
+
+	  function clear() {
+		    context.clear();
+	  }
+    function drawText(spec) {
+        context.save();
+
+        context.font = spec.font;
+        context.fillStyle = spec.fill;
+        context.fillText(spec.text, spec.x, spec.y);
+
+        context.restore();
+    }
+	  function drawImage(spec) {
+		    context.save();
+
+		    context.translate(spec.center.x, spec.center.y);
+        if (spec.rotation) {
+            context.rotate(spec.rotation);
+        }
+		    context.translate(-spec.center.x, -spec.center.y);
+
+		    context.drawImage(
+			      spec.image,
+			      spec.center.x - spec.size/2,
+			      spec.center.y - spec.size/2,
+			      spec.size, spec.size
+        );
+
+		    context.restore();
+	  }
+    // see http://www.williammalone.com/articles/create-html5-canvas-javascript-sprite-animation/
+    // context.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh)
+    // sx source x = startX + (frameWidth + spacer) * frameNumber
+    // sy source y = startY
+    // sw = frameWidth
+    // sh = frameHeight
+    // dx = destination x (ie the location to be drawn on canvas, top left corner)
+    // dy = destination y 
+    // dw = destination w
+    // dh = destination h
+	  function drawSprite(spec) {
+		    context.save();
+
+		    context.translate(spec.center.x, spec.center.y);
+        if (spec.rotation) {
+            context.rotate(spec.rotation);
+        }
+        if(spec.reverse) {
+            context.scale(-1,1);
+        }
+		    context.translate(-spec.center.x, -spec.center.y);
+        //console.log(spec);
+		    context.drawImage(
+			      spec.image,
+            spec.sx,
+            spec.sy,
+            spec.sw,
+            spec.sh,
+            spec.dx,
+            spec.dy,
+            spec.dw,
+            spec.dh
+        );
+
+		    context.restore();
+	  }
+    function drawRect(spec) {
+        context.save();
+		    context.translate(spec.position.x + spec.width / 2, spec.position.y + spec.height / 2);
+		    if(spec.rotation) context.rotate(spec.rotation);
+		    context.translate(-(spec.position.x + spec.width / 2), -(spec.position.y + spec.height / 2));
+        // Create gradient
+		    context.fillStyle = spec.fill;
+		    context.fillRect(spec.position.x, spec.position.y, spec.width, spec.height);
+
+		    context.strokeStyle = spec.stroke;
+		    context.strokeRect(spec.position.x, spec.position.y, spec.width, spec.height);
+
+		    context.restore();
+    }
+    function drawCircle(spec) {
+        let w = spec.width;
+        let h = spec.height;
+        let x = spec.position.x * w;
+        let y = spec.position.y * h;
+        context.save();
+        context.beginPath();
+        context.fillStyle = spec.fill;
+        context.arc(x + h/2, y + w/2, w/2 -10 , 0, 2 * Math.PI, false);
+        context.fill();
+        context.lineWidth = spec.lineWidth;
+        context.strokeStyle = spec.stroke;
+        context.stroke();
+        context.restore();
+    }
+	  return {
+		    clear,
+		    drawImage,
+        drawRect,
+        drawText,
+        drawCircle,
+        drawSprite
+	  };
+};
+
+module.exports = Graphics; //returns a generator function Graphics(canvas)
+
+},{}],6:[function(require,module,exports){
+////////////////////////////////
+// This object will be passed into the Graphics.drawSprite(sprite)
+// Need to guarantee that the img is an Image object ready to go
+//
+//    context.drawImage(
+//    		sprite.img,
+//        sprite.sx,
+//        sprite.sy,
+//        sprite.sw,
+//        sprite.sh,
+//        sprite.dx,
+//        sprite.dy,
+//        sprite.dw,
+//        sprite.dh
+//    );
+////////////////////////////////
+let Graphics = require("./Globals.js").graphics;
+
+let Sprite = function(spec) {
+    'use strict';
+    let that = {};
+    let accumTime = 0;
+    let frameNumber = 0;
+    let numFrames = spec.numFrames;
+
+    that.update = function(elapsedTime) {
+        accumTime += elapsedTime;
+        if (accumTime > spec.animationRate) {
+            accumTime = 0;
+            if (frameNumber < numFrames - 1) {
+                frameNumber++;
+            } else {
+                frameNumber = 0;
+            }
+        }
+    };
+    //need to ensure that the image is ready
+    that.render = function() {
+        Graphics.drawSprite({
+            reverse: spec.reverse,
+            center: { x: spec.center.x, y: spec.center.y},
+            image: spec.img,
+            sx: spec.startX + (spec.frameWidth * frameNumber),
+            sy: spec.startY,
+            sw: spec.frameWidth,
+            sh: spec.frameHeight,
+            dx: spec.center.x - spec.width/2,
+            dy: spec.center.y - spec.height/2,
+            dw: spec.width,
+            dh: spec.height
+        });
+    };
+
+    return that;
+};
+
+module.exports = Sprite; //generates a new sprite with given specs
+
+},{"./Globals.js":4}],7:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     return "<div  id=\"return-to-main-menu\">\n    <a class=\"bump-text\" href=\"/\">&larr; Main Menu</a>\n</div>\n";
 },"useData":true});
 
-},{"hbsfy/runtime":28}],4:[function(require,module,exports){
+},{"hbsfy/runtime":33}],8:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 var partial$0 = require('./_return.hbs');
@@ -259,13 +661,14 @@ HandlebarsCompiler.registerPartial('./_return.hbs', partial$0);
 module.exports = HandlebarsCompiler.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1, helper;
 
-  return ((stack1 = container.invokePartial(partials["./_return.hbs"],depth0,{"name":"./_return.hbs","data":data,"helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
-    + "\n<div class=\"content-well\">\n    <h1>"
+  return "<div id=\"AboutScreen\">\n"
+    + ((stack1 = container.invokePartial(partials["./_return.hbs"],depth0,{"name":"./_return.hbs","data":data,"indent":"    ","helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
+    + "\n    <div class=\"content-well\">\n        <h1>"
     + container.escapeExpression(((helper = (helper = helpers.title || (depth0 != null ? depth0.title : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : {},{"name":"title","hash":{},"data":data}) : helper)))
-    + "</h1>\n    <p>\n        Lemmings clone by Ryan Frazier & Seth Bertlshofer\n    </p>\n    <p>\n        Images from Lemmings screen shots taken from Google Search\n    </p>\n</div>\n";
+    + "</h1>\n        <p>\n            Lemmings clone by Ryan Frazier & Seth Bertlshofer\n        </p>\n        <p>\n            Images from Lemmings screen shots taken from Google Search\n        </p>\n        <p>\n            Many thanks to <a href=\"http://www.widgetworx.com/projects/sl.html\">SpriteLib</a> for the blocks and texture sprites.\n        </p>\n    </div>\n</div>\n";
 },"usePartial":true,"useData":true});
 
-},{"./_return.hbs":3,"hbsfy/runtime":28}],5:[function(require,module,exports){
+},{"./_return.hbs":7,"hbsfy/runtime":33}],9:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 var partial$0 = require('./_return.hbs');
@@ -273,11 +676,12 @@ HandlebarsCompiler.registerPartial('./_return.hbs', partial$0);
 module.exports = HandlebarsCompiler.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1;
 
-  return ((stack1 = container.invokePartial(partials["./_return.hbs"],depth0,{"name":"./_return.hbs","data":data,"helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
-    + "<div id=\"game-field\">\n    <div id=\"game-screen\">\n        <canvas id=\"canvas\"></canvas>\n        <canvas id=\"mini-map\"></canvas>\n    </div>\n    <div id=\"status-bar\">\n        <div id=\"timer\">\n            Time : 00:00\n        </div>\n        <div id=\"out\">\n            OUT : 22\n        </div>\n        <div id=\"in\">\n            IN : 0%\n        </div>\n    </div>\n    <div id=\"control-panel\">\n        <ul>\n            <li>\n                <button class=\"bump\" id=\"btn1\" onclick=\"alert('clicked')\"></button>\n            </li>\n            <li>\n                <button class=\"bump\" id=\"btn2\" onclick=\"alert('clicked')\"></button>\n            </li>\n            <li>\n                <button class=\"bump\" id=\"btn3\" onclick=\"alert('clicked')\">\n                    <div class=\"status\">\n                        123\n                    </div>\n                </button>\n            </li>\n            <li>\n                <button class=\"bump active\" id=\"btn4\" onclick=\"alert('clicked')\">\n                    <div class=\"status\">\n                        123\n                    </div>\n                </button>\n            </li>\n            <li>\n                <button class=\"bump\" id=\"btn5\" onclick=\"alert('clicked')\">\n                    <div class=\"status\">\n                        123\n                    </div>\n                </button>\n            </li>\n            <li>\n                <button class=\"bump\" id=\"btn6\" onclick=\"alert('clicked')\">\n                    <div class=\"status\">\n                        123\n                    </div>\n                </button>\n            </li>\n            <li>\n                <button class=\"bump\" id=\"btn7\" onclick=\"alert('clicked')\">\n                    <div class=\"status\">\n                        123\n                    </div>\n                </button>\n            </li>\n            <li>\n                <button class=\"bump\" id=\"btn8\" onclick=\"alert('clicked')\">\n                    <div class=\"status\">\n                        123\n                    </div>\n                </button>\n            </li>\n            <li>\n                <button class=\"bump\" id=\"btn9\" onclick=\"alert('clicked')\">\n                    <div class=\"status\">\n                        123\n                    </div>\n                </button>\n            </li>\n            <li>\n                <button class=\"bump\" id=\"btn10\" onclick= \"alert('clicked')\">\n                    <div class=\"status\">\n                        123\n                    </div>\n                </button>\n            </li>\n            <li>\n                <button class=\"bump\" id=\"btn11\" onclick=\"alert('clicked')\">\n                    <div class=\"status\">\n                        50\n                    </div>\n                 </button>\n            </li>\n            <li>\n                <button class=\"bump\" id=\"btn12\" onclick=\"alert('clicked')\">\n                    <div class=\"status\">\n                        50\n                    </div>\n                </button>\n            </li>\n        </ul>\n    </div>\n</div>\n<script src=\"/javascripts/bundle.js\"></script>\n\n";
+  return "<div id=\"GameScreen\">\n"
+    + ((stack1 = container.invokePartial(partials["./_return.hbs"],depth0,{"name":"./_return.hbs","data":data,"helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
+    + "<div id=\"game-field\">\n    <div id=\"game-screen\">\n        <canvas id=\"canvas\"></canvas>\n        <canvas id=\"mini-map\"></canvas>\n    </div>\n    <div id=\"status-bar\">\n        <div id=\"timer\">\n            Time : 00:00\n        </div>\n        <div id=\"out\">\n            OUT : 22\n        </div>\n        <div id=\"in\">\n            IN : 0%\n        </div>\n    </div>\n    <div id=\"control-panel\">\n        <ul>\n            <li>\n                <button class=\"bump\" id=\"btn1\" onclick=\"alert('clicked')\"></button>\n            </li>\n            <li>\n                <button class=\"bump\" id=\"btn2\" onclick=\"alert('clicked')\"></button>\n            </li>\n            <li>\n                <button class=\"bump\" id=\"btn3\" onclick=\"alert('clicked')\">\n                    <div class=\"status\">\n                        123\n                    </div>\n                </button>\n            </li>\n            <li>\n                <button class=\"bump active\" id=\"btn4\" onclick=\"alert('clicked')\">\n                    <div class=\"status\">\n                        123\n                    </div>\n                </button>\n            </li>\n            <li>\n                <button class=\"bump\" id=\"btn5\" onclick=\"alert('clicked')\">\n                    <div class=\"status\">\n                        123\n                    </div>\n                </button>\n            </li>\n            <li>\n                <button class=\"bump\" id=\"btn6\" onclick=\"alert('clicked')\">\n                    <div class=\"status\">\n                        123\n                    </div>\n                </button>\n            </li>\n            <li>\n                <button class=\"bump\" id=\"btn7\" onclick=\"alert('clicked')\">\n                    <div class=\"status\">\n                        123\n                    </div>\n                </button>\n            </li>\n            <li>\n                <button class=\"bump\" id=\"btn8\" onclick=\"alert('clicked')\">\n                    <div class=\"status\">\n                        123\n                    </div>\n                </button>\n            </li>\n            <li>\n                <button class=\"bump\" id=\"btn9\" onclick=\"alert('clicked')\">\n                    <div class=\"status\">\n                        123\n                    </div>\n                </button>\n            </li>\n            <li>\n                <button class=\"bump\" id=\"btn10\" onclick= \"alert('clicked')\">\n                    <div class=\"status\">\n                        123\n                    </div>\n                </button>\n            </li>\n            <li>\n                <button class=\"bump\" id=\"btn11\" onclick=\"alert('clicked')\">\n                    <div class=\"status\">\n                        50\n                    </div>\n                 </button>\n            </li>\n            <li>\n                <button class=\"bump\" id=\"btn12\" onclick=\"alert('clicked')\">\n                    <div class=\"status\">\n                        50\n                    </div>\n                </button>\n            </li>\n        </ul>\n    </div>\n</div>\n<script src=\"/javascripts/bundle.js\"></script>\n\n</div>\n";
 },"usePartial":true,"useData":true});
 
-},{"./_return.hbs":3,"hbsfy/runtime":28}],6:[function(require,module,exports){
+},{"./_return.hbs":7,"hbsfy/runtime":33}],10:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 var partial$0 = require('./_return.hbs');
@@ -285,13 +689,14 @@ HandlebarsCompiler.registerPartial('./_return.hbs', partial$0);
 module.exports = HandlebarsCompiler.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1, helper;
 
-  return ((stack1 = container.invokePartial(partials["./_return.hbs"],depth0,{"name":"./_return.hbs","data":data,"helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
-    + "\n<div class=\"content-well\">\n    <h1>"
+  return "<div id=\"HelpScreen\">\n"
+    + ((stack1 = container.invokePartial(partials["./_return.hbs"],depth0,{"name":"./_return.hbs","data":data,"indent":"    ","helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
+    + "\n    <div class=\"content-well\">\n        <h1>"
     + container.escapeExpression(((helper = (helper = helpers.title || (depth0 != null ? depth0.title : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : {},{"name":"title","hash":{},"data":data}) : helper)))
-    + "</h1>\n    <p>\n        Click the buttons to save the lemmings. Try to save as many as you can.\n    </p>\n</div>\n";
+    + "</h1>\n        <p>\n            Click the buttons to save the lemmings. Try to save as many as you can.\n        </p>\n    </div>\n</div>\n";
 },"usePartial":true,"useData":true});
 
-},{"./_return.hbs":3,"hbsfy/runtime":28}],7:[function(require,module,exports){
+},{"./_return.hbs":7,"hbsfy/runtime":33}],11:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 var partial$0 = require('./_return.hbs');
@@ -333,14 +738,40 @@ module.exports = HandlebarsCompiler.template({"1":function(container,depth0,help
     + "</div>\n";
 },"usePartial":true,"useData":true});
 
-},{"./_return.hbs":3,"hbsfy/runtime":28}],8:[function(require,module,exports){
+},{"./_return.hbs":7,"hbsfy/runtime":33}],12:[function(require,module,exports){
+// hbsfy compiled Handlebars template
+var HandlebarsCompiler = require('hbsfy/runtime');
+var partial$0 = require('./main.hbs');
+HandlebarsCompiler.registerPartial('./main.hbs', partial$0);
+var partial$1 = require('./about.hbs');
+HandlebarsCompiler.registerPartial('./about.hbs', partial$1);
+var partial$2 = require('./help.hbs');
+HandlebarsCompiler.registerPartial('./help.hbs', partial$2);
+var partial$3 = require('./highscores.hbs');
+HandlebarsCompiler.registerPartial('./highscores.hbs', partial$3);
+var partial$4 = require('./game.hbs');
+HandlebarsCompiler.registerPartial('./game.hbs', partial$4);
+module.exports = HandlebarsCompiler.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+    var stack1;
+
+  return ((stack1 = container.invokePartial(partials["./main.hbs"],depth0,{"name":"./main.hbs","data":data,"helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
+    + ((stack1 = container.invokePartial(partials["./about.hbs"],depth0,{"name":"./about.hbs","data":data,"helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
+    + ((stack1 = container.invokePartial(partials["./help.hbs"],depth0,{"name":"./help.hbs","data":data,"helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
+    + "\n<div id=\"HighScoresScreen\">\n"
+    + ((stack1 = container.invokePartial(partials["./highscores.hbs"],depth0,{"name":"./highscores.hbs","data":data,"indent":"    ","helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
+    + "</div>\n\n"
+    + ((stack1 = container.invokePartial(partials["./game.hbs"],depth0,{"name":"./game.hbs","data":data,"helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
+    + "\n<div style=\"display:none\">\n    <img id=\"lemming_walking\" alt=\"sprite sheet\" src=\"images/lemming_walking.png\">\n    <img id=\"lemming_blocking\" alt=\"sprite sheet\" src=\"images/lemming_blocking.png\">\n    <img id=\"lemming_umbrella\" alt=\"sprite sheet\" src=\"images/lemming_umbrella.png\">\n    <img id=\"lemming_exploding\" alt=\"sprite sheet\" src=\"images/lemming_exploding.png\">\n    <img id=\"lemming_climbing\" alt=\"sprite sheet\" src=\"images/lemming_climbing.png\">\n    <img id=\"lemming_splatting\" alt=\"sprite sheet\" src=\"images/lemming_splatting.png\">\n    <img id=\"lemming_drowning\" alt=\"sprite sheet\" src=\"images/lemming_drowning.png\">\n    <img id=\"lemming_builder\" alt=\"sprite sheet\" src=\"images/lemming_builder.png\">\n    <img id=\"lemming_timeup\" alt=\"sprite sheet\" src=\"images/lemming_timeup.png\">\n    <img id=\"lemming_digging\" alt=\"sprite sheet\" src=\"images/lemming_digging.png\">\n    <img id=\"lemming_trap_10tons\" alt=\"sprite sheet\" src=\"images/lemming_trap_10tons.png\">\n    <img id=\"lemming_trap_hanging\" alt=\"sprite sheet\" src=\"images/lemming_trap_hanging.png\">\n    <img id=\"entrance_gate\" alt=\"sprite sheet\" src=\"images/entrance_gate.png\">\n    <img id=\"end_gate\" alt=\"sprite sheet\" src=\"images/end_gate.png\">\n</div>\n";
+},"usePartial":true,"useData":true});
+
+},{"./about.hbs":8,"./game.hbs":9,"./help.hbs":10,"./highscores.hbs":11,"./main.hbs":13,"hbsfy/runtime":33}],13:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    return "<ul id=\"main-menu\">\n    <li class=\"btn bump\">\n        <a href=\"/game\">New Game</a>\n    </li>\n    <li class=\"btn bump\">\n        <a href=\"/about\">About</a>\n    </li>\n    <li class=\"btn bump\">\n        <a href=\"/help\">Help</a>\n    </li>\n    <li class=\"btn bump\">\n        <a href=\"/highscores\">High Scores</a>\n    </li>\n</ul>\n";
+    return "<div id=\"MainScreen\">\n    <ul id=\"main-menu\">\n        <li class=\"btn bump\">\n            <a href=\"/game\">New Game</a>\n        </li>\n        <li class=\"btn bump\">\n            <a href=\"/about\">About</a>\n        </li>\n        <li class=\"btn bump\">\n            <a href=\"/help\">Help</a>\n        </li>\n        <li class=\"btn bump\">\n            <a href=\"/highscores\">High Scores</a>\n        </li>\n    </ul>\n</div>\n";
 },"useData":true});
 
-},{"hbsfy/runtime":28}],9:[function(require,module,exports){
+},{"hbsfy/runtime":33}],14:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -408,7 +839,7 @@ exports['default'] = inst;
 module.exports = exports['default'];
 
 
-},{"./handlebars/base":10,"./handlebars/exception":13,"./handlebars/no-conflict":23,"./handlebars/runtime":24,"./handlebars/safe-string":25,"./handlebars/utils":26}],10:[function(require,module,exports){
+},{"./handlebars/base":15,"./handlebars/exception":18,"./handlebars/no-conflict":28,"./handlebars/runtime":29,"./handlebars/safe-string":30,"./handlebars/utils":31}],15:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -514,7 +945,7 @@ exports.createFrame = _utils.createFrame;
 exports.logger = _logger2['default'];
 
 
-},{"./decorators":11,"./exception":13,"./helpers":14,"./logger":22,"./utils":26}],11:[function(require,module,exports){
+},{"./decorators":16,"./exception":18,"./helpers":19,"./logger":27,"./utils":31}],16:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -532,7 +963,7 @@ function registerDefaultDecorators(instance) {
 }
 
 
-},{"./decorators/inline":12}],12:[function(require,module,exports){
+},{"./decorators/inline":17}],17:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -563,7 +994,7 @@ exports['default'] = function (instance) {
 module.exports = exports['default'];
 
 
-},{"../utils":26}],13:[function(require,module,exports){
+},{"../utils":31}],18:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -616,7 +1047,7 @@ exports['default'] = Exception;
 module.exports = exports['default'];
 
 
-},{}],14:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -664,7 +1095,7 @@ function registerDefaultHelpers(instance) {
 }
 
 
-},{"./helpers/block-helper-missing":15,"./helpers/each":16,"./helpers/helper-missing":17,"./helpers/if":18,"./helpers/log":19,"./helpers/lookup":20,"./helpers/with":21}],15:[function(require,module,exports){
+},{"./helpers/block-helper-missing":20,"./helpers/each":21,"./helpers/helper-missing":22,"./helpers/if":23,"./helpers/log":24,"./helpers/lookup":25,"./helpers/with":26}],20:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -705,7 +1136,7 @@ exports['default'] = function (instance) {
 module.exports = exports['default'];
 
 
-},{"../utils":26}],16:[function(require,module,exports){
+},{"../utils":31}],21:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -801,7 +1232,7 @@ exports['default'] = function (instance) {
 module.exports = exports['default'];
 
 
-},{"../exception":13,"../utils":26}],17:[function(require,module,exports){
+},{"../exception":18,"../utils":31}],22:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -828,7 +1259,7 @@ exports['default'] = function (instance) {
 module.exports = exports['default'];
 
 
-},{"../exception":13}],18:[function(require,module,exports){
+},{"../exception":18}],23:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -859,7 +1290,7 @@ exports['default'] = function (instance) {
 module.exports = exports['default'];
 
 
-},{"../utils":26}],19:[function(require,module,exports){
+},{"../utils":31}],24:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -887,7 +1318,7 @@ exports['default'] = function (instance) {
 module.exports = exports['default'];
 
 
-},{}],20:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -901,7 +1332,7 @@ exports['default'] = function (instance) {
 module.exports = exports['default'];
 
 
-},{}],21:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -936,7 +1367,7 @@ exports['default'] = function (instance) {
 module.exports = exports['default'];
 
 
-},{"../utils":26}],22:[function(require,module,exports){
+},{"../utils":31}],27:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -985,7 +1416,7 @@ exports['default'] = logger;
 module.exports = exports['default'];
 
 
-},{"./utils":26}],23:[function(require,module,exports){
+},{"./utils":31}],28:[function(require,module,exports){
 (function (global){
 /* global window */
 'use strict';
@@ -1009,7 +1440,7 @@ module.exports = exports['default'];
 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],24:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -1308,7 +1739,7 @@ function executeDecorators(fn, prog, container, depths, data, blockParams) {
 }
 
 
-},{"./base":10,"./exception":13,"./utils":26}],25:[function(require,module,exports){
+},{"./base":15,"./exception":18,"./utils":31}],30:[function(require,module,exports){
 // Build out our basic SafeString type
 'use strict';
 
@@ -1325,7 +1756,7 @@ exports['default'] = SafeString;
 module.exports = exports['default'];
 
 
-},{}],26:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -1451,20 +1882,20 @@ function appendContextPath(contextPath, id) {
 }
 
 
-},{}],27:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 // Create a simple path alias to allow browserify to resolve
 // the runtime on a supported path.
 module.exports = require('./dist/cjs/handlebars.runtime')['default'];
 
-},{"./dist/cjs/handlebars.runtime":9}],28:[function(require,module,exports){
+},{"./dist/cjs/handlebars.runtime":14}],33:[function(require,module,exports){
 module.exports = require("handlebars/runtime")["default"];
 
-},{"handlebars/runtime":27}],29:[function(require,module,exports){
+},{"handlebars/runtime":32}],34:[function(require,module,exports){
 module.exports = Array.isArray || function (arr) {
   return Object.prototype.toString.call(arr) == '[object Array]';
 };
 
-},{}],30:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v3.2.1
  * https://jquery.com/
@@ -11719,7 +12150,7 @@ if ( !noGlobal ) {
 return jQuery;
 } );
 
-},{}],31:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 (function (process){
   /* globals require, module */
 
@@ -12345,7 +12776,7 @@ return jQuery;
   page.sameOrigin = sameOrigin;
 
 }).call(this,require('_process'))
-},{"_process":1,"path-to-regexp":32}],32:[function(require,module,exports){
+},{"_process":1,"path-to-regexp":37}],37:[function(require,module,exports){
 var isarray = require('isarray')
 
 /**
@@ -12737,4 +13168,4 @@ function pathToRegexp (path, keys, options) {
   return stringToRegexp(path, keys, options)
 }
 
-},{"isarray":29}]},{},[2]);
+},{"isarray":34}]},{},[2]);

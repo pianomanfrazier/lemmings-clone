@@ -7,8 +7,30 @@ var browserSync = require('browser-sync').create();
 
 // Style Dependencies
 var sass = require('gulp-sass');
+var handlebars = require('gulp-handlebars');
+var browserify = require('gulp-browserify');
+var uglify = require('gulp-uglify');
 
 // ********* Server *********
+gulp.task('templates', ()=>{
+  'use strict';
+
+  return gulp.src('./client/**/*.hbs')
+    .pipe(handlebars())
+    .pipe(rename('bundle.js'))
+    .pipe(gulp.dest('./server/public/javascripts'));
+});
+
+gulp.task('js', ['templates', 'sass'], ()=>{
+   'use strict';
+
+   return gulp.src('./client/**/*.js')
+       .pipe(browserify())
+       .pipe(uglify())
+       .pipe(rename('bundle.js'))
+       .pipe(gulp.dest('./server/public/javascripts'));
+});
+
 
 gulp.task('sass', ()=>{
   'use strict';
@@ -39,4 +61,4 @@ gulp.task('watch', ()=>{
 });
 
 // ********* Tasks *********
-gulp.task('default', ['browserSync', 'sass', 'watch']);
+gulp.task('default', ['browserSync', 'watch']);

@@ -2,4 +2,5 @@
 !.gitignore
 !.jshintrc
 node_modules/
-./server/public/javascripts/bundle.js  # I'm adding this in because it will change everytime we run gulp which then always gets commited and it doesn't.... we should think about doing this for the whole server/public directory
+server/public/javascripts/  # I'm adding this in because it will change everytime we run gulp which then always gets commited and it doesn't.... we should think about doing this for the whole server/public directory
+server/public/stylesheets/

@@ -1,80 +1,101 @@
-import * as _       from 'lodash';
+var _ = require('lodash');
 
-var KeyEvent;
+// let cancelNextRequest = false;
+let KeyEvent = null;
 
-let input = (screens)=>{
+let Keyboard=()=>{
     'use strict';
 
-    let cancelNextRequest = false;
+    let that = {
+        keys: {},
+        handlers: []
+    };
 
-    function Keyboard() {
-        let that = {
-            keys : {},
-            handlers : []
-        };
-
-        function keyPress(e) {
-            that.keys[e.keyCode] = e.timeStamp;
-        }
-
-        function keyRelease(e) {
-            delete that.keys[e.keyCode];
-        }
-
-        that.registerCommand = (key, handler)=>{
-            that.handlers.push({key, handler});
-        };
-
-        that.update = (elapsedTime)=>{
-            _.each(that.handlers, (handler, index)=>{
-                if (that.keys.hasOwnProperty(handler.key)) {
-                    that.handlers[index].handler(elapsedTime);
-                }
-            });
-        };
-
-        window.addEventListener('keydown', keyPress);
-        window.addEventListener('keyup', keyRelease);
-
-        return that;
+    function keyPress(e) {
+        that.keys[e.keyCode] = e.timeStamp;
     }
 
-    function ButtonClick(id) {
+    function keyRelease(e) {
+        delete that.keys[e.keyCode];
+    }
+
+    that.registerCommand = (key, handler)=>{
+        that.handlers.push({key, handler});
+    };
+
+    that.update = (elapsedTime)=>{
+        _.each(that.handlers, (handler, index)=>{
+            if (that.keys.hasOwnProperty(handler.key)) {
+                that.handlers[index].handler(elapsedTime);
+            }
+        });
+    };
+
+    that.buttonPress = (id)=>{
         switch(id) {
-            case 'unPause':
-                document.getElementById('paused-section').style.display = 'none';
-                document.getElementById('background-shield').style.display = 'none';
-                screens['game-play'].run();
+            case 'pause-btn':
+            case 'speed-up-btn':
+            case 'speed-down-btn':
+            case 'atomic-lemming-exploding-btn':
+                console.log('game state pressed: ' + id);
                 break;
 
-            case 'saveScore':
-                document.getElementById('name-section').style.display = 'none';
-                document.getElementById('background-shield').style.display = 'none';
-                screens['game-play'].saveScore();
+            case 'pick-axe-btn':
+            case 'lemming-digging-btn':
+            case 'lemming-builder-btn':
+            case 'lemming-blocking-btn':
+            case 'lemming-exploding-btn':
+            case 'lemming-umbrella-btn':
+            case 'lemming-climbing-btn':
+                console.log('lemming pressed: ' + id);
                 break;
 
-            case 'quit':
-                console.log('quiting');
-                document.getElementById('name-section').style.display = 'none';
-                document.getElementById('paused-section').style.display = 'none';
-                document.getElementById('background-shield').style.display = 'none';
+            case 'btn3':
+                console.log('misc. pressed: ' + id);
                 break;
 
             default:
         }
     }
 
-    function mouseClick(spec) {
+    window.addEventListener('keydown', keyPress);
+    window.addEventListener('keyup', keyRelease);
 
+    return that;
+};
+
+let Mouse=()=>{
+    'use strict';
+
+    let that = {
+        clicks: {},
+        handlers: []
+    };
+
+    function clickDown(e) {
+        that.clicks[e.keyCode] = e.timeStamp;
     }
 
-    return {
-        cancelNextRequest,
+    function clickUp(e) {
+        delete that.clicks[e.keyCode];
+    }
 
-        Keyboard,
-        ButtonClick,
-        mouseClick
+    that.registerCommand = (key, handler)=>{
+        that.handlers.push({key, handler});
     };
+
+    that.update = (elapsedTime)=>{
+        _.each(that.handlers, (handler, index)=>{
+            if (that.clicks.hasOwnProperty(handler.key)) {
+                that.handlers[index].handler(elapsedTime);
+            }
+        });
+    };
+
+    window.addEventListener('mouseClickDown', clickDown);
+    window.addEventListener('keyup', clickUp);
+
+    return that;
 };
 
 //------------------------------------------------------------------
@@ -82,7 +103,7 @@ let input = (screens)=>{
 // Source: http://stackoverflow.com/questions/1465374/javascript-event-keycode-constants
 //
 //------------------------------------------------------------------
-if (typeof KeyEvent === 'undefined') {
+if (KeyEvent === null) {
     KeyEvent = {
         DOM_VK_CANCEL: 3,
         DOM_VK_HELP: 6,
@@ -202,4 +223,4 @@ if (typeof KeyEvent === 'undefined') {
     };
 }
 
-module.export = {input, KeyEvent};
+module.export = {Keyboard, Mouse, KeyEvent};

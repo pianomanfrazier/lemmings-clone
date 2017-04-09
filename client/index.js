@@ -1,54 +1,58 @@
-var page = require("page");
-var $ = require("jquery");
-var index = require("./js/views/index.hbs");
-var highscores = require("./js/views/highscores.hbs");
+var page        = require("page");
+var $           = require("jquery");
+var _           = require("lodash");
+var inputs      = require("./js/lib/inputs");
+var index       = require("./js/views/index.hbs");
+var highscores  = require("./js/views/highscores.hbs");
 
 var eApp = document.getElementById("app");
-eApp.innerHTML = index({});
-var eMainScreen = $("#MainScreen");
-var eGameScreen = $("#GameScreen");
-var eAboutScreen = $("#AboutScreen");
-var eHelpScreen = $("#HelpScreen");
-var eHighScoresScreen = $("#HighScoresScreen");
-var screens = [eGameScreen, eAboutScreen, eHelpScreen, eHighScoresScreen];
+eApp.innerHTML          = index({});
+var eMainScreen         = $("#MainScreen");
+var eGameScreen         = $("#GameScreen");
+var eAboutScreen        = $("#AboutScreen");
+var eHelpScreen         = $("#HelpScreen");
+var eHighScoresScreen   = $("#HighScoresScreen");
+var screens             = [eGameScreen, eAboutScreen, eHelpScreen, eHighScoresScreen];
 
 var Sprite = require("./js/Sprite.js");
 
-var walking = document.getElementById("lemming_walking");
-var blocker = document.getElementById("lemming_blocking");
-var umbrella = document.getElementById("lemming_umbrella");
-var exploding = document.getElementById("lemming_exploding");
-var climbing = document.getElementById("lemming_climbing");
-var splat = document.getElementById("lemming_splatting");
-var drowning = document.getElementById("lemming_drowning");
-var builder = document.getElementById("lemming_builder");
-var timeup = document.getElementById("lemming_timeup");
-var digging = document.getElementById("lemming_digging");
-var trap_10tons = document.getElementById("lemming_trap_10tons");
-var trap_hanging = document.getElementById("lemming_trap_hanging");
-var entrance_gate = document.getElementById("entrance_gate");
-var end_gate = document.getElementById("end_gate");
+var walking     = document.getElementById("lemming_walking");
+var blocker     = document.getElementById("lemming_blocking");
+var umbrella    = document.getElementById("lemming_umbrella");
+var exploding   = document.getElementById("lemming_exploding");
+var climbing    = document.getElementById("lemming_climbing");
+var splat       = document.getElementById("lemming_splatting");
+var drowning    = document.getElementById("lemming_drowning");
+var builder     = document.getElementById("lemming_builder");
+var timeup      = document.getElementById("lemming_timeup");
+var digging     = document.getElementById("lemming_digging");
+// var trap_10tons = document.getElementById("lemming_trap_10tons");
+// var trap_hanging = document.getElementById("lemming_trap_hanging");
+// var entrance_gate = document.getElementById("entrance_gate");
+// var end_gate = document.getElementById("end_gate");
 
-
-var images = [walking, blocker, umbrella, exploding, climbing, splat, drowning,builder, timeup, digging, trap_10tons, trap_hanging, entrance_gate, end_gate];
+var images = [walking, blocker, umbrella, exploding, climbing, splat, drowning,builder, timeup, digging, /*trap_10tons, trap_hanging, entrance_gate, end_gate*/];
 
 var loop = require("./js/GameLoop.js");
 
 var testGame = {
+    inputs,
     lemmings : [],
-    update: function(elapsedTime) {
+    update: (elapsedTime)=>{
         'use strict';
-        this.lemmings.forEach(function(l){
-            l.update(elapsedTime);
+
+        _.each(this.lemmings, (lemming)=>{
+            lemming.update(elapsedTime);
         });
     },
-    render: function() {
+    render: ()=>{
         'use strict';
-        this.lemmings.forEach(function(l){
-            l.render();
+
+        _.each(this.lemmings, (lemming)=>{
+            lemming.render();
         });
     },
-    init: function() {
+    init: ()=>{
         'use strict';
         var w = 107;
         var h = 250;
@@ -127,17 +131,17 @@ var testGame = {
         }));
     }
 };
-end_gate.onload = function() {
-    'use strict';
-    console.log("image ready");
-    testGame.init();
-};
+// end_gate.onload = ()=>{
+//     'use strict';
+//     console.log("image ready");
+//     testGame.init();
+// };
 
 page('/', ()=>{
     'use strict';
 
-    screens.forEach(function(el){
-        el.slideUp();
+    _.each(screens, (screen)=>{
+        screen.slideUp();
     });
     eMainScreen.slideDown();
 });
@@ -168,10 +172,10 @@ page('/highscores', ()=>{
         type: "GET",
         dataType: 'json',
         url: '/api/highscores',
-        error: function(e) {
+        error: (e)=>{
             console.log(e);
         }
-    }).done(function(data) {
+    }).done((data)=>{
         eHighScoresScreen.html(highscores({title : "Highscores", highscores : data}));
         console.log(data);
     }).fail((e)=>{

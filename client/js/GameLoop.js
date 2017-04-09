@@ -8,7 +8,7 @@ GameLoop.isRunning = false;
 
 GameLoop.graphics = Graphics(canvas);
 
-GameLoop.stop = function() {
+GameLoop.stop = ()=>{
     'use strict';
     //console.log("stop loop");
     //Game.graphics.clear();
@@ -16,7 +16,7 @@ GameLoop.stop = function() {
     GameLoop.isRunning = false;
 };
 
-GameLoop.run = function(game) {
+GameLoop.run = (game)=>{
     'use strict';
     //prevents multiple game loops
     if(GameLoop.isRunning) return;

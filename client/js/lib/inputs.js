@@ -1,9 +1,10 @@
 var _ = require('lodash');
 
-// let cancelNextRequest = false;
-let KeyEvent = null;
+let Inputs = {};
 
-let Keyboard=()=>{
+Inputs.KeyEvent = null;
+
+Inputs.Keyboard=()=>{
     'use strict';
 
     let that = {
@@ -31,40 +32,13 @@ let Keyboard=()=>{
         });
     };
 
-    that.buttonPress = (id)=>{
-        switch(id) {
-            case 'pause-btn':
-            case 'speed-up-btn':
-            case 'speed-down-btn':
-            case 'atomic-lemming-exploding-btn':
-                console.log('game state pressed: ' + id);
-                break;
-
-            case 'pick-axe-btn':
-            case 'lemming-digging-btn':
-            case 'lemming-builder-btn':
-            case 'lemming-blocking-btn':
-            case 'lemming-exploding-btn':
-            case 'lemming-umbrella-btn':
-            case 'lemming-climbing-btn':
-                console.log('lemming pressed: ' + id);
-                break;
-
-            case 'btn3':
-                console.log('misc. pressed: ' + id);
-                break;
-
-            default:
-        }
-    }
-
     window.addEventListener('keydown', keyPress);
     window.addEventListener('keyup', keyRelease);
 
     return that;
 };
 
-let Mouse=()=>{
+Inputs.Mouse=()=>{
     'use strict';
 
     let that = {
@@ -98,13 +72,42 @@ let Mouse=()=>{
     return that;
 };
 
+Inputs.ButtonPress = (id)=>{
+    'use strict';
+
+    switch(id) {
+        case 'pause-btn':
+        case 'speed-up-btn':
+        case 'speed-down-btn':
+        case 'atomic-bombs-btn':
+            console.log('game state pressed: ' + id);
+            break;
+
+        case 'pick-axe-btn':
+        case 'lemming-digging-btn':
+        case 'lemming-builder-btn':
+        case 'lemming-blocking-btn':
+        case 'lemming-exploding-btn':
+        case 'lemming-umbrella-btn':
+        case 'lemming-climbing-btn':
+            console.log('lemming pressed: ' + id);
+            break;
+
+        case 'btn3':
+            console.log('misc. pressed: ' + id);
+            break;
+
+        default:
+    }
+};
+
 //------------------------------------------------------------------
 //
 // Source: http://stackoverflow.com/questions/1465374/javascript-event-keycode-constants
 //
 //------------------------------------------------------------------
-if (KeyEvent === null) {
-    KeyEvent = {
+if (Inputs.KeyEvent === null) {
+    Inputs.KeyEvent = {
         DOM_VK_CANCEL: 3,
         DOM_VK_HELP: 6,
         DOM_VK_BACK_SPACE: 8,
@@ -223,4 +226,4 @@ if (KeyEvent === null) {
     };
 }
 
-module.export = {Keyboard, Mouse, KeyEvent};
+module.exports = Inputs;

@@ -31,6 +31,14 @@ var digging     = document.getElementById("lemming_digging");
 // var entrance_gate = document.getElementById("entrance_gate");
 // var end_gate = document.getElementById("end_gate");
 
+$("#control-panel :button").each((i, button)=>{
+    'use strict';
+
+    $(button).click(()=>{
+        inputs.ButtonPress(button.id);
+    });
+});
+
 var images = [walking, blocker, umbrella, exploding, climbing, splat, drowning,builder, timeup, digging, /*trap_10tons, trap_hanging, entrance_gate, end_gate*/];
 
 var loop = require("./js/GameLoop.js");

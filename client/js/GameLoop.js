@@ -1,5 +1,5 @@
-let Graphics = require("./Graphics.js");
-let canvas = require("./Globals.js").canvas;
+let Graphics    = require("./Graphics.js");
+let canvas      = require("./Globals.js").canvas;
 
 let GameLoop = {};
 
@@ -18,6 +18,7 @@ GameLoop.stop = ()=>{
 
 GameLoop.run = (game)=>{
     'use strict';
+
     //prevents multiple game loops
     if(GameLoop.isRunning) return;
     GameLoop.isRunning = true;

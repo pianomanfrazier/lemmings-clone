@@ -1,10 +1,10 @@
-var _ = require('lodash');
+var _           = require('lodash');
 
 let Inputs = {};
 
 Inputs.KeyEvent = null;
 
-Inputs.Keyboard=()=>{
+Inputs.Keyboard = ()=>{
     'use strict';
 
     let that = {
@@ -38,12 +38,13 @@ Inputs.Keyboard=()=>{
     return that;
 };
 
-Inputs.Mouse=()=>{
+Inputs.Mouse = ()=>{
     'use strict';
 
     let that = {
         clicks: {},
-        handlers: []
+        handlers: [],
+        lemmingType: ''
     };
 
     function clickDown(e) {
@@ -58,12 +59,12 @@ Inputs.Mouse=()=>{
         that.handlers.push({key, handler});
     };
 
-    that.update = (elapsedTime)=>{
-        _.each(that.handlers, (handler, index)=>{
-            if (that.clicks.hasOwnProperty(handler.key)) {
-                that.handlers[index].handler(elapsedTime);
-            }
-        });
+    that.update = ()=>{
+
+    };
+
+    that.updateLemmingType = (type)=>{
+        console.log(type);
     };
 
     window.addEventListener('mouseClickDown', clickDown);
@@ -77,20 +78,25 @@ Inputs.ButtonPress = (id)=>{
 
     switch(id) {
         case 'pause-btn':
-        case 'speed-up-btn':
-        case 'speed-down-btn':
-        case 'atomic-bombs-btn':
+            // TODO: call game's stop function
             console.log('game state pressed: ' + id);
             break;
 
-        case 'pick-axe-btn':
-        case 'lemming-digging-btn':
-        case 'lemming-builder-btn':
-        case 'lemming-blocking-btn':
-        case 'lemming-exploding-btn':
-        case 'lemming-umbrella-btn':
-        case 'lemming-climbing-btn':
+        case 'speed-up-btn':
+        case 'speed-down-btn':
+        case 'atomic-bomb-btn':
+            console.log('game state pressed: ' + id);
+            break;
+
+        case 'lemming-pickaxe':
+        case 'lemming-digging':
+        case 'lemming-builder':
+        case 'lemming-blocking':
+        case 'lemming-exploding':
+        case 'lemming-umbrella':
+        case 'lemming-climbing':
             console.log('lemming pressed: ' + id);
+            Inputs.Mouse.updateLemmingType(id);
             break;
 
         case 'btn3':

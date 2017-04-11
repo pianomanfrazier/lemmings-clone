@@ -57,6 +57,7 @@ let Mouse = (()=>{
     }
 
     function clickDown(e) {
+        // TODO: may need to figure out a better key for this
         let location = getMousePos(e);
         // console.log('x: ' + location.x, 'y: ' + location.y);
         let lemmingType = that.lemmingType;

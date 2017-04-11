@@ -32,16 +32,16 @@ var Graphics = function(canvas) {
 
     let context = canvas.getContext('2d');
 
-	  CanvasRenderingContext2D.prototype.clear = function() {
-		    this.save();
-		    this.setTransform(1, 0, 0, 1, 0, 0);
-		    this.clearRect(0, 0, canvas.width, canvas.height);
-		    this.restore();
-	  };
+    CanvasRenderingContext2D.prototype.clear = function() {
+        this.save();
+        this.setTransform(1, 0, 0, 1, 0, 0);
+        this.clearRect(0, 0, canvas.width, canvas.height);
+        this.restore();
+    };
 
-	  function clear() {
-		    context.clear();
-	  }
+    function clear() {
+        context.clear();
+    }
     function drawText(spec) {
         context.save();
 
@@ -51,24 +51,24 @@ var Graphics = function(canvas) {
 
         context.restore();
     }
-	  function drawImage(spec) {
-		    context.save();
+    function drawImage(spec) {
+        context.save();
 
-		    context.translate(spec.center.x, spec.center.y);
+        context.translate(spec.center.x, spec.center.y);
         if (spec.rotation) {
             context.rotate(spec.rotation);
         }
-		    context.translate(-spec.center.x, -spec.center.y);
+        context.translate(-spec.center.x, -spec.center.y);
 
-		    context.drawImage(
-			      spec.image,
-			      spec.center.x - spec.size/2,
-			      spec.center.y - spec.size/2,
-			      spec.size, spec.size
+        context.drawImage(
+            spec.image,
+            spec.center.x - spec.size/2,
+            spec.center.y - spec.size/2,
+            spec.size, spec.size
         );
 
-		    context.restore();
-	  }
+        context.restore();
+    }
     // see http://www.williammalone.com/articles/create-html5-canvas-javascript-sprite-animation/
     // context.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh)
     // sx source x = startX + (frameWidth + spacer) * frameNumber
@@ -76,23 +76,23 @@ var Graphics = function(canvas) {
     // sw = frameWidth
     // sh = frameHeight
     // dx = destination x (ie the location to be drawn on canvas, top left corner)
-    // dy = destination y 
+    // dy = destination y
     // dw = destination w
     // dh = destination h
-	  function drawSprite(spec) {
-		    context.save();
+    function drawSprite(spec) {
+        context.save();
 
-		    context.translate(spec.center.x, spec.center.y);
+        context.translate(spec.center.x, spec.center.y);
         if (spec.rotation) {
             context.rotate(spec.rotation);
         }
         if(spec.reverse) {
             context.scale(-1,1);
         }
-		    context.translate(-spec.center.x, -spec.center.y);
+        context.translate(-spec.center.x, -spec.center.y);
         //console.log(spec);
-		    context.drawImage(
-			      spec.image,
+        context.drawImage(
+            spec.image,
             spec.sx,
             spec.sy,
             spec.sw,
@@ -103,21 +103,21 @@ var Graphics = function(canvas) {
             spec.dh
         );
 
-		    context.restore();
-	  }
+        context.restore();
+    }
     function drawRect(spec) {
         context.save();
-		    context.translate(spec.position.x + spec.width / 2, spec.position.y + spec.height / 2);
-		    if(spec.rotation) context.rotate(spec.rotation);
-		    context.translate(-(spec.position.x + spec.width / 2), -(spec.position.y + spec.height / 2));
-        // Create gradient
-		    context.fillStyle = spec.fill;
-		    context.fillRect(spec.position.x, spec.position.y, spec.width, spec.height);
+        context.translate(spec.position.x + spec.width / 2, spec.position.y + spec.height / 2);
+        if(spec.rotation) context.rotate(spec.rotation);
+        context.translate(-(spec.position.x + spec.width / 2), -(spec.position.y + spec.height / 2));
+    // Create gradient
+        context.fillStyle = spec.fill;
+        context.fillRect(spec.position.x, spec.position.y, spec.width, spec.height);
 
-		    context.strokeStyle = spec.stroke;
-		    context.strokeRect(spec.position.x, spec.position.y, spec.width, spec.height);
+        context.strokeStyle = spec.stroke;
+        context.strokeRect(spec.position.x, spec.position.y, spec.width, spec.height);
 
-		    context.restore();
+        context.restore();
     }
     function drawCircle(spec) {
         let w = spec.width;
@@ -134,14 +134,14 @@ var Graphics = function(canvas) {
         context.stroke();
         context.restore();
     }
-	  return {
-		    clear,
-		    drawImage,
+    return {
+        clear,
+        drawImage,
         drawRect,
         drawText,
         drawCircle,
         drawSprite
-	  };
+    };
 };
 
 module.exports = Graphics; //returns a generator function Graphics(canvas)

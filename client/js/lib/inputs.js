@@ -1,10 +1,10 @@
 var _           = require('lodash');
+var Globals     = require('./../Globals');
 
-let Inputs = {};
 
-Inputs.KeyEvent = null;
+let KeyEvent = null;
 
-Inputs.Keyboard = ()=>{
+let Keyboard = (()=>{
     'use strict';
 
     let that = {
@@ -36,44 +36,67 @@ Inputs.Keyboard = ()=>{
     window.addEventListener('keyup', keyRelease);
 
     return that;
-};
+})();
 
-Inputs.Mouse = ()=>{
+let Mouse = (()=>{
     'use strict';
 
     let that = {
         clicks: {},
         handlers: [],
-        lemmingType: ''
+        lemmingType: '',
+        currLocation: {}
     };
 
+    function getMousePos(e) {
+        let rect = Globals.canvas.getBoundingClientRect();
+        return {
+            x: e.clientX - rect.left,
+            y: e.clientY - rect.top
+        };
+    }
+
     function clickDown(e) {
-        that.clicks[e.keyCode] = e.timeStamp;
+        let location = getMousePos(e);
+        // console.log('x: ' + location.x, 'y: ' + location.y);
+        let lemmingType = that.lemmingType;
+        that.clicks[lemmingType] = {
+            location,
+            timeStamp: e.timeStamp
+        };
     }
 
     function clickUp(e) {
-        delete that.clicks[e.keyCode];
+        let lemmingType = that.lemmingType;
+        delete that.clicks[lemmingType];
     }
 
-    that.registerCommand = (key, handler)=>{
-        that.handlers.push({key, handler});
-    };
+    function onHover(e) {
+        let mousePos = getMousePos(e);
+        // console.log('x: ' + mousePos.x, 'y: ' + mousePos.y);
+        that.currLocation = mousePos;
+    }
 
-    that.update = ()=>{
-
+    that.update = (elapsedTime)=>{
+        _.each(that.handlers, (handler, index)=>{
+            if (that.clicks.hasOwnProperty(handler.key)) {
+                that.handlers[index].handler(elapsedTime);
+            }
+        });
     };
 
     that.updateLemmingType = (type)=>{
-        console.log(type);
+        that.lemmingType = type;
     };
 
-    window.addEventListener('mouseClickDown', clickDown);
-    window.addEventListener('keyup', clickUp);
+    Globals.canvas.addEventListener('mousedown', clickDown);
+    Globals.canvas.addEventListener('mouseup', clickUp);
+    Globals.canvas.addEventListener('mousemove', onHover);
 
     return that;
-};
+})();
 
-Inputs.ButtonPress = (id)=>{
+let ButtonPress = (id)=>{
     'use strict';
 
     switch(id) {
@@ -95,8 +118,7 @@ Inputs.ButtonPress = (id)=>{
         case 'lemming-exploding':
         case 'lemming-umbrella':
         case 'lemming-climbing':
-            console.log('lemming pressed: ' + id);
-            Inputs.Mouse.updateLemmingType(id);
+            Mouse.updateLemmingType(id);
             break;
 
         case 'btn3':
@@ -112,8 +134,8 @@ Inputs.ButtonPress = (id)=>{
 // Source: http://stackoverflow.com/questions/1465374/javascript-event-keycode-constants
 //
 //------------------------------------------------------------------
-if (Inputs.KeyEvent === null) {
-    Inputs.KeyEvent = {
+if (KeyEvent === null) {
+    KeyEvent = {
         DOM_VK_CANCEL: 3,
         DOM_VK_HELP: 6,
         DOM_VK_BACK_SPACE: 8,
@@ -232,4 +254,4 @@ if (Inputs.KeyEvent === null) {
     };
 }
 
-module.exports = Inputs;
+module.exports = {KeyEvent, Keyboard, Mouse, ButtonPress};

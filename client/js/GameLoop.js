@@ -33,6 +33,7 @@ GameLoop.run = (game)=>{
 
     function update(elapsedTime) {
         game.update(elapsedTime);
+        // game.inputs.update(elapsedTime);
     }
     function render() {
         graphics.clear();

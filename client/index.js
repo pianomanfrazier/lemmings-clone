@@ -46,12 +46,34 @@ $("#control-panel :button").each((i, button)=>{
 
 var images = [walking, blocker, umbrella, exploding, climbing, splat, drowning,builder, timeup, digging, trap_10tons, trap_hanging, entrance_gate, end_gate];
 
-var loop = require("./js/GameLoop.js");
+var loop        = require("./js/GameLoop.js");
+var Globals     = require('./js/Globals');
+var Graphics    = require("./js/Graphics.js");
+
+var graphics = Graphics(Globals.canvas);
 
 // TODO: this is not a permanent object.  We need to move this into the game loop
 var testGame = {
     inputs,
     lemmings : [],
+    update: (elapsedTime)=>{
+        'use strict';
+
+        _.each(testGame.lemmings, (lemming)=>{
+            lemming.update(elapsedTime);
+        });
+
+        testGame.inputs.Mouse.update({elapsedTime, lemmings: testGame.lemmings});
+    },
+    render: (elapsedTime)=>{
+        'use strict';
+
+        graphics.clear();
+
+        _.each(testGame.lemmings, (lemming)=>{
+            lemming.render();
+        });
+    },
     init: ()=>{
         'use strict';
         var w = 107;
@@ -167,6 +189,11 @@ page('/help', ()=>{
     eMainScreen.slideUp();
     eHelpScreen.slideDown();
 });
+// page('/settings', ()=>{
+//     'use strict';
+//     eMainScreen.slideUp();
+//     eHelpScreen.slideDown();
+// });
 page('/highscores', ()=>{
     'use strict';
     eMainScreen.slideUp();

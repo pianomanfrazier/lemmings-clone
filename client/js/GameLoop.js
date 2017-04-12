@@ -1,13 +1,8 @@
-let _           = require('lodash');
-let Graphics    = require("./Graphics.js");
-let canvas      = require("./Globals.js").canvas;
 
 let GameLoop = {};
 
 GameLoop.rafID = 0;
 GameLoop.isRunning = false;
-
-GameLoop.graphics = Graphics(canvas);
 
 GameLoop.stop = ()=>{
     'use strict';
@@ -24,7 +19,7 @@ GameLoop.run = (game)=>{
     if(GameLoop.isRunning) return;
     GameLoop.isRunning = true;
 
-    let graphics = GameLoop.graphics;
+
     let lastTimeStamp = performance.now();
 
     //FPS for game loop
@@ -33,19 +28,13 @@ GameLoop.run = (game)=>{
     let timeframe = 1000/FPS;
 
     function update(elapsedTime) {
-        _.each(game.lemmings, (lemming)=>{
-            lemming.update(elapsedTime);
-        });
-
-        game.inputs.Mouse.update({elapsedTime, lemmings: game.lemmings});
+        game.update(elapsedTime);
     }
-    function render() {
-        graphics.clear();
 
-        _.each(game.lemmings, (lemming)=>{
-            lemming.render();
-        });
+    function render(elapsedTime) {
+        game.render(elapsedTime);
     }
+
     function gameLoop(time) {
         GameLoop.rafID = window.requestAnimationFrame(gameLoop);
         let elapsedTime = (time - lastTimeStamp);

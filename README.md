@@ -65,7 +65,7 @@ A Lemmings clone using HTML5 and Javascript
 
 - 10tons
   - 192x250 with 12 frames
-- haning
+- hanging
   - 107x250 with 34 frames
   
 ### GATES

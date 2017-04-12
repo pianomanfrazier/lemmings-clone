@@ -66,7 +66,7 @@ let Mouse = (()=>{
 
     function onHover(e) {
         let mousePos = getMousePos(e);
-        console.log(mousePos.x, mousePos.y);
+        // console.log(mousePos.x, mousePos.y);
 
         // need to have access to the lemmings
 
@@ -83,14 +83,16 @@ let Mouse = (()=>{
 
                 if(click.location.x > left && click.location.x < right &&
                    click.location.y > top && click.location.y < bottom) {
-                       console.log("inside lemming");
+                    if(that.lemmingType !== '' && !_.has(lemming.type, that.lemmingType)) {
+                        lemming.type[that.lemmingType] = that.lemmingType;
+                    }
                 }
             });
         });
     };
 
     that.updateLemmingType = (type)=>{
-        that.lemmingType = type;
+        that.lemmingType = (that.lemmingType === '' || that.lemmingType !== type) ? type : '';
     };
 
     Globals.canvas.addEventListener('mousedown', clickDown);

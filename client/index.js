@@ -57,9 +57,10 @@ var testGame = {
         var w = 107;
         var h = 250;
         testGame.lemmings.push( Sprite({
+            type: {},
             reverse: false,
             img: images[11],
-            center: {x: w + 500, y: h + 500},
+            center: {x: w + 50, y: h + 50},
             width: w, //width to be drawn
             height: h,
             startX: 0, //top left corner of sprite
@@ -72,9 +73,10 @@ var testGame = {
         w = 192;
         h = 250;
         testGame.lemmings.push( Sprite({
+            type: {},
             reverse: false,
             img: images[10],
-            center: {x: w + 200, y: h + 200},
+            center: {x: w + 20, y: h + 20},
             width: w, //width to be drawn
             height: h,
             startX: 0, //top left corner of sprite
@@ -87,9 +89,10 @@ var testGame = {
         w = 50;
         h = w;
         testGame.lemmings.push( Sprite({
+            type: {},
             reverse: false,
             img: images[0],
-            center: {x: w + 100, y: h + 100},
+            center: {x: w + 10, y: h + 10},
             width: w, //width to be drawn
             height: h,
             startX: 0, //top left corner of sprite
@@ -102,9 +105,10 @@ var testGame = {
         w = 100;
         h = 70;
         testGame.lemmings.push( Sprite({
+            type: {},
             reverse: false,
             img: images[12],
-            center: {x: w + 700, y: h + 700},
+            center: {x: w + 70, y: h + 70},
             width: w, //width to be drawn
             height: h,
             startX: 0, //top left corner of sprite
@@ -117,9 +121,10 @@ var testGame = {
         w = 100;
         h = 70;
         testGame.lemmings.push( Sprite({
+            type: {},
             reverse: false,
             img: images[13],
-            center: {x: w + 300, y: h + 700},
+            center: {x: w + 30, y: h + 70},
             width: w, //width to be drawn
             height: h,
             startX: 0, //top left corner of sprite

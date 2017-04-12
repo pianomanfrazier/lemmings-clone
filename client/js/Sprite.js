@@ -18,14 +18,15 @@ let Graphics = require("./Globals.js").graphics;
 
 let Sprite = (spec)=>{
     'use strict';
-    let that = {};
-    let accumTime = 0;
-    let frameNumber = 0;
-    let numFrames = spec.numFrames;
+    let that = {},
+        accumTime = 0,
+        frameNumber = 0,
+        numFrames = spec.numFrames;
 
-    that.center = spec.center;
-    that.width = spec.width;
-    that.height = spec.height;
+    that.type       = spec.type;
+    that.center     = spec.center;
+    that.width      = spec.width;
+    that.height     = spec.height;
 
     that.update = (elapsedTime)=>{
         accumTime += elapsedTime;

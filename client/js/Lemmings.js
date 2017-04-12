@@ -4,6 +4,7 @@ let spriteConfig = require("./config.js").sprites;
 var Sprite = require("./Sprite.js");
 
 let Lemmings = {};
+//for testing only
 Lemmings.type = 'blocking';
 
 Lemmings.lemmings = []; //store all lemmings here
@@ -17,9 +18,8 @@ Lemmings.sprites = {};
 Lemmings.score = 0;
 Lemmings.user = "";
 
-Lemmings.init =(spec)=>{
+Lemmings.init = ()=>{
     'use strict';
-    Lemmings.user = spec.user;
     //load level
     //load all sprite sheets
     //reset variables
@@ -32,10 +32,8 @@ Lemmings.init =(spec)=>{
                 reverse: false,
                 img: img,
                 center: {x: 100 + 2*i, y: 100 + 2*i},
-                //width: spec.width * (spec.scaleFactor) ? spec.scaleFactor : spriteConfig.SCALE_FACTOR, //width to be drawn
-                //height: spec.height * (spec.scaleFactor) ? spec.scaleFactor : spriteConfig.SCALE_FACTOR, //height to be drawn
-                width: spec.width * spriteConfig.SCALE_FACTOR,
-                height: spec.height * spriteConfig.SCALE_FACTOR,
+                width: spec.width * ((spec.scaleFactor) ? spec.scaleFactor : spriteConfig.SCALE_FACTOR), //width to be drawn
+                height: spec.height * ((spec.scaleFactor) ? spec.scaleFactor : spriteConfig.SCALE_FACTOR), //height to be drawn
                 startX: 0, //top left corner of sprite
                 startY: 0,
                 frameWidth: spec.width, //width of image
@@ -67,6 +65,7 @@ Lemmings.update = (elapsedTime)=>{
     _.each(Lemmings.lemmings, (lemming)=>{
         lemming.update(elapsedTime);
     });
+    //for testing only
     Lemmings.sprites[Lemmings.type].update(elapsedTime);
     //Lemmings.world.update(elapsedTime);
 };
@@ -75,6 +74,7 @@ Lemmings.render = ()=>{
     _.each(Lemmings.lemmings, (lemming)=>{
         lemming.render();
     });
+    //for testing only
     Lemmings.sprites[Lemmings.type].render();
     //Lemmings.world.render();
 };

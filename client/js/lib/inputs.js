@@ -1,5 +1,5 @@
-var _           = require('lodash');
-var Globals     = require('./../Globals');
+let _           = require('lodash');
+let Globals     = require('./../Globals');
 
 
 let KeyEvent = null;
@@ -42,10 +42,8 @@ let Mouse = (()=>{
     'use strict';
 
     let that = {
-        clicks: {},
-        handlers: [],
-        lemmingType: '',
-        currLocation: {}
+        clicks: [],
+        lemmingType: ''
     };
 
     function getMousePos(e) {
@@ -57,32 +55,37 @@ let Mouse = (()=>{
     }
 
     function clickDown(e) {
-        // TODO: may need to figure out a better key for this
         let location = getMousePos(e);
-        // console.log('x: ' + location.x, 'y: ' + location.y);
         let lemmingType = that.lemmingType;
-        that.clicks[lemmingType] = {
-            location,
-            timeStamp: e.timeStamp
-        };
+        that.clicks.push({location, lemmingType, timeStamp: e.timeStamp});
     }
 
     function clickUp(e) {
-        let lemmingType = that.lemmingType;
-        delete that.clicks[lemmingType];
+        that.clicks.pop(); // remove the oldest input click
     }
 
     function onHover(e) {
         let mousePos = getMousePos(e);
-        // console.log('x: ' + mousePos.x, 'y: ' + mousePos.y);
-        that.currLocation = mousePos;
+        console.log(mousePos.x, mousePos.y);
+
+        // need to have access to the lemmings
+
+        // check though all the lemmings
     }
 
-    that.update = (elapsedTime)=>{
-        _.each(that.handlers, (handler, index)=>{
-            if (that.clicks.hasOwnProperty(handler.key)) {
-                that.handlers[index].handler(elapsedTime);
-            }
+    that.update = (spec)=>{
+        _.each(that.clicks, (click)=>{
+            _.each(spec.lemmings, (lemming)=>{
+                let left = lemming.center.x - (lemming.width / 2);
+                let right= lemming.center.x + (lemming.width / 2);
+                let top = lemming.center.y - (lemming.height / 2);
+                let bottom = lemming.center.y + (lemming.height / 2);
+
+                if(click.location.x > left && click.location.x < right &&
+                   click.location.y > top && click.location.y < bottom) {
+                       console.log("inside lemming");
+                }
+            });
         });
     };
 
@@ -103,6 +106,7 @@ let ButtonPress = (id)=>{
     switch(id) {
         case 'pause-btn':
             // TODO: call game's stop function
+
             console.log('game state pressed: ' + id);
             break;
 

@@ -52,20 +52,6 @@ var loop = require("./js/GameLoop.js");
 var testGame = {
     inputs,
     lemmings : [],
-    update: (elapsedTime)=>{
-        'use strict';
-
-        _.each(this.lemmings, (lemming)=>{
-            lemming.update(elapsedTime);
-        });
-    },
-    render: ()=>{
-        'use strict';
-
-        _.each(this.lemmings, (lemming)=>{
-            lemming.render();
-        });
-    },
     init: ()=>{
         'use strict';
         var w = 107;

@@ -1,3 +1,4 @@
+let _           = require('lodash');
 let Graphics    = require("./Graphics.js");
 let canvas      = require("./Globals.js").canvas;
 
@@ -32,25 +33,32 @@ GameLoop.run = (game)=>{
     let timeframe = 1000/FPS;
 
     function update(elapsedTime) {
-        game.update(elapsedTime);
-        // game.inputs.update(elapsedTime);
+        _.each(game.lemmings, (lemming)=>{
+            lemming.update(elapsedTime);
+        });
+
+        game.inputs.Mouse.update({elapsedTime, lemmings: game.lemmings});
     }
     function render() {
         graphics.clear();
-        game.render();
+
+        _.each(game.lemmings, (lemming)=>{
+            lemming.render();
+        });
     }
     function gameLoop(time) {
         GameLoop.rafID = window.requestAnimationFrame(gameLoop);
         let elapsedTime = (time - lastTimeStamp);
 
-    accumtime += elapsedTime;
-    if (accumtime > timeframe) {
-        update(accumtime);
-            render();
-        accumtime = 0;
-    }
+        accumtime += elapsedTime;
 
-    lastTimeStamp = time;
+        if (accumtime > timeframe) {
+            update(accumtime);
+            render();
+            accumtime = 0;
+        }
+
+        lastTimeStamp = time;
     }
 
     window.requestAnimationFrame(gameLoop);

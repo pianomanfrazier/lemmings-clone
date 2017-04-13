@@ -8,13 +8,13 @@ $mini-map-scale: 0.2;
 $green: #00AD2F;
 $yellow: #EEFD4E;
 
-#GameScreen, #AboutScreen, #HelpScreen, #HighScoresScreen, #settings-screen {
+#GameScreen, #AboutScreen, #HelpScreen, #HighScoresScreen, #SettingsScreen {
     display: none;
 }
 
 #SettingsScreen {
     #hot-keys {
-        display: inline-grid;
+        display: grid;
     }
 
     input {

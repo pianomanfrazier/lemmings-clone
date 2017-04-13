@@ -1,3 +1,9 @@
+////////////////////////////////////////////////
+// TODO: split out route functions into Routes.js
+//       this way can handle exit /game more effectively with /index callback
+//       for now exit /game calls loop.stop()
+//       it needs to go back to the main menu
+////////////////////////////////////////////////
 var page = require("page");
 var $ = require("jquery");
 
@@ -32,6 +38,10 @@ page('/game', ()=>{
     eGameScreen.slideDown();
 
     loop.run(Lemmings);
+});
+page.exit('/game', ()=>{
+    'use strict';
+    loop.stop();
 });
 page('/about', ()=>{
     'use strict';

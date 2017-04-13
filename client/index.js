@@ -43,24 +43,24 @@ var Graphics    = require("./js/Graphics.js");
 
 var graphics = Graphics(Globals.canvas);
 
-$(document).ready(()=>{
+//the document is ready because this is called after all elements
+//are injected to the page
+//should us JQuery.on() to dynamically bind events
+//see http://stackoverflow.com/questions/6658752/click-event-doesnt-work-on-dynamically-generated-elements
+$(document).on('click','#hotkey-save-btn', ()=>{
     'use strict';
+    inputs.ButtonPress('hotkey-save', getHotKeys());
+});
 
-    $('#hot-keys :button').each((i, button)=>{
-        $(button).click(()=>{
-            inputs.ButtonPress('hotkey-save', getHotKeys());
-        });
-    });
+//not sure why this works and the other doesn't
+$('#control-panel :button').each((i, button)=>{
 
-    $('#control-panel :button').each((i, button)=>{
+    let regex =/lemming-\w{0,}/;
+    let match = regex.exec(button.id);
+    let type = (match) ? match[0] : button.id;
 
-        let regex =/lemming-\w{0,}/;
-        let match = regex.exec(button.id);
-        let type = (match) ? match[0] : button.id;
-
-        $(button).click(()=>{
-            inputs.ButtonPress(type);
-        });
+    $(button).click(()=>{
+        inputs.ButtonPress(type);
     });
 });
 

@@ -112,6 +112,7 @@ let ButtonPress = (id, obj)=>{
             console.log('game state pressed: ' + id);
             break;
         case 'hotkey-save':
+            console.log("save pressed");
 
             if(obj) {
                 Settings.storage.save(obj);

@@ -29,12 +29,17 @@ sprites.climbing = {
     height: 55,
     frames: 7
 };
+//need a climb over ridge animation, frames 8-16 on climber sprite sheet
+sprites.climb_over = {
+    width: 55,
+    height: 55,
+    frames: 9
+};
 sprites.builder = {
     width: 64,
     height: 64,
     frames: 16
 };
-//need a climb over ridge animation, frames 8-16 on climber sprite sheet
 sprites.splatting = {
     width: 80,
     height: 50,

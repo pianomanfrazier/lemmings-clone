@@ -14,3 +14,25 @@
 //  Lemming.update(elapsedTime) //update position, process collisions, death events, mouse hover events
 //  ??isHover boolean flag??
 //  Lemming.render() //render the active sprite at the location of the lemming
+//
+//Components
+//
+// Lemming:
+//  state (walking, falling, climbing, umbrella, exploding, drowning, blocking...)
+//  types (umbrella, climber)
+//
+// Traps:
+//  types: 10tons, hanger
+//  activate when lemming contacts the center
+//
+// Game Level Objects:
+//  platforms:
+//   can be walked on
+//   if walk of ledge, if too far splat at bottom, if umbrella start don't splat
+//  walls:
+//   reverse walker
+//   starts climber going up (when center reaches top, start climb over animation)
+//  opening gate:
+//   release lemming at specified rate
+//  destination gate:
+//   on lemming contact start walking away animation, update score

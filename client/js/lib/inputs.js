@@ -1,5 +1,6 @@
 let _           = require('lodash');
 let Globals     = require('./../Globals');
+let Settings    = require('./../settings');
 
 
 let KeyEvent = null;
@@ -84,7 +85,7 @@ let Mouse = (()=>{
                 if(click.location.x > left && click.location.x < right &&
                    click.location.y > top && click.location.y < bottom) {
                     if(that.lemmingType !== '' && !_.has(lemming.type, that.lemmingType)) {
-                        lemming.type[that.lemmingType] = that.lemmingType;
+                        lemming.type[that.lemmingType] = that.lemmingType;   that.center     = spec.center;
                     }
                 }
             });
@@ -102,14 +103,19 @@ let Mouse = (()=>{
     return that;
 })();
 
-let ButtonPress = (id)=>{
+let ButtonPress = (id, obj)=>{
     'use strict';
 
     switch(id) {
         case 'pause-btn':
             // TODO: call game's stop function
-
             console.log('game state pressed: ' + id);
+            break;
+        case 'hotkey-save':
+
+            if(obj) {
+                Settings.storage.save(obj);
+            }
             break;
 
         case 'speed-up-btn':

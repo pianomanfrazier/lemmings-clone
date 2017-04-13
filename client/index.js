@@ -3,6 +3,7 @@ var $           = require("jquery");
 var _           = require("lodash");
 var index       = require("./js/views/index.hbs");
 var highscores  = require("./js/views/highscores.hbs");
+var settings    = require("./js/views/settings.hbs");
 
 var eApp = document.getElementById("app");
 eApp.innerHTML          = index({});
@@ -10,8 +11,10 @@ var eMainScreen         = $("#MainScreen");
 var eGameScreen         = $("#GameScreen");
 var eAboutScreen        = $("#AboutScreen");
 var eHelpScreen         = $("#HelpScreen");
+var eSettingScreen      = $("#SettingsScreen");
 var eHighScoresScreen   = $("#HighScoresScreen");
-var screens             = [eGameScreen, eAboutScreen, eHelpScreen, eHighScoresScreen];
+
+var screens = [eGameScreen, eAboutScreen, eSettingScreen, eHelpScreen, eHighScoresScreen];
 
 var Sprite = require("./js/Sprite.js");
 
@@ -32,18 +35,6 @@ var end_gate        = document.getElementById("end_gate");
 
 var inputs          = require("./js/lib/inputs");
 
-$("#control-panel :button").each((i, button)=>{
-    'use strict';
-
-    let regex =/lemming-\w{0,}/;
-    let match = regex.exec(button.id);
-    let type = (match) ? match[0] : button.id;
-
-    $(button).click(()=>{
-        inputs.ButtonPress(type);
-    });
-});
-
 var images = [walking, blocker, umbrella, exploding, climbing, splat, drowning,builder, timeup, digging, trap_10tons, trap_hanging, entrance_gate, end_gate];
 
 var loop        = require("./js/GameLoop.js");
@@ -51,6 +42,40 @@ var Globals     = require('./js/Globals');
 var Graphics    = require("./js/Graphics.js");
 
 var graphics = Graphics(Globals.canvas);
+
+$(document).ready(()=>{
+    'use strict';
+
+    $('#hot-keys :button').each((i, button)=>{
+        $(button).click(()=>{
+            inputs.ButtonPress('hotkey-save', getHotKeys());
+        });
+    });
+
+    $('#control-panel :button').each((i, button)=>{
+
+        let regex =/lemming-\w{0,}/;
+        let match = regex.exec(button.id);
+        let type = (match) ? match[0] : button.id;
+
+        $(button).click(()=>{
+            inputs.ButtonPress(type);
+        });
+    });
+});
+
+function getHotKeys() {
+    'use strict';
+
+    let hotKeys = {};
+    $('#hot-keys :input').each((i, input)=>{
+        let value = $(input).value;
+
+        hotKeys[input] = value;
+    });
+
+    return hotKeys;
+}
 
 // TODO: this is not a permanent object.  We need to move this into the game loop
 var testGame = {
@@ -189,11 +214,13 @@ page('/help', ()=>{
     eMainScreen.slideUp();
     eHelpScreen.slideDown();
 });
-// page('/settings', ()=>{
-//     'use strict';
-//     eMainScreen.slideUp();
-//     eHelpScreen.slideDown();
-// });
+page('/settings', ()=>{
+    'use strict';
+    eMainScreen.slideUp();
+    eSettingScreen.slideDown();
+    // TODO: need to store the hotkeys in the browser storage
+    eSettingScreen.html(settings({hotKeys: ''/* browserr storage*/}));
+});
 page('/highscores', ()=>{
     'use strict';
     eMainScreen.slideUp();

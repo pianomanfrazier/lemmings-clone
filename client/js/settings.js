@@ -22,4 +22,4 @@ let storage = (()=>{
     return that;
 })();
 
-module.export = {storage};
+module.exports = {storage};

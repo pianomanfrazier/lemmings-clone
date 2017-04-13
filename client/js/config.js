@@ -3,7 +3,7 @@ let sprites = {};
 
 //sprite sheet params, height width, image names
 sprites.ANIMATION_SPEED = 200;
-sprites.SCALE_FACTOR = 0.5;
+sprites.SCALE_FACTOR = 0.3;
 sprites.walking = {
     width: 50,
     height: 50,
@@ -74,7 +74,8 @@ sprites.entrance_gate = {
 sprites.end_gate = {
     width: 100,
     height: 70,
-    frames: 6
+    frames: 6,
+    scaleFactor: 0.8
 };
 
 config.sprites = sprites;

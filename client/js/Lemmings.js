@@ -5,7 +5,7 @@ var Sprite = require("./Sprite.js");
 
 let Lemmings = {};
 //for testing only
-Lemmings.type = 'blocking';
+Lemmings.type = 'trap_hanging';
 
 Lemmings.lemmings = []; //store all lemmings here
 Lemmings.sprites = {};
@@ -28,19 +28,19 @@ Lemmings.init = ()=>{
         img.onload = ()=>{
             let type = img.id.slice(8); //remove "lemming_" from id
             let spec = spriteConfig[type];
-            Lemmings.sprites[type] = ( Sprite({
+            Lemmings.sprites[type] = Sprite({
                 reverse: false,
                 img: img,
                 center: {x: 100 + 2*i, y: 100 + 2*i},
                 width: spec.width * ((spec.scaleFactor) ? spec.scaleFactor : spriteConfig.SCALE_FACTOR), //width to be drawn
                 height: spec.height * ((spec.scaleFactor) ? spec.scaleFactor : spriteConfig.SCALE_FACTOR), //height to be drawn
-                startX: 0, //top left corner of sprite
-                startY: 0,
+                startX: (spec.startX) ? spec.startX : 0, //top left corner of sprite
+                startY: (spec.startY) ? spec.startY : 0,
                 frameWidth: spec.width, //width of image
                 frameHeight: spec.height,
                 numFrames: spec.frames,
                 animationRate: (spec.speed) ? spec.speed : spriteConfig.ANIMATION_SPEED
-            }));
+            });
         };
     });
 };

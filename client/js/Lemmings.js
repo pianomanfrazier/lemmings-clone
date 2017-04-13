@@ -1,3 +1,6 @@
+////////////////////////////////////////////////
+// TODO: load images at runtime not on page load, remove from index.hbs
+////////////////////////////////////////////////
 let $ = require("jquery");
 let _ = require("lodash");
 let spriteConfig = require("./config.js").sprites;
@@ -5,14 +8,10 @@ var Sprite = require("./Sprite.js");
 
 let Lemmings = {};
 //for testing only
-Lemmings.type = 'trap_hanging';
+Lemmings.type = 'end_gate';
 
 Lemmings.lemmings = []; //store all lemmings here
 Lemmings.sprites = {};
-///////////////////////////////
-// Images
-// TODO: load images at runtime not on page load, remove from index.hbs
-///////////////////////////////
 //Lemmings.world = World(spec); //generate a level according to specs
 //need to detect collisions between lemmings and world objects
 Lemmings.score = 0;
@@ -31,7 +30,7 @@ Lemmings.init = ()=>{
             Lemmings.sprites[type] = Sprite({
                 reverse: false,
                 img: img,
-                center: {x: 100 + 2*i, y: 100 + 2*i},
+                center: {x: 100, y: 100}, //this is arbitrary for testing
                 width: spec.width * ((spec.scaleFactor) ? spec.scaleFactor : spriteConfig.SCALE_FACTOR), //width to be drawn
                 height: spec.height * ((spec.scaleFactor) ? spec.scaleFactor : spriteConfig.SCALE_FACTOR), //height to be drawn
                 startX: (spec.startX) ? spec.startX : 0, //top left corner of sprite

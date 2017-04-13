@@ -117,7 +117,7 @@ lemming.on('hover').drawBox()
   - steel
   - water
   - trap
-  - ornamental (no collision detection)
+  - ornamental (no collision detection) (trees, clouds, ...)
   
 - WORLD representation
   - json config

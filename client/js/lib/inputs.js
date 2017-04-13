@@ -115,7 +115,7 @@ let ButtonPress = (id, obj)=>{
             console.log("save pressed");
 
             if(obj) {
-                Settings.storage.save(obj);
+                Settings.storage.add('hotkeys',obj);
             }
             break;
 

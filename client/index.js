@@ -54,6 +54,7 @@ $(document).on('click','#hotkey-save-btn', ()=>{
 
 //not sure why this works and the other doesn't
 $('#control-panel :button').each((i, button)=>{
+    'use strict';
 
     let regex =/lemming-\w{0,}/;
     let match = regex.exec(button.id);
@@ -69,9 +70,15 @@ function getHotKeys() {
 
     let hotKeys = {};
     $('#hot-keys :input').each((i, input)=>{
-        let value = $(input).value;
+        let value = $(input).val().toUpperCase();
 
-        hotKeys[input] = value;
+        let id = $(input).attr('id');
+
+        if(id !== 'hotkey-save-btn') {
+            // todo: we can either store the key's value (e.g. 65 for DOM_VK_A) or we can store the key (e.g. DOM_VK_A)
+            // I don't know which one is going to be better in this case.
+            hotKeys[id] = 'DOM_VK_' + value;
+        }
     });
 
     return hotKeys;

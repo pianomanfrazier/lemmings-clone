@@ -10,14 +10,18 @@ let storage = (()=>{
     }
 
     that.add = (name, value)=>{
-        that.hotKeys[name] = value;
-        localStorage['Lemmings.hotKeys'] = JSON.stringify(that.hotKeys);
+        switch(name) {
+            case 'hotkeys':
+                localStorage['Lemmings.hotKeys'] = JSON.stringify(value);
+                break;
+            default:
+        }
     };
 
-    that.remove = (key)=>{
-        delete that.hotKeys[key];
-        localStorage['Lemmings.hotKeys'] = JSON.stringify(that.hotKeys);
-    };
+    // that.remove = (name, key)=>{
+    //     delete that.hotKeys[key];
+    //     localStorage['Lemmings.hotKeys'] = JSON.stringify(that.hotKeys);
+    // };
 
     return that;
 })();

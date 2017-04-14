@@ -108,10 +108,8 @@ var testGame = {
         testGame.inputs.Keyboard.update(elapsedTime);
 
         // check local storage
-        let hotKeys = settings.storage.retrieve('hotKeys');
-        if(hotKeys === null) {
-            settings.storage.add('hotKeys', testGame.hotKeys);
-        } else if (settings.storage.hotKeysUpdate) {
+        if (settings.storage.hotKeysUpdate) {
+            let hotKeys = settings.storage.retrieve('hotKeys');
             settings.storage.hotKeysUpdate = false;
 
             _.each(hotKeys, (key)=>{
@@ -254,6 +252,12 @@ page('/', ()=>{
         screen.slideUp();
     });
     eMainScreen.slideDown();
+
+    let hotKeys = settings.storage.retrieve('hotKeys');
+    if(hotKeys === null || hotKeys === []) {
+        settings.storage.add('hotKeys', testGame.hotKeys);
+    }
+
 });
 page('/game', ()=>{
     'use strict';

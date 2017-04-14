@@ -1,3 +1,4 @@
+let $           = require("jquery");
 let _           = require('lodash');
 let Globals     = require('./../Globals');
 let Settings    = require('./../settings');
@@ -86,6 +87,7 @@ let Mouse = (()=>{
                    click.location.y > top && click.location.y < bottom) {
                     if(that.lemmingType !== '' && !_.has(lemming.type, that.lemmingType)) {
                         lemming.type[that.lemmingType] = that.lemmingType;   that.center     = spec.center;
+                        console.log('click: ' + that.lemmingType);
                     }
                 }
             });
@@ -134,6 +136,20 @@ let ButtonPress = (id, obj)=>{
         case 'lemming-exploding':
         case 'lemming-umbrella':
         case 'lemming-climbing':
+            // $('#control-panel :button').each((i, button)=>{
+
+            //     let regex =/lemming-\w{0,}/;
+            //     let match = regex.exec(button.id);
+            //     let type = (match) ? match[0] : button.id;
+
+            //     $(button).click(()=>{
+            //         inputs.ButtonPress(type);
+            //     });
+            // });
+            // _.each(buttons, (button)=>{$(button).removeClass(".active");})
+            // $(#id).addClass(".active");
+            // //need to manage lemming resources eventually (blockers, exploders, umbrellaers,...)
+            // GameModel.activeButton = id;
             Mouse.updateLemmingType(id);
             console.log('pressed: ' + id);
             break;

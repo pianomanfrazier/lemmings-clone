@@ -135,6 +135,7 @@ let ButtonPress = (id, obj)=>{
         case 'lemming-umbrella':
         case 'lemming-climbing':
             Mouse.updateLemmingType(id);
+            console.log('pressed: ' + id);
             break;
 
         case 'btn3':

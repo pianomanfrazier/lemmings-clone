@@ -76,8 +76,6 @@ function getHotKeys() {
         let id = $(input).attr('id');
 
         if(id !== 'hotkey-save-btn') {
-            // todo: we can either store the key's value (e.g. 65 for DOM_VK_A) or we can store the key (e.g. DOM_VK_A)
-            // I don't know which one is going to be better in this case.
             hotKeys.push({id, value});
         }
     });
@@ -107,11 +105,47 @@ var testGame = {
         });
 
         testGame.inputs.Mouse.update({elapsedTime, lemmings: testGame.lemmings});
+        testGame.inputs.Keyboard.update(elapsedTime);
 
         // check local storage
         let hotKeys = settings.storage.retrieve('hotKeys');
         if(hotKeys === null) {
             settings.storage.add('hotKeys', testGame.hotKeys);
+        } else if (settings.storage.hotKeysUpdate) {
+            settings.storage.hotKeysUpdate = false;
+
+            _.each(hotKeys, (key)=>{
+                let type = "";
+                switch(key.id) {
+                    case 'pause':
+                        type = 'pause-btn';
+                        break;
+                    case 'atomicBomb':
+                        type = 'atomic-bomb-btn';
+                        break;
+                    case 'lemmingStop':
+                        type = 'lemming-blocking';
+                        break;
+                    case 'lemmingBomb':
+                        type = 'lemming-exploding';
+                        break;
+                    case 'lemmingUmbrella':
+                        type = 'lemming-umbrella';
+                        break;
+                    case 'lemmingClimb':
+                        type = 'lemming-climbing';
+                        break;
+                    case 'fastForward':
+                        type = 'speed-up-btn';
+                        break;
+                    case 'slowDown':
+                        type = 'speed-down-btn';
+                        break;
+                    default:
+                }
+
+                inputs.Keyboard.registerCommand(inputs.KeyEvent['DOM_VK_' + key.value], ()=>inputs.ButtonPress(type));
+            });
         }
     },
     render: (elapsedTime)=>{
@@ -225,6 +259,8 @@ page('/game', ()=>{
     'use strict';
     eMainScreen.slideUp();
     eGameScreen.slideDown();
+
+    settings.storage.hotKeysUpdate = true;
 
     loop.run(testGame);
 });

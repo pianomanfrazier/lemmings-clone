@@ -16,9 +16,11 @@ let storage = (()=>{
     that.add = (name, value)=>{
         switch(name) {
             case 'hotKeys':
+                that.hotKeysUpdate = true;
                 localStorage['Lemmings.hotKeys'] = JSON.stringify(value);
                 break;
             default:
+            that.hotKeysUpdate = false;
         }
     };
 

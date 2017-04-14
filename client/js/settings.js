@@ -9,9 +9,13 @@ let storage = (()=>{
         that.hotKeys = JSON.parse(that.previousHotKeys);
     }
 
+    that.retrieve = (name)=>{
+        return JSON.parse(localStorage.getItem('Lemmings.' + name));
+    };
+
     that.add = (name, value)=>{
         switch(name) {
-            case 'hotkeys':
+            case 'hotKeys':
                 localStorage['Lemmings.hotKeys'] = JSON.stringify(value);
                 break;
             default:

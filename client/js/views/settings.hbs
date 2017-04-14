@@ -2,13 +2,18 @@
 
     <div id="hot-keys" class="content-well">
         <h3>Hot Keys</h3>
-        <label for="pause">Pause: </label><input type="text" id="pause" placeholder=""/>
+{{#if hotKeys}}
+    {{#each hotKeys}}
+        <label for="{{id}}">{{id}}: </label><input type="text" id="{{id}}" placeholder="" value="{{value}}"/>
+    {{/each}}
+{{/if}}
+        {{!--<label for="pause">Pause: </label><input type="text" id="pause" placeholder=""/>
         <label for="atomicBomb">Atomic Bomb: </label><input type="text" id="atomicBomb" placeholder=""/>
         <label for="lemmingStop">Lemming Stop: </label><input type="text" id="lemmingStop" placeholder=""/>
         <label for="lemmingBomb">Lemming Bomb: </label><input type="text" id="lemmingBomb" placeholder=""/>
         <label for="lemmingUmbrella">Lemming Umbrella: </label><input type="text" id="lemmingUmbrella" placeholder=""/>
         <label for="lemmingClimb">Lemming Climber: </label><input type="text" id="lemmingClimb" placeholder=""/>
         <label for="fastForward">Fast Forward: </label><input type="text" id="fastForward" placeholder=""/>
-        <label for="slowDown">Slow Down: </label><input type="text" id="slowDown" placeholder=""/>
+        <label for="slowDown">Slow Down: </label><input type="text" id="slowDown" placeholder=""/>--}}
         <button id="hotkey-save-btn" class="btn bump">Save</button>
     </div>

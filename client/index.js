@@ -1,9 +1,10 @@
 var page        = require("page");
 var $           = require("jquery");
 var _           = require("lodash");
+var settings    = require("./js/settings");
 var index       = require("./js/views/index.hbs");
 var highscores  = require("./js/views/highscores.hbs");
-var settings    = require("./js/views/settings.hbs");
+var settingsPG    = require("./js/views/settings.hbs");
 
 var eApp = document.getElementById("app");
 eApp.innerHTML          = index({});
@@ -38,7 +39,7 @@ var inputs          = require("./js/lib/inputs");
 var images = [walking, blocker, umbrella, exploding, climbing, splat, drowning,builder, timeup, digging, trap_10tons, trap_hanging, entrance_gate, end_gate];
 
 var loop        = require("./js/GameLoop.js");
-var Globals     = require('./js/Globals');
+var Globals     = require("./js/Globals");
 var Graphics    = require("./js/Graphics.js");
 
 var graphics = Graphics(Globals.canvas);
@@ -68,7 +69,7 @@ $('#control-panel :button').each((i, button)=>{
 function getHotKeys() {
     'use strict';
 
-    let hotKeys = {};
+    let hotKeys = [];
     $('#hot-keys :input').each((i, input)=>{
         let value = $(input).val().toUpperCase();
 
@@ -77,7 +78,7 @@ function getHotKeys() {
         if(id !== 'hotkey-save-btn') {
             // todo: we can either store the key's value (e.g. 65 for DOM_VK_A) or we can store the key (e.g. DOM_VK_A)
             // I don't know which one is going to be better in this case.
-            hotKeys[id] = 'DOM_VK_' + value;
+            hotKeys.push({id, value});
         }
     });
 
@@ -87,6 +88,16 @@ function getHotKeys() {
 // TODO: this is not a permanent object.  We need to move this into the game loop
 var testGame = {
     inputs,
+    hotKeys: [
+        {"id":"pause", "value":"A"},
+        {"id":"atomicBomb", "value":"B"},
+        {"id":"lemmingStop", "value":"C"},
+        {"id":"lemmingBomb", "value":"D"},
+        {"id":"lemmingUmbrella", "value":"E"},
+        {"id":"lemmingClimb", "value":"F"},
+        {"id":"fastForward", "value":"G"},
+        {"id":"slowDown", "value":"H"}
+    ],
     lemmings : [],
     update: (elapsedTime)=>{
         'use strict';
@@ -96,6 +107,12 @@ var testGame = {
         });
 
         testGame.inputs.Mouse.update({elapsedTime, lemmings: testGame.lemmings});
+
+        // check local storage
+        let hotKeys = settings.storage.retrieve('hotKeys');
+        if(hotKeys === null) {
+            settings.storage.add('hotKeys', testGame.hotKeys);
+        }
     },
     render: (elapsedTime)=>{
         'use strict';
@@ -226,7 +243,8 @@ page('/settings', ()=>{
     eMainScreen.slideUp();
     eSettingScreen.slideDown();
     // TODO: need to store the hotkeys in the browser storage
-    eSettingScreen.html(settings({hotKeys: ''/* browserr storage*/}));
+    let keys = settings.storage.retrieve('hotKeys');
+    eSettingScreen.html(settingsPG({hotKeys: keys}));
 });
 page('/highscores', ()=>{
     'use strict';

@@ -36,3 +36,19 @@
 //   release lemming at specified rate
 //  destination gate:
 //   on lemming contact start walking away animation, update score
+let Lemming = {};
+
+Lemming.spriteType = "falling"; //defaults to falling
+//hash of all the sprite strips
+Lemming.sprites = require("./GenSpriteSet.js")();
+
+Lemming.update = (elapsedTime)=>{
+    'use strict';
+    Lemming.sprites[Lemming.type].update(elapsedTime);
+};
+Lemming.render = ()=>{
+    'use strict';
+    Lemming.sprites[Lemming.type].render();
+};
+
+module.exports = Lemming;

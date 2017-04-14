@@ -5,9 +5,15 @@
 - Ryan Frazier
 - Seth Bertlshofer
 
-## Game to Implement 
+## Game to Implement
 
 We will be implementing the [Lemmings game](https://www.youtube.com/watch?v=xIuxB1oR2WQ)
+
+# run project
+- install all node_modules (we use yarn `yarn` at project root and in server/)
+- go to server/ run `nodemon`
+- open a new terminal, go to project root and run `gulp`
+- open your browser to `localhost:3000`
 
 ## Milestone Points
 

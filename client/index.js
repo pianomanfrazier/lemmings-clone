@@ -146,7 +146,7 @@ var testGame = {
             });
         }
     },
-    render: (elapsedTime)=>{
+    render: ()=>{
         'use strict';
 
         graphics.clear();

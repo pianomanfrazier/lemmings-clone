@@ -136,20 +136,12 @@ let ButtonPress = (id, obj)=>{
         case 'lemming-exploding':
         case 'lemming-umbrella':
         case 'lemming-climbing':
-            // $('#control-panel :button').each((i, button)=>{
+            $('#control-panel :button').each((i, button)=>{
+                $(button).removeClass("active");
+            });
 
-            //     let regex =/lemming-\w{0,}/;
-            //     let match = regex.exec(button.id);
-            //     let type = (match) ? match[0] : button.id;
+            $('#' + id + '-btn').addClass('active');
 
-            //     $(button).click(()=>{
-            //         inputs.ButtonPress(type);
-            //     });
-            // });
-            // _.each(buttons, (button)=>{$(button).removeClass(".active");})
-            // $(#id).addClass(".active");
-            // //need to manage lemming resources eventually (blockers, exploders, umbrellaers,...)
-            // GameModel.activeButton = id;
             Mouse.updateLemmingType(id);
             console.log('pressed: ' + id);
             break;

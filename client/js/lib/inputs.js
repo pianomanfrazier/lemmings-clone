@@ -131,6 +131,7 @@ let ButtonPress = (id, obj)=>{
 
         case 'lemming-pickaxe':
         case 'lemming-digging':
+        case 'lemming-bashing':
         case 'lemming-builder':
         case 'lemming-blocking':
         case 'lemming-exploding':

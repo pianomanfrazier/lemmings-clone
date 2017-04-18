@@ -35,6 +35,8 @@ Lemmings.init = ()=>{
     }
     //you can dynamically change the type of lemming displayed
     //based on the type the lemming will move up/down/left/right
+    Lemmings.lemmings[0].center = {x:300,y:300};
+    //TODO: reverse direction of walking lemming
     Lemmings.lemmings[3].type = "walking";
     Lemmings.lemmings[4].type = "umbrella";
     Lemmings.lemmings[5].type = "exploding";

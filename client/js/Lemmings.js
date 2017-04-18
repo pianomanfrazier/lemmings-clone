@@ -12,7 +12,14 @@ Lemmings.lemmings = []; //store all lemmings here
 //need to detect collisions between lemmings and world objects
 Lemmings.score = 0;
 Lemmings.lemmingCount = 25;
+Lemmings.lemmingsOut = 0;
+Lemmings.lemmingsIn = 0;
 Lemmings.user = "";
+Lemmings.startTime = new Date().getTime();
+Lemmings.accumTime = 0;
+let eTimer = $("#timer");
+let eOut = $("#out");
+let eIn = $("#in");
 
 Lemmings.init = ()=>{
     'use strict';
@@ -29,6 +36,7 @@ Lemmings.init = ()=>{
     Lemmings.lemmings[4].type = "umbrella";
     Lemmings.lemmings[5].type = "exploding";
     Lemmings.lemmings[6].type = "climbing";
+    Lemmings.lemmings[7].type = "blocking";
     //reset variables
     //get all the images
 };
@@ -48,11 +56,30 @@ Lemmings.storeScore = ()=>{
         console.log(data);
     });
 };
+Lemmings.updateTimer = (elapsedTime)=>{
+    'use strict';
+    Lemmings.accumTime+=elapsedTime;
+    if(Lemmings.accumTime > 1000) {
+        Lemmings.accumTime = 0;
+        let timer = new Date().getTime() - Lemmings.startTime;
+        timer = Math.floor(timer/1000);
+        let seconds = timer % 60;
+        let minutes = Math.floor(timer/60);
+        if(seconds < 10){
+            seconds = "0" + seconds.toString();
+        }
+        if(minutes < 10){
+            minutes = "0" + minutes.toString();
+        }
+        eTimer.html("Time : " + minutes + ":" + seconds);
+    }
+};
 Lemmings.update = (elapsedTime)=>{
     'use strict';
     _.each(Lemmings.lemmings, (lemming)=>{
         lemming.update(elapsedTime);
     });
+    Lemmings.updateTimer(elapsedTime);
     //Lemmings.world.update(elapsedTime);
 };
 Lemmings.render = ()=>{

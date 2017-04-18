@@ -2,12 +2,17 @@ let config = {};
 let sprites = {};
 
 //sprite sheet params, height width, image names
-sprites.ANIMATION_SPEED = 200;
+sprites.ANIMATION_SPEED = 100;
 sprites.SCALE_FACTOR = 0.3;
 sprites.walking = {
     width: 50,
     height: 50,
     frames: 8
+};
+sprites.falling = {
+    width: 50,
+    height: 50,
+    frames: 4
 };
 sprites.blocking = {
     width: 50,
@@ -17,7 +22,7 @@ sprites.blocking = {
 sprites.umbrella = {
     width: 85,
     height: 85,
-    frames: 12
+    frames: 5
 };
 sprites.exploding = {
     width: 50,

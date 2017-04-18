@@ -22,6 +22,8 @@ let Sprite = function(spec) {
     let accumTime = 0;
     let frameNumber = 0;
     let numFrames = spec.numFrames;
+    that.center = {x:100, y:300};
+    that.speed = spec.animationRate;
 
     that.update = function(elapsedTime) {
         accumTime += elapsedTime;
@@ -38,14 +40,14 @@ let Sprite = function(spec) {
     that.render = function() {
         Graphics.drawSprite({
             reverse: spec.reverse,
-            center: { x: spec.center.x, y: spec.center.y},
+            center: { x: that.center.x, y: that.center.y},
             image: spec.img,
             sx: spec.startX + (spec.frameWidth * frameNumber),
             sy: spec.startY,
             sw: spec.frameWidth,
             sh: spec.frameHeight,
-            dx: spec.center.x - spec.width/2,
-            dy: spec.center.y - spec.height/2,
+            dx: that.center.x - spec.width/2,
+            dy: that.center.y - spec.height/2,
             dw: spec.width,
             dh: spec.height
         });

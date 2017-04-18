@@ -20,7 +20,6 @@ var eHighScoresScreen = $("#HighScoresScreen");
 var screens = [eGameScreen, eAboutScreen, eHelpScreen, eHighScoresScreen];
 
 var Lemmings = require("./js/Lemmings.js");
-Lemmings.init({user:"Ryan"});
 
 var loop = require("./js/GameLoop.js");
 
@@ -37,6 +36,7 @@ page('/game', ()=>{
     eMainScreen.slideUp();
     eGameScreen.slideDown();
 
+    Lemmings.init({user:"Ryan"});
     loop.run(Lemmings);
 });
 page.exit('/game', ()=>{

@@ -3,6 +3,7 @@
 ////////////////////////////////////////////////
 let $ = require("jquery");
 let _ = require("lodash");
+let GenerateLemming = require("./Lemming.js");
 
 let Lemmings = {};
 
@@ -10,12 +11,24 @@ Lemmings.lemmings = []; //store all lemmings here
 //Lemmings.world = World(spec); //generate a level according to specs
 //need to detect collisions between lemmings and world objects
 Lemmings.score = 0;
+Lemmings.lemmingCount = 25;
 Lemmings.user = "";
 
 Lemmings.init = ()=>{
     'use strict';
     //load level
     //load all sprite sheets
+    //some sample Lemmings for testing
+    for(var i = 0; i < Lemmings.lemmingCount; i++) {
+        Lemmings.lemmings.push(GenerateLemming());
+        Lemmings.lemmings[i].center = {x: 100 + 10*i, y: 100};
+    }
+    //you can dynamically change the type of lemming displayed
+    //based on the type the lemming will move up/down/left/right
+    Lemmings.lemmings[3].type = "walking";
+    Lemmings.lemmings[4].type = "umbrella";
+    Lemmings.lemmings[5].type = "exploding";
+    Lemmings.lemmings[6].type = "climbing";
     //reset variables
     //get all the images
 };

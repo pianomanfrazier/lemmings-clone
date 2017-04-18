@@ -9,11 +9,14 @@ let Lemmings = {};
 
 Lemmings.lemmings = []; //store all lemmings here
 //Lemmings.world = World(spec); //generate a level according to specs
-//need to detect collisions between lemmings and world objects
+//need to detect collisions between lemmings and world objects and blockers
 Lemmings.score = 0;
+//get number of lemmings/types from level config
+//each level is 16x28 with 25px squares
+//have user choose the level they want and load it
 Lemmings.lemmingCount = 25;
-Lemmings.lemmingsOut = 0;
-Lemmings.lemmingsIn = 0;
+Lemmings.lemmingsOut = 7;
+Lemmings.lemmingsIn = 4;
 Lemmings.user = "";
 Lemmings.startTime = new Date().getTime();
 Lemmings.accumTime = 0;
@@ -38,6 +41,7 @@ Lemmings.init = ()=>{
     Lemmings.lemmings[6].type = "climbing";
     Lemmings.lemmings[7].type = "blocking";
     //reset variables
+    Lemmings.startTime = new Date().getTime();
     //get all the images
 };
 //ajax call to server
@@ -73,6 +77,16 @@ Lemmings.updateTimer = (elapsedTime)=>{
         }
         eTimer.html("Time : " + minutes + ":" + seconds);
     }
+};
+//this should only be called when a new lemming is put into the level
+Lemmings.updateOut = ()=>{
+    'use strict';
+    eOut.html("OUT : " + Lemmings.lemmingsOut);
+};
+//this should be called only when a lemming is saved
+Lemmings.updateIn = ()=>{
+    'use strict';
+    eIn.html("IN : " + Math.floor(Lemmings.lemmingsIn/Lemmings.lemmingCount * 100) + "%");
 };
 Lemmings.update = (elapsedTime)=>{
     'use strict';

@@ -50,7 +50,7 @@ var graphics = Graphics(Globals.canvas);
 //see http://stackoverflow.com/questions/6658752/click-event-doesnt-work-on-dynamically-generated-elements
 $(document).on('click','#hotkey-save-btn', ()=>{
     'use strict';
-    inputs.ButtonPress('hotkey-save', getHotKeys());
+    inputs.ButtonPress('hotkey-save', inputs.getHotKeys());
 });
 
 //not sure why this works and the other doesn't
@@ -66,36 +66,10 @@ $('#control-panel :button').each((i, button)=>{
     });
 });
 
-function getHotKeys() {
-    'use strict';
-
-    let hotKeys = [];
-    $('#hot-keys :input').each((i, input)=>{
-        let value = $(input).val().toUpperCase();
-
-        let id = $(input).attr('id');
-
-        if(id !== 'hotkey-save-btn') {
-            hotKeys.push({id, value});
-        }
-    });
-
-    return hotKeys;
-}
 
 // TODO: this is not a permanent object.  We need to move this into the game loop
 var testGame = {
     inputs,
-    hotKeys: [
-        {"id":"pause", "value":"A"},
-        {"id":"atomicBomb", "value":"B"},
-        {"id":"lemmingStop", "value":"C"},
-        {"id":"lemmingBomb", "value":"D"},
-        {"id":"lemmingUmbrella", "value":"E"},
-        {"id":"lemmingClimb", "value":"F"},
-        {"id":"fastForward", "value":"G"},
-        {"id":"slowDown", "value":"H"}
-    ],
     lemmings : [],
     update: (elapsedTime)=>{
         'use strict';
@@ -255,7 +229,7 @@ page('/', ()=>{
 
     let hotKeys = settings.storage.retrieve('hotKeys');
     if(hotKeys === null || hotKeys === []) {
-        settings.storage.add('hotKeys', testGame.hotKeys);
+        settings.storage.add('hotKeys', Globals.hotKeys);
     }
 
 });

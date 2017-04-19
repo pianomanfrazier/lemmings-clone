@@ -23,6 +23,8 @@ let Sprite = (spec)=>{
         frameNumber = 0,
         numFrames = spec.numFrames;
 
+        // TODO: the following attributes can be taken out.  I was using them for
+        // the inputs but these will need to be referred to in the Lemming's obj
     that.type       = spec.type;
     that.center     = spec.center;
     that.width      = spec.width;

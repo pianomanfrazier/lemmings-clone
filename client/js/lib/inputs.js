@@ -115,6 +115,21 @@ let ButtonPress = (id, obj)=>{
             break;
         case 'hotkey-save':
             console.log("save pressed");
+            let hotKeys = [];
+
+            $('#hot-keys :input').each((i, input)=>{
+                // check for empty values
+                let value = $(input).val();
+                if(_.isEmpty(value)) {
+                    value = Globals.hotKeys[input];
+                }
+
+                let id = $(input).attr('id');
+
+                if(id !== 'hotkey-save-btn') {
+                    hotKeys.push({id, value});
+                }
+            });
 
             if(obj) {
                 Settings.storage.add('hotKeys',obj);
@@ -153,6 +168,29 @@ let ButtonPress = (id, obj)=>{
         default:
     }
 };
+
+let getHotKeys = ()=>{
+    'use strict';
+
+    let hotKeys = [];
+    $('#hot-keys :input').each((i, input)=>{
+        let value = $(input).val().toUpperCase();
+        // check for empty values
+        if(_.isEmpty(value)) {
+            value = Globals.hotKeys[input];
+        }
+
+
+
+        let id = $(input).attr('id');
+
+        if(id !== 'hotkey-save-btn') {
+            hotKeys.push({id, value});
+        }
+    });
+
+    return hotKeys;
+}
 
 //------------------------------------------------------------------
 //
@@ -279,4 +317,4 @@ if (KeyEvent === null) {
     };
 }
 
-module.exports = {KeyEvent, Keyboard, Mouse, ButtonPress};
+module.exports = {KeyEvent, Keyboard, Mouse, ButtonPress, getHotKeys};

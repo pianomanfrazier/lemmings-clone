@@ -2,15 +2,15 @@
   "name": "Lemmings",
   "author": "Seth Bertlshofer & Ryan Frazier",
   "dependencies": {
-    "browser-sync": "^2.18.8",
-    "gulp": "^3.9.1",
-    "gulp-run": "^1.7.1",
     "jquery": "^3.2.1",
-    "node-sass": "^4.5.2",
     "page": "^1.7.1"
   },
   "devDependencies": {
+    "browser-sync": "^2.18.8",
+    "browserify": "^14.3.0",
     "browserify-shim": "^3.8.14",
+    "gulp": "^3.9.1",
+    "gulp-run": "^1.7.1",
     "handlebars": "^4.0.6",
     "hbsfy": "^2.7.0"
   },

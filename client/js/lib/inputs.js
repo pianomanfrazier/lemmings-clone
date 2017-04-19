@@ -86,7 +86,8 @@ let Mouse = (()=>{
                 if(click.location.x > left && click.location.x < right &&
                    click.location.y > top && click.location.y < bottom) {
                     if(that.lemmingType !== '' && !_.has(lemming.type, that.lemmingType)) {
-                        lemming.type[that.lemmingType] = that.lemmingType;   that.center     = spec.center;
+                        lemming.type[that.lemmingType] = that.lemmingType;
+                        that.center = spec.center;
                         console.log('click: ' + that.lemmingType);
                     }
                 }
@@ -146,6 +147,7 @@ let ButtonPress = (id, obj)=>{
 
         case 'lemming-pickaxe':
         case 'lemming-digging':
+        case 'lemming-bashing':
         case 'lemming-builder':
         case 'lemming-blocking':
         case 'lemming-exploding':

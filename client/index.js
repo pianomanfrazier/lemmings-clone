@@ -1,61 +1,143 @@
-var page = require("page");
-var $ = require("jquery");
-var index = require("./js/views/index.hbs");
-var highscores = require("./js/views/highscores.hbs");
+var page        = require("page");
+var $           = require("jquery");
+var _           = require("lodash");
+var settings    = require("./js/settings");
+var index       = require("./js/views/index.hbs");
+var highscores  = require("./js/views/highscores.hbs");
+var settingsPG    = require("./js/views/settings.hbs");
 
 var eApp = document.getElementById("app");
-eApp.innerHTML = index({});
-var eMainScreen = $("#MainScreen");
-var eGameScreen = $("#GameScreen");
-var eAboutScreen = $("#AboutScreen");
-var eHelpScreen = $("#HelpScreen");
-var eHighScoresScreen = $("#HighScoresScreen");
-var screens = [eGameScreen, eAboutScreen, eHelpScreen, eHighScoresScreen];
+eApp.innerHTML          = index({});
+var eMainScreen         = $("#MainScreen");
+var eGameScreen         = $("#GameScreen");
+var eAboutScreen        = $("#AboutScreen");
+var eHelpScreen         = $("#HelpScreen");
+var eSettingScreen      = $("#SettingsScreen");
+var eHighScoresScreen   = $("#HighScoresScreen");
+
+var screens = [eGameScreen, eAboutScreen, eSettingScreen, eHelpScreen, eHighScoresScreen];
 
 var Sprite = require("./js/Sprite.js");
 
-var walking = document.getElementById("lemming_walking");
-var blocker = document.getElementById("lemming_blocking");
-var umbrella = document.getElementById("lemming_umbrella");
-var exploding = document.getElementById("lemming_exploding");
-var climbing = document.getElementById("lemming_climbing");
-var splat = document.getElementById("lemming_splatting");
-var drowning = document.getElementById("lemming_drowning");
-var builder = document.getElementById("lemming_builder");
-var timeup = document.getElementById("lemming_timeup");
-var digging = document.getElementById("lemming_digging");
-var trap_10tons = document.getElementById("lemming_trap_10tons");
-var trap_hanging = document.getElementById("lemming_trap_hanging");
-var entrance_gate = document.getElementById("entrance_gate");
-var end_gate = document.getElementById("end_gate");
+var walking         = document.getElementById("lemming_walking");
+var blocker         = document.getElementById("lemming_blocking");
+var umbrella        = document.getElementById("lemming_umbrella");
+var exploding       = document.getElementById("lemming_exploding");
+var climbing        = document.getElementById("lemming_climbing");
+var splat           = document.getElementById("lemming_splatting");
+var drowning        = document.getElementById("lemming_drowning");
+var builder         = document.getElementById("lemming_builder");
+var timeup          = document.getElementById("lemming_timeup");
+var digging         = document.getElementById("lemming_digging");
+var trap_10tons     = document.getElementById("lemming_trap_10tons");
+var trap_hanging    = document.getElementById("lemming_trap_hanging");
+var entrance_gate   = document.getElementById("entrance_gate");
+var end_gate        = document.getElementById("end_gate");
 
+var inputs          = require("./js/lib/inputs");
 
 var images = [walking, blocker, umbrella, exploding, climbing, splat, drowning,builder, timeup, digging, trap_10tons, trap_hanging, entrance_gate, end_gate];
 
-var loop = require("./js/GameLoop.js");
+var loop        = require("./js/GameLoop.js");
+var Globals     = require("./js/Globals");
+var Graphics    = require("./js/Graphics.js");
 
+var graphics = Graphics(Globals.canvas);
+
+//the document is ready because this is called after all elements
+//are injected to the page
+//should us JQuery.on() to dynamically bind events
+//see http://stackoverflow.com/questions/6658752/click-event-doesnt-work-on-dynamically-generated-elements
+$(document).on('click','#hotkey-save-btn', ()=>{
+    'use strict';
+    inputs.ButtonPress('hotkey-save', inputs.getHotKeys());
+});
+
+//not sure why this works and the other doesn't
+$('#control-panel :button').each((i, button)=>{
+    'use strict';
+
+    let regex =/lemming-\w{0,}/;
+    let match = regex.exec(button.id);
+    let type = (match) ? match[0] : button.id;
+
+    $(button).click(()=>{
+        inputs.ButtonPress(type);
+    });
+});
+
+
+// TODO: this is not a permanent object.  We need to move this into the game loop
 var testGame = {
+    inputs,
     lemmings : [],
-    update: function(elapsedTime) {
+    update: (elapsedTime)=>{
         'use strict';
-        this.lemmings.forEach(function(l){
-            l.update(elapsedTime);
+
+        _.each(testGame.lemmings, (lemming)=>{
+            lemming.update(elapsedTime);
+        });
+
+        testGame.inputs.Mouse.update({elapsedTime, lemmings: testGame.lemmings});
+        testGame.inputs.Keyboard.update(elapsedTime);
+
+        // check local storage
+        if (settings.storage.hotKeysUpdate) {
+            let hotKeys = settings.storage.retrieve('hotKeys');
+            settings.storage.hotKeysUpdate = false;
+
+            _.each(hotKeys, (key)=>{
+                let type = "";
+                switch(key.id) {
+                    case 'pause':
+                        type = 'pause-btn';
+                        break;
+                    case 'atomicBomb':
+                        type = 'atomic-bomb-btn';
+                        break;
+                    case 'lemmingStop':
+                        type = 'lemming-blocking';
+                        break;
+                    case 'lemmingBomb':
+                        type = 'lemming-exploding';
+                        break;
+                    case 'lemmingUmbrella':
+                        type = 'lemming-umbrella';
+                        break;
+                    case 'lemmingClimb':
+                        type = 'lemming-climbing';
+                        break;
+                    case 'fastForward':
+                        type = 'speed-up-btn';
+                        break;
+                    case 'slowDown':
+                        type = 'speed-down-btn';
+                        break;
+                    default:
+                }
+
+                inputs.Keyboard.registerCommand(inputs.KeyEvent['DOM_VK_' + key.value], ()=>inputs.ButtonPress(type));
+            });
+        }
+    },
+    render: ()=>{
+        'use strict';
+
+        graphics.clear();
+
+        _.each(testGame.lemmings, (lemming)=>{
+            lemming.render();
         });
     },
-    render: function() {
-        'use strict';
-        this.lemmings.forEach(function(l){
-            l.render();
-        });
-    },
-    init: function() {
+    init: ()=>{
         'use strict';
         var w = 107;
         var h = 250;
         testGame.lemmings.push( Sprite({
+            type: {},
             reverse: false,
             img: images[11],
-            center: {x: w + 500, y: h + 500},
+            center: {x: w + 50, y: h + 50},
             width: w, //width to be drawn
             height: h,
             startX: 0, //top left corner of sprite
@@ -68,9 +150,10 @@ var testGame = {
         w = 192;
         h = 250;
         testGame.lemmings.push( Sprite({
+            type: {},
             reverse: false,
             img: images[10],
-            center: {x: w + 200, y: h + 200},
+            center: {x: w + 20, y: h + 20},
             width: w, //width to be drawn
             height: h,
             startX: 0, //top left corner of sprite
@@ -83,9 +166,10 @@ var testGame = {
         w = 50;
         h = w;
         testGame.lemmings.push( Sprite({
+            type: {},
             reverse: false,
             img: images[0],
-            center: {x: w + 100, y: h + 100},
+            center: {x: w + 10, y: h + 10},
             width: w, //width to be drawn
             height: h,
             startX: 0, //top left corner of sprite
@@ -98,9 +182,10 @@ var testGame = {
         w = 100;
         h = 70;
         testGame.lemmings.push( Sprite({
+            type: {},
             reverse: false,
             img: images[12],
-            center: {x: w + 700, y: h + 700},
+            center: {x: w + 70, y: h + 70},
             width: w, //width to be drawn
             height: h,
             startX: 0, //top left corner of sprite
@@ -113,9 +198,10 @@ var testGame = {
         w = 100;
         h = 70;
         testGame.lemmings.push( Sprite({
+            type: {},
             reverse: false,
             img: images[13],
-            center: {x: w + 300, y: h + 700},
+            center: {x: w + 30, y: h + 70},
             width: w, //width to be drawn
             height: h,
             startX: 0, //top left corner of sprite
@@ -127,7 +213,7 @@ var testGame = {
         }));
     }
 };
-end_gate.onload = function() {
+end_gate.onload = ()=>{
     'use strict';
     console.log("image ready");
     testGame.init();
@@ -136,15 +222,23 @@ end_gate.onload = function() {
 page('/', ()=>{
     'use strict';
 
-    screens.forEach(function(el){
-        el.slideUp();
+    _.each(screens, (screen)=>{
+        screen.slideUp();
     });
     eMainScreen.slideDown();
+
+    let hotKeys = settings.storage.retrieve('hotKeys');
+    if(hotKeys === null || hotKeys === []) {
+        settings.storage.add('hotKeys', Globals.hotKeys);
+    }
+
 });
 page('/game', ()=>{
     'use strict';
     eMainScreen.slideUp();
     eGameScreen.slideDown();
+
+    settings.storage.hotKeysUpdate = true;
 
     loop.run(testGame);
 });
@@ -158,6 +252,14 @@ page('/help', ()=>{
     eMainScreen.slideUp();
     eHelpScreen.slideDown();
 });
+page('/settings', ()=>{
+    'use strict';
+    eMainScreen.slideUp();
+    eSettingScreen.slideDown();
+    // TODO: need to store the hotkeys in the browser storage
+    let keys = settings.storage.retrieve('hotKeys');
+    eSettingScreen.html(settingsPG({hotKeys: keys}));
+});
 page('/highscores', ()=>{
     'use strict';
     eMainScreen.slideUp();
@@ -168,10 +270,10 @@ page('/highscores', ()=>{
         type: "GET",
         dataType: 'json',
         url: '/api/highscores',
-        error: function(e) {
+        error: (e)=>{
             console.log(e);
         }
-    }).done(function(data) {
+    }).done((data)=>{
         eHighScoresScreen.html(highscores({title : "Highscores", highscores : data}));
         console.log(data);
     }).fail((e)=>{

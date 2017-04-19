@@ -5,14 +5,31 @@
 - Ryan Frazier
 - Seth Bertlshofer
 
-## Game to Implement 
+## Game to Implement
 
 We will be implementing the [Lemmings game](https://www.youtube.com/watch?v=xIuxB1oR2WQ)
+
+# run project
+- install all node_modules (we use yarn `yarn` at project root and in server/)
+- go to server/ run `nodemon`
+- open a new terminal, go to project root and run `gulp`
+- open your browser to `localhost:3000`
+
+## Milestone Points
+
+- menu system
+- reconfigurable controls
+- mouse clicks work to change lemming type
+- render sprites
+
+### Extra
+
+- mongo database for highscores, the highscores fetch and display
+- settings saved to local storage
 
 ## Overview of Features
 
 - (10) Game Menu system
-  - Players? (maybe multiplayer split screen, NodeJS with socket.io)
   - Choose Level
   - Settings
     - Music
@@ -29,10 +46,6 @@ We will be implementing the [Lemmings game](https://www.youtube.com/watch?v=xIux
     - umbrella
     - bomb
     - blocker
-    - builder
-    - wall digger
-    - pick axe
-    - digger
     - pause
     - atomic bomb
   - mini map?
@@ -48,10 +61,7 @@ We will be implementing the [Lemmings game](https://www.youtube.com/watch?v=xIux
 - (5) Sound and Music
   - sound effects for lemming motions
     - exploding
-    - digging
-    - building
     - splatting
-    - pick axe
     - drowning
   - separate music theme for each level
 - (10) persistant scores with MongoLab mongodb

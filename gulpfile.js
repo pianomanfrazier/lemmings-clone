@@ -1,42 +1,23 @@
 // Gulp Dependencies
 var gulp = require('gulp');
-var rename = require('gulp-rename');
-
-// Servers
-var browserSync = require('browser-sync').create();
-
-// Style Dependencies
-var sass = require('gulp-sass');
-
-// ********* Server *********
-
-gulp.task('sass', ()=>{
-  'use strict';
-
-  return gulp.src("./client/styles/*.scss")
-      .pipe(sass())
-      .pipe(rename('main.css'))
-      .pipe(gulp.dest('./server/public/stylesheets'))
-      .pipe(browserSync.stream());
-});
+var run = require('gulp-run');
 
 gulp.task('browserSync', ()=>{
   'use strict';
 
-  // browser-sync to refresh to web page when pages happen
-  browserSync.init({
-    proxy: 'localhost:3000',
-    port: 5000
-  });
+  return run('browser-sync start --proxy "localhost:3000" --files "game_dev_final"').exec();
 });
 
+gulp.task('sass', ()=>{
+  'use strict';
+  return run('sass --watch ./client/styles/main.scss:./server/public/stylesheets/main.css').exec();
+});
 
-gulp.task('watch', ()=>{
+gulp.task('watchify', ()=>{
   'use strict';
 
-  gulp.watch("./client/styles/*.scss", ['sass']);
-  gulp.watch("./client/*.html").on('change', browserSync.reload);
+  return run('watchify -t [ hbsfy -t ] ./client/index.js -o ./server/public/javascripts/bundle.js -v').exec();
 });
 
 // ********* Tasks *********
-gulp.task('default', ['browserSync', 'sass', 'watch']);
+gulp.task('default', ['browserSync', 'sass', 'watchify']);

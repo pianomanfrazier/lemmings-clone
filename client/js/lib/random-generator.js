@@ -61,4 +61,4 @@ let Random = (()=>{
     };
 });
 
-module.export = Random;
+module.exports = Random;

@@ -34,10 +34,9 @@ var trap_hanging    = document.getElementById("lemming_trap_hanging");
 var entrance_gate   = document.getElementById("entrance_gate");
 var end_gate        = document.getElementById("end_gate");
 
-var inputs          = require("./js/lib/inputs");
-
 var images = [walking, blocker, umbrella, exploding, climbing, splat, drowning,builder, timeup, digging, trap_10tons, trap_hanging, entrance_gate, end_gate];
 
+var inputs      = require("./js/lib/inputs");
 var loop        = require("./js/GameLoop.js");
 var Globals     = require("./js/Globals");
 var Graphics    = require("./js/Graphics.js");
@@ -50,7 +49,7 @@ var graphics = Graphics(Globals.canvas);
 //see http://stackoverflow.com/questions/6658752/click-event-doesnt-work-on-dynamically-generated-elements
 $(document).on('click','#hotkey-save-btn', ()=>{
     'use strict';
-    inputs.ButtonPress('hotkey-save', inputs.getHotKeys());
+    inputs.ButtonPress('hotkey-save');
 });
 
 //not sure why this works and the other doesn't

@@ -22,13 +22,13 @@ let Sprite = (spec)=>{
         accumTime = 0,
         frameNumber = 0,
         numFrames = spec.numFrames;
-
         // TODO: the following attributes can be taken out.  I was using them for
         // the inputs but these will need to be referred to in the Lemming's obj
     that.type       = spec.type;
     that.center     = spec.center;
     that.width      = spec.width;
     that.height     = spec.height;
+    that.speed      = spec.animationRate;
 
     that.update = (elapsedTime)=>{
         accumTime += elapsedTime;
@@ -51,10 +51,10 @@ let Sprite = (spec)=>{
             sy: spec.startY,
             sw: spec.frameWidth,
             sh: spec.frameHeight,
-            dx: spec.center.x - spec.width/2,
-            dy: spec.center.y - spec.height/2,
-            dw: that.width,
-            dh: that.height
+            dx: that.center.x - spec.width/2,
+            dy: that.center.y - spec.height/2,
+            dw: spec.width,
+            dh: spec.height
         });
     };
 

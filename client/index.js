@@ -34,7 +34,7 @@ let inputs              = require("./js/lib/inputs.js");
 //see http://stackoverflow.com/questions/6658752/click-event-doesnt-work-on-dynamically-generated-elements
 $(document).on('click','#hotkey-save-btn', ()=>{
     'use strict';
-    inputs.ButtonPress('hotkey-save', inputs.getHotKeys());
+    inputs.ButtonPress('hotkey-save');
 });
 
 //not sure why this works and the other doesn't

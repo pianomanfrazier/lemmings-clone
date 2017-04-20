@@ -116,26 +116,31 @@ let ButtonPress = (id, obj)=>{
             break;
         case 'hotkey-save':
             console.log("save pressed");
-            let hotKeys = [];
+            let hotKeys = getHotKeys();
 
-            $('#hot-keys :input').each((i, input)=>{
-                // check for empty values
-                let value = $(input).val();
-                if(_.isEmpty(value)) {
-                    value = Globals.hotKeys[input];
-                }
+            let isDuplicate = false;
+            _.each(hotKeys, (keyi, i)=>{
+                _.each(hotKeys, (keyj, j)=>{
+                    if(i !== j && keyi.value === keyj.value) {
+                        isDuplicate = true;
+                        // TODO: need to figure out why this isn't working
+                        $('#error-message').addClass('active');
+                        $('#' + keyi.id).addClass('error');
+                        $('#' + keyj.id).addClass('error');
 
-                let id = $(input).attr('id');
+                    }
 
-                if(id !== 'hotkey-save-btn') {
-                    hotKeys.push({id, value});
-                }
+                    if(!isDuplicate) {
+                        $('#' + keyi.id).removeClass('error');
+                        $('#' + keyj.id).removeClass('error');
+                    }
+                });
             });
 
-            if(obj) {
-                Settings.storage.add('hotKeys',obj);
-
-                // TODO: update keypress listeners
+            if(!isDuplicate) {
+                $('#error-message').removeClass('active');
+                $('#save-message').addClass('active');
+                Settings.storage.add('hotKeys', hotKeys);
             }
             break;
 
@@ -176,18 +181,16 @@ let getHotKeys = ()=>{
 
     let hotKeys = [];
     $('#hot-keys :input').each((i, input)=>{
-        let value = $(input).val().toUpperCase();
-        // check for empty values
-        if(_.isEmpty(value)) {
-            value = Globals.hotKeys[input];
-        }
-
-
-
         let id = $(input).attr('id');
 
         if(id !== 'hotkey-save-btn') {
-            hotKeys.push({id, value});
+            let value       = $(input).val().toUpperCase();
+            let myDefault   = Globals.hotKeys[i].default;
+
+            // check for empty values
+            value = (!_.isEmpty(value)) ? value : myDefault;
+
+            hotKeys.push({id, default: myDefault, value});
         }
     });
 

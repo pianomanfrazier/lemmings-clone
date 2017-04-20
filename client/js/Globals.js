@@ -10,14 +10,14 @@ Globals.graphics = Graphics(Globals.canvas);
 Globals.graphics = Graphics(Globals.canvas);
 
 Globals.hotKeys = [
-    {"id":"pause", "value":"A"},
-    {"id":"atomicBomb", "value":"B"},
-    {"id":"lemmingStop", "value":"C"},
-    {"id":"lemmingBomb", "value":"D"},
-    {"id":"lemmingUmbrella", "value":"E"},
-    {"id":"lemmingClimb", "value":"F"},
-    {"id":"fastForward", "value":"G"},
-    {"id":"slowDown", "value":"H"}
+    {"id":"pause", "default": "P", "value":"A"},
+    {"id":"atomicBomb", "default": "A", "value":"B"},
+    {"id":"lemmingStop", "default": "S", "value":"C"},
+    {"id":"lemmingBomb", "default": "B", "value":"D"},
+    {"id":"lemmingUmbrella", "default": "U", "value":"E"},
+    {"id":"lemmingClimb", "default": "C", "value":"F"},
+    {"id":"fastForward", "default": "F", "value":"G"},
+    {"id":"slowDown", "default": "D", "value":"H"}
 ];
 
 module.exports = Globals;

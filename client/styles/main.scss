@@ -8,17 +8,24 @@ $mini-map-scale: 0.2;
 $green: #00AD2F;
 $yellow: #EEFD4E;
 
-#GameScreen {
+#GameScreen, #AboutScreen, #HelpScreen, #HighScoresScreen, #SettingsScreen {
     display: none;
 }
-#AboutScreen {
-    display: none;
-}
-#HelpScreen {
-    display: none;
-}
-#HighScoresScreen {
-    display: none;
+
+#SettingsScreen {
+    #hot-keys {
+        display: grid;
+    }
+
+    input {
+        float: right;
+        margin: 2px 5px;
+    }
+
+    button {
+        text-decoration: none;
+        margin: auto;
+    }
 }
 
 body {
@@ -173,14 +180,14 @@ button.active {
   }
 
   &:hover {
-  background: lighten($green, 20%);
-  background-image: -webkit-linear-gradient(top, lighten($green, 20%), $green);
-  background-image: -moz-linear-gradient(top, lighten($green, 20%), $green);
-  background-image: -ms-linear-gradient(top, lighten($green, 20%), $green);
-  background-image: -o-linear-gradient(top, lighten($green, 20%), $green);
-  background-image: linear-gradient(to bottom, lighten($green, 20%), $green);
-  text-decoration: none;
-  box-shadow: 2px 2px 4px white;
+    background: lighten($green, 20%);
+    background-image: -webkit-linear-gradient(top, lighten($green, 20%), $green);
+    background-image: -moz-linear-gradient(top, lighten($green, 20%), $green);
+    background-image: -ms-linear-gradient(top, lighten($green, 20%), $green);
+    background-image: -o-linear-gradient(top, lighten($green, 20%), $green);
+    background-image: linear-gradient(to bottom, lighten($green, 20%), $green);
+    text-decoration: none;
+    box-shadow: 2px 2px 4px white;
   }
 }
 .content-well {

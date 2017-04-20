@@ -1,9 +1,14 @@
 ////////////////////////////////////////////////
 // TODO: load images at runtime not on page load, remove from index.hbs
 ////////////////////////////////////////////////
-let $ = require("jquery");
-let _ = require("lodash");
-let GenerateLemming = require("./Lemming.js");
+let $                = require("jquery");
+let _                = require("lodash");
+let GenerateLemming  = require("./Lemming.js");
+let settings         = require("./settings.js");
+let inputs           = require("./lib/inputs.js");
+let Graphics         = require("./Graphics.js");
+let Globals          = require("./js/Globals");
+let graphics         = Graphics(Globals.canvas);
 
 let Lemmings = {};
 
@@ -95,11 +100,53 @@ Lemmings.update = (elapsedTime)=>{
     _.each(Lemmings.lemmings, (lemming)=>{
         lemming.update(elapsedTime);
     });
+    Lemmings.inputs.Mouse.update({elapsedTime, lemmings: Lemmings.lemmings});
+    Lemmings.inputs.Keyboard.update(elapsedTime);
+
+    // check local storage
+    if (settings.storage.hotKeysUpdate) {
+        let hotKeys = settings.storage.retrieve('hotKeys');
+        settings.storage.hotKeysUpdate = false;
+
+        _.each(hotKeys, (key)=>{
+            let type = "";
+            switch(key.id) {
+                case 'pause':
+                    type = 'pause-btn';
+                    break;
+                case 'atomicBomb':
+                    type = 'atomic-bomb-btn';
+                    break;
+                case 'lemmingStop':
+                    type = 'lemming-blocking';
+                    break;
+                case 'lemmingBomb':
+                    type = 'lemming-exploding';
+                    break;
+                case 'lemmingUmbrella':
+                    type = 'lemming-umbrella';
+                    break;
+                case 'lemmingClimb':
+                    type = 'lemming-climbing';
+                    break;
+                case 'fastForward':
+                    type = 'speed-up-btn';
+                    break;
+                case 'slowDown':
+                    type = 'speed-down-btn';
+                    break;
+                default:
+            }
+
+            inputs.Keyboard.registerCommand(inputs.KeyEvent['DOM_VK_' + key.value], ()=>inputs.ButtonPress(type));
+        });
+    }
     Lemmings.updateTimer(elapsedTime);
     //Lemmings.world.update(elapsedTime);
 };
 Lemmings.render = ()=>{
     'use strict';
+    graphics.clear();
     _.each(Lemmings.lemmings, (lemming)=>{
         lemming.render();
     });

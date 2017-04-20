@@ -16,16 +16,21 @@
 ////////////////////////////////
 let Graphics = require("./Globals.js").graphics;
 
-let Sprite = function(spec) {
+let Sprite = (spec)=>{
     'use strict';
-    let that = {};
-    let accumTime = 0;
-    let frameNumber = 0;
-    let numFrames = spec.numFrames;
-    that.center = {x:100, y:300};
-    that.speed = spec.animationRate;
+    let that = {},
+        accumTime = 0,
+        frameNumber = 0,
+        numFrames = spec.numFrames;
+        // TODO: the following attributes can be taken out.  I was using them for
+        // the inputs but these will need to be referred to in the Lemming's obj
+    that.type       = spec.type;
+    that.center     = spec.center;
+    that.width      = spec.width;
+    that.height     = spec.height;
+    that.speed      = spec.animationRate;
 
-    that.update = function(elapsedTime) {
+    that.update = (elapsedTime)=>{
         accumTime += elapsedTime;
         if (accumTime > spec.animationRate) {
             accumTime = 0;
@@ -37,10 +42,10 @@ let Sprite = function(spec) {
         }
     };
     //need to ensure that the image is ready
-    that.render = function() {
+    that.render = ()=>{
         Graphics.drawSprite({
             reverse: spec.reverse,
-            center: { x: that.center.x, y: that.center.y},
+            center: that.center,
             image: spec.img,
             sx: spec.startX + (spec.frameWidth * frameNumber),
             sy: spec.startY,

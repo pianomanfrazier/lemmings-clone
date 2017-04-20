@@ -24,7 +24,6 @@ var eHighScoresScreen   = $("#HighScoresScreen");
 var screens             = [eGameScreen, eAboutScreen, eSettingScreen, eHelpScreen, eHighScoresScreen];
 
 var Lemmings            = require("./js/Lemmings.js");
-var inputs      = require("./js/lib/inputs");
 var loop                = require("./js/GameLoop.js");
 var Globals             = require("./js/Globals.js");
 let inputs              = require("./js/lib/inputs.js");

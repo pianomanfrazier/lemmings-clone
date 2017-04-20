@@ -7,11 +7,12 @@ let GenerateLemming  = require("./Lemming.js");
 let settings         = require("./settings.js");
 let inputs           = require("./lib/inputs.js");
 let Graphics         = require("./Graphics.js");
-let Globals          = require("./js/Globals");
+let Globals          = require("./Globals.js");
 let graphics         = Graphics(Globals.canvas);
 
 let Lemmings = {};
 
+Lemmings.inputs = inputs;
 Lemmings.lemmings = []; //store all lemmings here
 //Lemmings.world = World(spec); //generate a level according to specs
 //need to detect collisions between lemmings and world objects and blockers

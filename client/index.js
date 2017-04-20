@@ -26,7 +26,7 @@ var screens             = [eGameScreen, eAboutScreen, eSettingScreen, eHelpScree
 var Lemmings            = require("./js/Lemmings.js");
 var loop                = require("./js/GameLoop.js");
 var Globals             = require("./js/Globals.js");
-let inputs              = require("./lib/inputs.js");
+let inputs              = require("./js/lib/inputs.js");
 
 //the document is ready because this is called after all elements
 //are injected to the page

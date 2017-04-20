@@ -1,10 +1,16 @@
-var page        = require("page");
-var $           = require("jquery");
-var _           = require("lodash");
-var settings    = require("./js/settings");
-var index       = require("./js/views/index.hbs");
-var highscores  = require("./js/views/highscores.hbs");
-var settingsPG    = require("./js/views/settings.hbs");
+////////////////////////////////////////////////
+// TODO: split out route functions into Routes.js
+//       this way can handle exit /game more effectively with /index callback
+//       for now exit /game calls loop.stop()
+//       it needs to go back to the main menu
+////////////////////////////////////////////////
+var page                = require("page");
+var $                   = require("jquery");
+var _                   = require("lodash");
+var settings            = require("./js/settings");
+var index               = require("./js/views/index.hbs");
+var highscores          = require("./js/views/highscores.hbs");
+var settingsPG          = require("./js/views/settings.hbs");
 
 var eApp = document.getElementById("app");
 eApp.innerHTML          = index({});
@@ -15,33 +21,13 @@ var eHelpScreen         = $("#HelpScreen");
 var eSettingScreen      = $("#SettingsScreen");
 var eHighScoresScreen   = $("#HighScoresScreen");
 
-var screens = [eGameScreen, eAboutScreen, eSettingScreen, eHelpScreen, eHighScoresScreen];
+var screens             = [eGameScreen, eAboutScreen, eSettingScreen, eHelpScreen, eHighScoresScreen];
 
-var Sprite = require("./js/Sprite.js");
-
-var walking         = document.getElementById("lemming_walking");
-var blocker         = document.getElementById("lemming_blocking");
-var umbrella        = document.getElementById("lemming_umbrella");
-var exploding       = document.getElementById("lemming_exploding");
-var climbing        = document.getElementById("lemming_climbing");
-var splat           = document.getElementById("lemming_splatting");
-var drowning        = document.getElementById("lemming_drowning");
-var builder         = document.getElementById("lemming_builder");
-var timeup          = document.getElementById("lemming_timeup");
-var digging         = document.getElementById("lemming_digging");
-var trap_10tons     = document.getElementById("lemming_trap_10tons");
-var trap_hanging    = document.getElementById("lemming_trap_hanging");
-var entrance_gate   = document.getElementById("entrance_gate");
-var end_gate        = document.getElementById("end_gate");
-
-var images = [walking, blocker, umbrella, exploding, climbing, splat, drowning,builder, timeup, digging, trap_10tons, trap_hanging, entrance_gate, end_gate];
-
+var Lemmings            = require("./js/Lemmings.js");
 var inputs      = require("./js/lib/inputs");
-var loop        = require("./js/GameLoop.js");
-var Globals     = require("./js/Globals");
-var Graphics    = require("./js/Graphics.js");
-
-var graphics = Graphics(Globals.canvas);
+var loop                = require("./js/GameLoop.js");
+var Globals             = require("./js/Globals.js");
+let inputs              = require("./js/lib/inputs.js");
 
 //the document is ready because this is called after all elements
 //are injected to the page
@@ -65,159 +51,6 @@ $('#control-panel :button').each((i, button)=>{
     });
 });
 
-
-// TODO: this is not a permanent object.  We need to move this into the game loop
-var testGame = {
-    inputs,
-    lemmings : [],
-    update: (elapsedTime)=>{
-        'use strict';
-
-        _.each(testGame.lemmings, (lemming)=>{
-            lemming.update(elapsedTime);
-        });
-
-        testGame.inputs.Mouse.update({elapsedTime, lemmings: testGame.lemmings});
-        testGame.inputs.Keyboard.update(elapsedTime);
-
-        // check local storage
-        if (settings.storage.hotKeysUpdate) {
-            let hotKeys = settings.storage.retrieve('hotKeys');
-            settings.storage.hotKeysUpdate = false;
-
-            _.each(hotKeys, (key)=>{
-                let type = "";
-                switch(key.id) {
-                    case 'pause':
-                        type = 'pause-btn';
-                        break;
-                    case 'atomicBomb':
-                        type = 'atomic-bomb-btn';
-                        break;
-                    case 'lemmingStop':
-                        type = 'lemming-blocking';
-                        break;
-                    case 'lemmingBomb':
-                        type = 'lemming-exploding';
-                        break;
-                    case 'lemmingUmbrella':
-                        type = 'lemming-umbrella';
-                        break;
-                    case 'lemmingClimb':
-                        type = 'lemming-climbing';
-                        break;
-                    case 'fastForward':
-                        type = 'speed-up-btn';
-                        break;
-                    case 'slowDown':
-                        type = 'speed-down-btn';
-                        break;
-                    default:
-                }
-
-                inputs.Keyboard.registerCommand(inputs.KeyEvent['DOM_VK_' + key.value], ()=>inputs.ButtonPress(type));
-            });
-        }
-    },
-    render: ()=>{
-        'use strict';
-
-        graphics.clear();
-
-        _.each(testGame.lemmings, (lemming)=>{
-            lemming.render();
-        });
-    },
-    init: ()=>{
-        'use strict';
-        var w = 107;
-        var h = 250;
-        testGame.lemmings.push( Sprite({
-            type: {},
-            reverse: false,
-            img: images[11],
-            center: {x: w + 50, y: h + 50},
-            width: w, //width to be drawn
-            height: h,
-            startX: 0, //top left corner of sprite
-            startY: 0,
-            frameWidth: w, //width of image
-            frameHeight: h,
-            numFrames: 34,
-            animationRate: 200
-        }));
-        w = 192;
-        h = 250;
-        testGame.lemmings.push( Sprite({
-            type: {},
-            reverse: false,
-            img: images[10],
-            center: {x: w + 20, y: h + 20},
-            width: w, //width to be drawn
-            height: h,
-            startX: 0, //top left corner of sprite
-            startY: 0,
-            frameWidth: w, //width of image
-            frameHeight: h,
-            numFrames: 12,
-            animationRate: 200
-        }));
-        w = 50;
-        h = w;
-        testGame.lemmings.push( Sprite({
-            type: {},
-            reverse: false,
-            img: images[0],
-            center: {x: w + 10, y: h + 10},
-            width: w, //width to be drawn
-            height: h,
-            startX: 0, //top left corner of sprite
-            startY: 0,
-            frameWidth: w, //width of image
-            frameHeight: h,
-            numFrames: 8,
-            animationRate: 200
-        }));
-        w = 100;
-        h = 70;
-        testGame.lemmings.push( Sprite({
-            type: {},
-            reverse: false,
-            img: images[12],
-            center: {x: w + 70, y: h + 70},
-            width: w, //width to be drawn
-            height: h,
-            startX: 0, //top left corner of sprite
-            startY: 0,
-            frameWidth: w, //width of image
-            frameHeight: h,
-            numFrames: 10,
-            animationRate: 100
-        }));
-        w = 100;
-        h = 70;
-        testGame.lemmings.push( Sprite({
-            type: {},
-            reverse: false,
-            img: images[13],
-            center: {x: w + 30, y: h + 70},
-            width: w, //width to be drawn
-            height: h,
-            startX: 0, //top left corner of sprite
-            startY: 0,
-            frameWidth: w, //width of image
-            frameHeight: h,
-            numFrames: 6,
-            animationRate: 100
-        }));
-    }
-};
-end_gate.onload = ()=>{
-    'use strict';
-    console.log("image ready");
-    testGame.init();
-};
-
 page('/', ()=>{
     'use strict';
 
@@ -237,9 +70,13 @@ page('/game', ()=>{
     eMainScreen.slideUp();
     eGameScreen.slideDown();
 
+    Lemmings.init({user:"Ryan"});
     settings.storage.hotKeysUpdate = true;
-
-    loop.run(testGame);
+    loop.run(Lemmings);
+});
+page.exit('/game', ()=>{
+    'use strict';
+    loop.stop();
 });
 page('/about', ()=>{
     'use strict';

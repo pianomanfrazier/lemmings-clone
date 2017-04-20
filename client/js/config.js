@@ -4,6 +4,13 @@ let sprites = {};
 //sprite sheet params, height width, image names
 sprites.ANIMATION_SPEED = 100;
 sprites.SCALE_FACTOR = 0.3;
+sprites.cursor = {
+    width: 50,
+    height: 50,
+    frames: 2,
+    ready: false,
+    scaleFactor: sprites.SCALE_FACTOR * 1.3
+};
 sprites.walking = {
     width: 50,
     height: 50,

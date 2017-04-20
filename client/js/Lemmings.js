@@ -151,6 +151,8 @@ Lemmings.render = ()=>{
     _.each(Lemmings.lemmings, (lemming)=>{
         lemming.render();
     });
+    //draw the cursor
+    inputs.Mouse.draw();
     //Lemmings.world.render();
 };
 

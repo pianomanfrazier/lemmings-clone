@@ -2,6 +2,15 @@ let $           = require("jquery");
 let _           = require('lodash');
 let Globals     = require('./../Globals');
 let Settings    = require('./../settings');
+let Graphics    = Globals.graphics;
+let sprites     = require('./../config.js').sprites;
+let cursor      = sprites.cursor;
+let cursorsImg  = document.getElementById('cursors');
+let cursorNum   = 0; //this toggles the cursor 0 is cross hairs, 1 is box, updated in onHover handler
+cursorsImg.onload = ()=>{
+    'use strict';
+    cursor.ready = true;
+};
 
 
 let KeyEvent = null;
@@ -40,6 +49,7 @@ let Keyboard = (()=>{
     return that;
 })();
 
+let currentMousePosition = {}; //needed to draw cursor
 let Mouse = (()=>{
     'use strict';
 
@@ -68,12 +78,39 @@ let Mouse = (()=>{
 
     function onHover(e) {
         let mousePos = getMousePos(e);
-        // console.log(mousePos.x, mousePos.y);
+        currentMousePosition = mousePos;
 
         // need to have access to the lemmings
 
         // check though all the lemmings
+        //if hovering on a lemmings
+        //cursorNum = 1 //box
+        //else
+        cursorNum = 0; //crosshair cursor
     }
+    //this is called in gameModel.render()
+    that.draw = ()=>{
+        //cursorNum should be 0 or 1
+        if(cursorNum !== 1 && cursorNum !== 0) {
+            console.log("invalid cursor type");
+        }
+        let mousePos = currentMousePosition;
+        //draw the appropriate cursor at mouse position
+        if(cursor.ready) {
+            Graphics.drawSprite({
+                center: mousePos,
+                image: cursorsImg,
+                sx: cursor.width * cursorNum,
+                sy: 0,
+                sw: cursor.width,
+                sh: cursor.height,
+                dx: mousePos.x - cursor.width/2,
+                dy: mousePos.y - cursor.height/2,
+                dw: cursor.width * cursor.scaleFactor,
+                dh: cursor.height * cursor.scaleFactor
+            });
+        }
+    };
 
     that.update = (spec)=>{
         _.each(that.clicks, (click)=>{

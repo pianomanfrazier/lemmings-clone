@@ -118,38 +118,43 @@ let Mouse = (()=>{
         }
     };
 
+    let activeLemming = null; //the lemming which is being hovered over
     that.update = (spec)=>{
-        //on click perform action on highlighted lemming
-        //update the cursor type
-        //for each lemming
-        //if collision set active lemming and set cursor to 1
-        //if no collision set cursor to 0
-        _.each(that.clicks, (click)=>{
-            _.each(spec.lemmings, (lemming)=>{
-                let left = lemming.center.x - (lemming.width >> 1);
-                let right= lemming.center.x + (lemming.width >> 1);
-                let top = lemming.center.y - (lemming.height >> 1);
-                let bottom = lemming.center.y + (lemming.height >> 1);
+        let found = false;
+        _.each(spec.lemmings, (lemming)=>{
+            let left   = lemming.center.x - (lemming.width >> 1);
+            let right  = lemming.center.x + (lemming.width >> 1);
+            let top    = lemming.center.y - (lemming.height >> 1);
+            let bottom = lemming.center.y + (lemming.height >> 1);
 
-                if(click.location.x > left && click.location.x < right &&
-                   click.location.y > top && click.location.y < bottom) {
-                    ///////////////////////////////
-                    //some testing stuff
-                    console.log("lemming clicked:");
-                    console.log(lemming.type);
-                    //some prelim logic for the clicks
-                    if(lemming.type === "falling") lemming.type = "umbrella";
-                    else if(lemming.type === "walking") lemming.type = "falling";
-                    else lemming.type = "walking";
-                    //////////////////////////////
-                    if(that.lemmingType !== '' && !_.has(lemming.type, that.lemmingType)) {
-                        //I'm a bit confused by this stuff here
-                        //lemming.type[that.lemmingType] = that.lemmingType;
-                        //that.center = spec.center;
-                        //console.log('click: ' + that.lemmingType);
-                    }
-                }
-            });
+            if(that.position.x > left && that.position.x < right &&
+                that.position.y > top && that.position.y < bottom) {
+                    activeLemming = lemming;
+                    cursorNum = 1;
+                    found = true;
+                //if(that.lemmingType !== '' && !_.has(lemming.type, that.lemmingType)) {
+                //    //I'm a bit confused by this stuff here
+                //    //lemming.type[that.lemmingType] = that.lemmingType;
+                //    //that.center = spec.center;
+                //    //console.log('click: ' + that.lemmingType);
+                //}
+            }
+        });
+        //no lemming is being hovered
+        if(!found){
+            activeLemming = null;
+            cursorNum = 0;
+        }
+        _.each(that.clicks, (click)=>{
+            if(activeLemming !== null) {
+                console.log("clicked " + activeLemming.type + " lemming");
+                /////////////////////////
+                //some test logic to flip lemming sprites
+                if(activeLemming.type === "falling") activeLemming.type = "umbrella";
+                else if(activeLemming.type === "walking") activeLemming.type = "falling";
+                else activeLemming.type = "walking";
+                /////////////////////////
+            }
             _.remove(that.clicks, (el)=>{
                 return el === click;
             });

@@ -74,6 +74,23 @@ A Lemmings clone using HTML5 and Javascript
   - 100x70 with 10 frames
 - closing
   - 100x70 with 6 frames
+  
+### BLOCKS
+
+10 32 x 32 square images
+
+7-8 are ornamental and drawn to the background. The lemming can walk through it.
+
+1. rock-grass
+2. rock
+3. dirt-grass
+4. dirt
+5. dirt-skull
+6. dirt-diamonds
+7. flower-yellow
+8. mushroom-red
+9. mushroom-white
+10. flower-white
 
 ## Lemming
 

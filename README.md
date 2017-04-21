@@ -79,6 +79,8 @@ A Lemmings clone using HTML5 and Javascript
 
 10 32 x 32 square images
 
+scale the image down to the size you want (ie 10x10) when calling the sprite api.
+
 7-8 are ornamental and drawn to the background. The lemming can walk through it.
 
 1. rock-grass

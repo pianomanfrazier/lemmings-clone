@@ -43,6 +43,7 @@ let Sprite = (spec)=>{
     };
     //need to ensure that the image is ready
     that.render = ()=>{
+        if(!that.center) return;//when switch between sprites 'that' is undefined
         Graphics.drawSprite({
             reverse: spec.reverse,
             center: that.center,

@@ -48,6 +48,8 @@ function GenerateLemming() {
     let that = {};
 
     let sprites = SpriteGen();
+    //these can be dynamically changed
+    that.type = "falling"; //defaults to falling
     that.center = {x:100, y:100}; //default
     //this is for testing, should be loaded from config.js lemming width/heigh * scaleFactor
     that.width = LEMMING_WIDTH * SCALE_FACTOR;
@@ -55,8 +57,6 @@ function GenerateLemming() {
 
     let accumTime = 0;
 
-    //these can be dynamically changed
-    that.type = "falling"; //defaults to falling
 
     that.update = (elapsedTime)=>{
         let sprite = sprites[that.type];

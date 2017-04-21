@@ -55,7 +55,7 @@ let Mouse = (()=>{
     let cursorNum = 0;
     let that = {
         clicks: [],
-        lemmingType: '',
+        lemmingTypeSelected: '',
         position: {x:0, y:0}
     };
 
@@ -69,15 +69,15 @@ let Mouse = (()=>{
 
     function clickDown(e) {
         //let location = getMousePos(e);
-        //let lemmingType = that.lemmingType;
-        //that.clicks.push({location, lemmingType, timeStamp: e.timeStamp});
+        //let lemmingTypeSelected = that.lemmingTypeSelected;
+        //that.clicks.push({location, lemmingTypeSelected, timeStamp: e.timeStamp});
     }
 
     function clickUp(e) {
         //that.clicks.pop(); // remove the oldest input click
         let location = getMousePos(e);
-        let lemmingType = that.lemmingType;
-        that.clicks.push({location, lemmingType, timeStamp: e.timeStamp});
+        let lemmingTypeSelected = that.lemmingTypeSelected;
+        that.clicks.push({location, lemmingTypeSelected, timeStamp: e.timeStamp});
         //pop the click when it has been processed
     }
 
@@ -132,11 +132,11 @@ let Mouse = (()=>{
                     activeLemming = lemming;
                     cursorNum = 1;
                     found = true;
-                //if(that.lemmingType !== '' && !_.has(lemming.type, that.lemmingType)) {
+                //if(that.lemmingTypeSelected !== '' && !_.has(lemming.type, that.lemmingTypeSelected)) {
                 //    //I'm a bit confused by this stuff here
-                //    //lemming.type[that.lemmingType] = that.lemmingType;
+                //    //lemming.type[that.lemmingTypeSelected] = that.lemmingTypeSelected;
                 //    //that.center = spec.center;
-                //    //console.log('click: ' + that.lemmingType);
+                //    //console.log('click: ' + that.lemmingTypeSelected);
                 //}
             }
         });
@@ -148,12 +148,11 @@ let Mouse = (()=>{
         _.each(that.clicks, (click)=>{
             if(activeLemming !== null) {
                 console.log("clicked " + activeLemming.type + " lemming");
-                /////////////////////////
-                //some test logic to flip lemming sprites
-                if(activeLemming.type === "falling") activeLemming.type = "umbrella";
-                else if(activeLemming.type === "walking") activeLemming.type = "falling";
-                else activeLemming.type = "walking";
-                /////////////////////////
+                console.log(that.lemmingTypeSelected);
+                //this is for testing, should be done in the game model
+                if (that.lemmingTypeSelected !== "") {
+                    activeLemming.type = that.lemmingTypeSelected;
+                }
             }
             _.remove(that.clicks, (el)=>{
                 return el === click;
@@ -162,7 +161,10 @@ let Mouse = (()=>{
     };
 
     that.updateLemmingType = (type)=>{
-        that.lemmingType = (that.lemmingType === '' || that.lemmingType !== type) ? type : '';
+        that.lemmingTypeSelected = (that.lemmingTypeSelected === '' || that.lemmingTypeSelected !== type) ? type : '';
+        if(that.lemmingTypeSelected !== '') {
+            that.lemmingTypeSelected = that.lemmingTypeSelected.slice(8);
+        }
     };
 
     Globals.canvas.addEventListener('mousedown', clickDown);

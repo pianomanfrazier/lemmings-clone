@@ -6,7 +6,6 @@ let Graphics    = Globals.graphics;
 let sprites     = require('./../config.js').sprites;
 let cursor      = sprites.cursor;
 let cursorsImg  = document.getElementById('cursors');
-let cursorNum   = 0; //this toggles the cursor 0 is cross hairs, 1 is box, updated in onHover handler
 cursorsImg.onload = ()=>{
     'use strict';
     cursor.ready = true;
@@ -49,13 +48,15 @@ let Keyboard = (()=>{
     return that;
 })();
 
-let currentMousePosition = {}; //needed to draw cursor
 let Mouse = (()=>{
     'use strict';
 
+    //this toggles the cursor 0 is cross hairs, 1 is box, updated in onHover handler
+    let cursorNum = 0;
     let that = {
         clicks: [],
-        lemmingType: ''
+        lemmingType: '',
+        position: {x:0, y:0}
     };
 
     function getMousePos(e) {
@@ -77,8 +78,8 @@ let Mouse = (()=>{
     }
 
     function onHover(e) {
-        let mousePos = getMousePos(e);
-        currentMousePosition = mousePos;
+        //update the position of the mouse
+        that.position = getMousePos(e);
 
         // need to have access to the lemmings
 
@@ -86,7 +87,7 @@ let Mouse = (()=>{
         //if hovering on a lemmings
         //cursorNum = 1 //box
         //else
-        cursorNum = 0; //crosshair cursor
+        //cursorNum = 0; //crosshair cursor
     }
     //this is called in gameModel.render()
     that.draw = ()=>{
@@ -94,20 +95,21 @@ let Mouse = (()=>{
         if(cursorNum !== 1 && cursorNum !== 0) {
             console.log("invalid cursor type");
         }
-        let mousePos = currentMousePosition;
         //draw the appropriate cursor at mouse position
         if(cursor.ready) {
+            let scaledWidth = cursor.width * cursor.scaleFactor;
+            let scaledHeight = cursor.height * cursor.scaleFactor;
             Graphics.drawSprite({
-                center: mousePos,
+                center: that.position,
                 image: cursorsImg,
                 sx: cursor.width * cursorNum,
                 sy: 0,
                 sw: cursor.width,
                 sh: cursor.height,
-                dx: mousePos.x - cursor.width/2,
-                dy: mousePos.y - cursor.height/2,
-                dw: cursor.width * cursor.scaleFactor,
-                dh: cursor.height * cursor.scaleFactor
+                dx: that.position.x - scaledWidth/2,
+                dy: that.position.y - scaledHeight/2,
+                dw: scaledWidth,
+                dh: scaledHeight
             });
         }
     };
@@ -122,10 +124,20 @@ let Mouse = (()=>{
 
                 if(click.location.x > left && click.location.x < right &&
                    click.location.y > top && click.location.y < bottom) {
+                    ///////////////////////////////
+                    //some testing stuff
+                    console.log("lemming clicked:");
+                    console.log(lemming.type);
+                    //some prelim logic for the clicks
+                    if(lemming.type === "falling") lemming.type = "umbrella";
+                    else if(lemming.type === "walking") lemming.type = "falling";
+                    else lemming.type = "walking";
+                    //////////////////////////////
                     if(that.lemmingType !== '' && !_.has(lemming.type, that.lemmingType)) {
-                        lemming.type[that.lemmingType] = that.lemmingType;
-                        that.center = spec.center;
-                        console.log('click: ' + that.lemmingType);
+                        //I'm a bit confused by this stuff here
+                        //lemming.type[that.lemmingType] = that.lemmingType;
+                        //that.center = spec.center;
+                        //console.log('click: ' + that.lemmingType);
                     }
                 }
             });

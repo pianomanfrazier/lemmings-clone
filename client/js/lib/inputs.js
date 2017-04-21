@@ -68,13 +68,17 @@ let Mouse = (()=>{
     }
 
     function clickDown(e) {
-        let location = getMousePos(e);
-        let lemmingType = that.lemmingType;
-        that.clicks.push({location, lemmingType, timeStamp: e.timeStamp});
+        //let location = getMousePos(e);
+        //let lemmingType = that.lemmingType;
+        //that.clicks.push({location, lemmingType, timeStamp: e.timeStamp});
     }
 
     function clickUp(e) {
-        that.clicks.pop(); // remove the oldest input click
+        //that.clicks.pop(); // remove the oldest input click
+        let location = getMousePos(e);
+        let lemmingType = that.lemmingType;
+        that.clicks.push({location, lemmingType, timeStamp: e.timeStamp});
+        //pop the click when it has been processed
     }
 
     function onHover(e) {
@@ -115,12 +119,17 @@ let Mouse = (()=>{
     };
 
     that.update = (spec)=>{
+        //on click perform action on highlighted lemming
+        //update the cursor type
+        //for each lemming
+        //if collision set active lemming and set cursor to 1
+        //if no collision set cursor to 0
         _.each(that.clicks, (click)=>{
             _.each(spec.lemmings, (lemming)=>{
-                let left = lemming.center.x - (lemming.width / 2);
-                let right= lemming.center.x + (lemming.width / 2);
-                let top = lemming.center.y - (lemming.height / 2);
-                let bottom = lemming.center.y + (lemming.height / 2);
+                let left = lemming.center.x - (lemming.width >> 1);
+                let right= lemming.center.x + (lemming.width >> 1);
+                let top = lemming.center.y - (lemming.height >> 1);
+                let bottom = lemming.center.y + (lemming.height >> 1);
 
                 if(click.location.x > left && click.location.x < right &&
                    click.location.y > top && click.location.y < bottom) {
@@ -140,6 +149,9 @@ let Mouse = (()=>{
                         //console.log('click: ' + that.lemmingType);
                     }
                 }
+            });
+            _.remove(that.clicks, (el)=>{
+                return el === click;
             });
         });
     };

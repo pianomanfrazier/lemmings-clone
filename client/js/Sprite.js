@@ -3,7 +3,7 @@
 // Need to guarantee that the img is an Image object ready to go
 //
 //    context.drawImage(
-//    		sprite.img,
+//        sprite.img,
 //        sprite.sx,
 //        sprite.sy,
 //        sprite.sw,

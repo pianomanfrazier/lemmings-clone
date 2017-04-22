@@ -4,6 +4,8 @@ let sprites = {};
 //sprite sheet params, height width, image names
 sprites.ANIMATION_SPEED = 100;
 sprites.SCALE_FACTOR = 0.3;
+
+// ***** lemmings *****
 sprites.walking = {
     width: 50,
     height: 50,
@@ -66,6 +68,8 @@ sprites.timeup = {
     height: 50,
     frames: 16
 };
+
+// ***** traps *****
 sprites.trap_10tons = {
     width: 192,
     height: 250,
@@ -76,6 +80,8 @@ sprites.trap_hanging = {
     height: 250,
     frames: 34
 };
+
+// ***** gates end/start *****
 sprites.entrance_gate = {
     width: 100,
     height: 70,
@@ -86,6 +92,15 @@ sprites.end_gate = {
     height: 70,
     frames: 6,
     scaleFactor: 0.8
+};
+
+// ***** blocks *****
+sprites.block = {
+    width: 32,
+    height: 32,
+    frames: 10,
+    ready: false,
+    scaleFactor: sprites.SCALE_FACTOR * 1.3
 };
 
 config.sprites = sprites;

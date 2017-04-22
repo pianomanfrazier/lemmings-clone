@@ -13,11 +13,10 @@ eApp.innerHTML          = index({});
 var eMainScreen         = $("#MainScreen");
 var eGameScreen         = $("#GameScreen");
 var eAboutScreen        = $("#AboutScreen");
-var eHelpScreen         = $("#HelpScreen");
 var eSettingScreen      = $("#SettingsScreen");
 var eHighScoresScreen   = $("#HighScoresScreen");
 
-var screens             = [eGameScreen, eAboutScreen, eSettingScreen, eHelpScreen, eHighScoresScreen];
+var screens             = [eGameScreen, eAboutScreen, eSettingScreen, eHighScoresScreen];
 
 var Lemmings            = require("./js/Lemmings.js");
 var loop                = require("./js/GameLoop.js");
@@ -90,11 +89,6 @@ Routes.about = ()=>{
     'use strict';
     eMainScreen.slideUp();
     eAboutScreen.slideDown();
-};
-Routes.help = ()=>{
-    'use strict';
-    eMainScreen.slideUp();
-    eHelpScreen.slideDown();
 };
 Routes.settings = ()=>{
     'use strict';

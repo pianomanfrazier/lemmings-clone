@@ -24,10 +24,6 @@ page('/about', ()=>{
     'use strict';
     Routes.about();
 });
-page('/help', ()=>{
-    'use strict';
-    Routes.help();
-});
 page('/settings', ()=>{
     'use strict';
     Routes.settings();

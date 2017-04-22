@@ -3,8 +3,7 @@ let _           = require('lodash');
 let Globals     = require('./../Globals');
 let Settings    = require('./../settings');
 let Graphics    = Globals.graphics;
-let sprites     = require('./../config.js').sprites;
-let cursor      = sprites.cursor;
+let cursor      = require('./../config.js').sprites.cursor;
 let cursorsImg  = document.getElementById('cursors');
 cursorsImg.onload = ()=>{
     'use strict';
@@ -68,13 +67,9 @@ let Mouse = (()=>{
     }
 
     function clickDown(e) {
-        //let location = getMousePos(e);
-        //let lemmingTypeSelected = that.lemmingTypeSelected;
-        //that.clicks.push({location, lemmingTypeSelected, timeStamp: e.timeStamp});
     }
 
     function clickUp(e) {
-        //that.clicks.pop(); // remove the oldest input click
         let location = getMousePos(e);
         let lemmingTypeSelected = that.lemmingTypeSelected;
         that.clicks.push({location, lemmingTypeSelected, timeStamp: e.timeStamp});
@@ -84,14 +79,6 @@ let Mouse = (()=>{
     function onHover(e) {
         //update the position of the mouse
         that.position = getMousePos(e);
-
-        // need to have access to the lemmings
-
-        // check though all the lemmings
-        //if hovering on a lemmings
-        //cursorNum = 1 //box
-        //else
-        //cursorNum = 0; //crosshair cursor
     }
     //this is called in gameModel.render()
     that.draw = ()=>{
@@ -132,12 +119,6 @@ let Mouse = (()=>{
                     activeLemming = lemming;
                     cursorNum = 1;
                     found = true;
-                //if(that.lemmingTypeSelected !== '' && !_.has(lemming.type, that.lemmingTypeSelected)) {
-                //    //I'm a bit confused by this stuff here
-                //    //lemming.type[that.lemmingTypeSelected] = that.lemmingTypeSelected;
-                //    //that.center = spec.center;
-                //    //console.log('click: ' + that.lemmingTypeSelected);
-                //}
             }
         });
         //no lemming is being hovered
@@ -153,6 +134,12 @@ let Mouse = (()=>{
                 if (that.lemmingTypeSelected !== "") {
                     activeLemming.type = that.lemmingTypeSelected;
                 }
+                //if(that.lemmingTypeSelected !== '' && !_.has(lemming.possibleActions, that.lemmingTypeSelected)) {
+                //    //lemming.possibleActions.push(that.lemmingTypeSelected);
+                //    //that.center = spec.center;
+                //    //decrement from the game model the lemmingTypeSelected
+                //    //console.log('click: ' + that.lemmingTypeSelected);
+                //}
             }
             _.remove(that.clicks, (el)=>{
                 return el === click;

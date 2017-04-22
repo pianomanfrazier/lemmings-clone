@@ -41,13 +41,14 @@ canvas {
     width: 100%;
     text-align: center;
 }
-#return-to-main-menu {
+.return-to-main-menu {
     position: fixed;
     top: 0;
-    a {
+    a,div {
         text-decoration: none;
         color: $green;
         font-size: 2em;
+        cursor: pointer;
     }
 }
 #game-field {

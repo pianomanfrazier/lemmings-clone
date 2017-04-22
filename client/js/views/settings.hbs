@@ -1,11 +1,14 @@
     {{> ./_return.hbs }}
 
     <div id="hot-keys" class="content-well">
-        <h3>Hot Keys</h3>
-{{#if hotKeys}}
-    {{#each hotKeys}}
-        <label for="{{id}}">{{id}}: </label><input type="text" id="{{id}}" placeholder="" value="{{value}}"/>
-    {{/each}}
-{{/if}}
+        <h1>Hot Keys</h1>
+        {{#if hotKeys}}
+            <ul>
+            {{#each hotKeys}}
+                <li><label for="{{id}}">{{id}}: </label></li>
+                <li><input type="text" id="{{id}}" placeholder="" value="{{value}}"/></li>
+            {{/each}}
+            </ul>
+        {{/if}}
         <button id="hotkey-save-btn" class="btn bump">Save</button>
     </div>

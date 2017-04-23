@@ -4,10 +4,13 @@
         <h3>Hot Keys</h3>
         <h5 id="error-message">Duplicate Keys not allowed</h5>
         <h5 id="save-message">Save Successful</h5>
-{{#if hotKeys}}
-    {{#each hotKeys}}
-        <label for="{{id}}">{{id}}: </label><input type="text" id="{{id}}" placeholder="{{default}}" value="{{value}}"/>
-    {{/each}}
-{{/if}}
+        {{#if hotKeys}}
+            <ul>
+            {{#each hotKeys}}
+                <label for="{{id}}">{{id}}: </label><input type="text" id="{{id}}" placeholder="{{default}}" value="{{value}}"/>
+            {{/each}}
+            </ul>
+        {{/if}}
+
         <button id="hotkey-save-btn" class="btn bump">Save</button>
     </div>

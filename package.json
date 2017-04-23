@@ -1,6 +1,10 @@
 {
   "name": "Lemmings",
   "author": "Seth Bertlshofer & Ryan Frazier",
+  "version": "1.0",
+  "scripts": {
+    "postinstall": "cd ./server && yarn"
+  },
   "dependencies": {
     "jquery": "^3.2.1",
     "page": "^1.7.1",

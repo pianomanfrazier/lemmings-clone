@@ -1,6 +1,9 @@
 {
+  "name": "LemmingsServer",
+  "author": "Seth Bertlshofer & Ryan Frazier",
+  "version": "1.0",
   "scripts": {
-    "start" : "node server.js" 
+    "start" : "node server.js"
   },
   "dependencies": {
     "body-parser": "^1.17.1",

@@ -35,19 +35,19 @@ let World = (()=>{
     };
 
     that.render = ()=>{
-        _.each(that.map, (row, y)=>{
-            _.each(row, (block, x)=>{
-                if(block === "") return;
-                if(block === "entrance") return;
-                if(block === "exit") return;
-                blockNum = Globals.blockTypes[block];
+        _.each(that.map, (row, i)=>{
+            _.each(row, (cell, j)=>{
+                if(cell === "") return;
+                if(cell === "entrance") return;
+                if(cell === "exit") return;
+                blockNum = Globals.blockTypes[cell];
 
                 if(blockNum <= 0 && blockNum >= 9 && blockNum !== "") {
                     console.log("invalid block type");
                 }
 
-                x = (x * block.width) + (block.width / 2);
-                y = (y * block.height) + (block.height / 2);
+                let x = (j * block.width) + (block.width / 2);
+                let y = (i * block.height) + (block.height / 2);
 
                 //draw the appropriate block at mouse position
                 if(block.ready) {

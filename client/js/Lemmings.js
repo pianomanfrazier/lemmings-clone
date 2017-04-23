@@ -33,7 +33,8 @@ let eIn = $("#in");
 Lemmings.init = ()=>{
     'use strict';
     //load level
-    //load all sprite sheets
+    //clear the lemmings if there from previous game
+    Lemmings.lemmings = [];
     //some sample Lemmings for testing
     for(var i = 0; i < Lemmings.lemmingCount; i++) {
         Lemmings.lemmings.push(GenerateLemming());
@@ -151,6 +152,8 @@ Lemmings.render = ()=>{
     _.each(Lemmings.lemmings, (lemming)=>{
         lemming.render();
     });
+    //draw the cursor
+    inputs.Mouse.draw();
     //Lemmings.world.render();
 };
 

@@ -2,11 +2,12 @@
 
     <div id="hot-keys" class="content-well">
         <h1>Hot Keys</h1>
+        <h5 id="error-message">Duplicate Keys not allowed</h5>
+        <h5 id="save-message">Save Successful</h5>
         {{#if hotKeys}}
             <ul>
             {{#each hotKeys}}
-                <li><label for="{{id}}">{{id}}: </label></li>
-                <li><input type="text" id="{{id}}" placeholder="" value="{{value}}"/></li>
+                <label for="{{id}}">{{id}}: </label><input type="text" id="{{id}}" placeholder="{{default}}" value="{{value}}"/>
             {{/each}}
             </ul>
         {{/if}}

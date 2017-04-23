@@ -96,11 +96,9 @@ sprites.exitGate = {
 
 // ***** blocks *****
 sprites.block = {
-    width: 32,
-    height: 32,
-    frames: 10,
-    ready: false,
-    scaleFactor: sprites.SCALE_FACTOR * 1.3
+    width: 25,
+    height: 25,
+    ready: false
 };
 
 config.sprites = sprites;

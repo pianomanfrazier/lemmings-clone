@@ -7,6 +7,7 @@ let blocksImg       = document.getElementById('blocks');
 let blockNum        = 0; //this toggles the block 0 is cross hairs, 1 is box, updated in onHover handler
 blocksImg.onload = ()=>{
     'use strict';
+    console.log("blocks ready");
     block.ready = true;
 };
 
@@ -47,26 +48,20 @@ let World = (()=>{
     };
 
     that.render = ()=>{
-        _.each(that.map, (row, j)=>{
-            var length = row.length;
-            _.each(row, (col, i)=>{
-
-                blockNum = Globals.blockTypes[col];
+        _.each(that.map, (row, i)=>{
+            _.each(row, (cell, j)=>{
+                if(cell === "" && cell === "entrance" && cell === "exit") return;
+                blockNum = Globals.blockTypes[cell];
 
                 if(blockNum <= 0 && blockNum >= 9 && blockNum !== "") {
                     console.log("invalid block type");
                 }
 
-                let width = Globals.canvas.width / length;
-                let height = Globals.canvas.height / that.map.length;
-
-                let x = (i * width) + (width / 2);
-                let y = (j * height) + (height / 2);
-                let dx = i * width;
-                let dy = j * height;
+                let x = (j * block.width) + (block.width / 2);
+                let y = (i * block.height) + (block.height / 2);
 
                 if(block.ready) {
-                    switch(col) {
+                    switch(cell) {
                         case 'start':
 
                             break;
@@ -77,14 +72,14 @@ let World = (()=>{
                             Graphics.drawSprite({
                                 center: {x, y},
                                 image: blocksImg,
-                                sx: width * blockNum,
+                                sx: block.width * blockNum,
                                 sy: 0,
-                                sw: width,
-                                sh: height,
-                                dx,
-                                dy,
-                                dw: width,
-                                dh: height
+                                sw: block.width,
+                                sh: block.height,
+                                dx: x - block.width/2,
+                                dy: y - block.height/2,
+                                dw: block.width,
+                                dh: block.height
                             });
                     }
                 }

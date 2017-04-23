@@ -3,8 +3,6 @@ let Globals         = require("./Globals.js");
 let Graphics        = Globals.graphics;
 let sprites         = require('./config.js').sprites;
 let block           = sprites.block;
-let entranceGate    = sprites.entranceGate;
-let exitGate        = sprites.exitGate;
 let blocksImg       = document.getElementById('blocks');
 let blockNum        = 0; //this toggles the block 0 is cross hairs, 1 is box, updated in onHover handler
 blocksImg.onload = ()=>{
@@ -18,6 +16,8 @@ let World = (()=>{
     let that = {
         lemmingsSaved: 0,
         level: 0,
+        start: {},
+        finish: {},
         numLemmings: 0,
         lemmingGoal: 0,
         lemmingTypes: {},
@@ -28,6 +28,18 @@ let World = (()=>{
         that.lemmingGoal        = spec.lemmingGoal;
         that.lemmingTypes       = spec.lemmingTypes;
         that.map                = spec.map;
+
+        _.each(that.map, (row, j)=>{
+            let iS = _.findIndex(row, (obj)=>{
+                return obj === 'start';
+            });
+            let iF = _.findIndex(row, (obj)=>{
+                return obj === 'end';
+            });
+
+            if(iS !== -1) { that.start  = {x: iS, y: j}; }
+            if(iF !== -1) { that.finish = {x: iF, y: j}; }
+        });
     };
 
     that.update = (elapsedTime)=>{

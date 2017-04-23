@@ -10,7 +10,7 @@ let Graphics         = require("./Graphics.js");
 let Globals          = require("./Globals.js");
 let World            = require("./World.js");
 let graphics         = Graphics(Globals.canvas);
-let level1           = require("./levels/level1.json");
+let level1           = require("./levels/level1.js");
 // let level2           = require("./levels/level2.json");
 // let level3           = require("./levels/level3.json");
 

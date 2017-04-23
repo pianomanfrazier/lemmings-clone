@@ -28,7 +28,7 @@ Globals.blockTypes = {
     "flower_yellow": 6,
     "mushroom_red": 7,
     "mushroom_white": 8,
-    "flower_white": 9,
+    "flower_white": 9
 };
 
 module.exports = Globals;

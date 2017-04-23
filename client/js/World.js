@@ -7,6 +7,7 @@ let blocksImg   = document.getElementById('blocks');
 let blockNum    = 0; //this toggles the block 0 is cross hairs, 1 is box, updated in onHover handler
 blocksImg.onload = ()=>{
     'use strict';
+    console.log("blocks ready");
     block.ready = true;
 };
 
@@ -26,6 +27,7 @@ let World = (()=>{
         that.lemmingGoal        = spec.lemmingGoal;
         that.lemmingTypes       = spec.lemmingTypes;
         that.map                = spec.map;
+        console.log(that);
     };
 
     that.update = (elapsedTime)=>{
@@ -34,8 +36,11 @@ let World = (()=>{
 
     that.render = ()=>{
         _.each(that.map, (row, y)=>{
-            _.each(row, (col, x)=>{
-                blockNum = Globals.blockTypes[col];
+            _.each(row, (block, x)=>{
+                if(block === "") return;
+                if(block === "entrance") return;
+                if(block === "exit") return;
+                blockNum = Globals.blockTypes[block];
 
                 if(blockNum <= 0 && blockNum >= 9 && blockNum !== "") {
                     console.log("invalid block type");
@@ -53,8 +58,10 @@ let World = (()=>{
                         sy: 0,
                         sw: block.width,
                         sh: block.height,
-                        dw: block.width * block.scaleFactor,
-                        dh: block.height * block.scaleFactor
+                        dx: x - block.width/2,
+                        dy: y - block.height/2,
+                        dw: block.width,
+                        dh: block.height
                     });
                 }
             });

@@ -2469,6 +2469,10 @@ pako@~0.2.0:
   version "0.2.9"
   resolved "https://registry.yarnpkg.com/pako/-/pako-0.2.9.tgz#f3f7522f4ef782348da8161bad9ecfd51bf83a75"
 
+papaparse@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/papaparse/-/papaparse-4.2.0.tgz#ac5bed7de39445dabb6616a507024b8b88eee7c3"
+
 parents@^1.0.0, parents@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/parents/-/parents-1.0.1.tgz#fedd4d2bf193a77745fe71e371d73c3307d9c751"

@@ -2,9 +2,11 @@
 
     <div id="hot-keys" class="content-well">
         <h3>Hot Keys</h3>
+        <h5 id="error-message">Duplicate Keys not allowed</h5>
+        <h5 id="save-message">Save Successful</h5>
 {{#if hotKeys}}
     {{#each hotKeys}}
-        <label for="{{id}}">{{id}}: </label><input type="text" id="{{id}}" placeholder="" value="{{value}}"/>
+        <label for="{{id}}">{{id}}: </label><input type="text" id="{{id}}" placeholder="{{default}}" value="{{value}}"/>
     {{/each}}
 {{/if}}
         <button id="hotkey-save-btn" class="btn bump">Save</button>

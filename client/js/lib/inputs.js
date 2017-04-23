@@ -166,8 +166,9 @@ let ButtonPress = (id, obj)=>{
 
     switch(id) {
         case 'pause-btn':
-            // TODO: call game's stop function
             console.log('game state pressed: ' + id);
+            //window alert stops the browser thread (i.e. it suspends the game loop)
+            window.alert("Game Paused");
             break;
         case 'hotkey-save':
             console.log("save pressed");

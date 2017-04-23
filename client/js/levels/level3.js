@@ -1,15 +1,16 @@
 let Papa = require("papaparse");
 
-let level1 = {
+let level3 = {
     "lemmingGoal": 10,
     "lemmingTypes": {
-        "climbing": 10,
-        "umbrella": 10
+        "blocking": 4,
+        "umbrella": 10,
+        "exploding": 2
     },
     "map": []
 };
 
-Papa.parse("/levels/level1.csv", {
+Papa.parse("/levels/level3.csv", {
     delimiter: ",",
     newline: "\n",
     download: true,
@@ -19,8 +20,8 @@ Papa.parse("/levels/level1.csv", {
     },
     complete: (results)=>{
         'use strict';
-        level1.map = results.data;
+        level3.map = results.data;
     }
 });
 
-module.exports = level1;
+module.exports = level3;

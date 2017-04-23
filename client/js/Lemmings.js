@@ -11,8 +11,8 @@ let Globals          = require("./Globals.js");
 let World            = require("./World.js");
 let graphics         = Graphics(Globals.canvas);
 let level1           = require("./levels/level1.js");
-// let level2           = require("./levels/level2.json");
-// let level3           = require("./levels/level3.json");
+let level2           = require("./levels/level2.js");
+let level3           = require("./levels/level3.js");
 
 let Lemmings = {};
 
@@ -159,8 +159,6 @@ Lemmings.render = ()=>{
     _.each(Lemmings.lemmings, (lemming)=>{
         lemming.render();
     });
-    // Lemmings.world.render();
-
 };
 
 module.exports = Lemmings;

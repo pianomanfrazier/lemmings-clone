@@ -13,10 +13,9 @@ $yellow: #EEFD4E;
 }
 
 #SettingsScreen {
-    #hot-keys {
-        display: grid;
+    ul {
+        list-style: none;
     }
-
     #error-message {
         display: none;
         color: #F00;
@@ -36,13 +35,14 @@ $yellow: #EEFD4E;
     }
 
     input {
-        float: right;
-        margin: 2px 5px;
+        margin-bottom: 1em;
     }
-
     button {
         text-decoration: none;
         margin: auto;
+    }
+    .content-well {
+        text-align: center;
     }
 }
 
@@ -53,18 +53,20 @@ body {
 }
 canvas {
     border: 2px solid black;
+    cursor: none;
 }
 #header {
     width: 100%;
     text-align: center;
 }
-#return-to-main-menu {
+.return-to-main-menu {
     position: fixed;
     top: 0;
-    a {
+    a,div {
         text-decoration: none;
         color: $green;
         font-size: 2em;
+        cursor: pointer;
     }
 }
 #game-field {

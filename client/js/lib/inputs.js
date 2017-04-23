@@ -2,6 +2,13 @@ let $           = require("jquery");
 let _           = require('lodash');
 let Globals     = require('./../Globals');
 let Settings    = require('./../settings');
+let Graphics    = Globals.graphics;
+let cursor      = require('./../config.js').sprites.cursor;
+let cursorsImg  = document.getElementById('cursors');
+cursorsImg.onload = ()=>{
+    'use strict';
+    cursor.ready = true;
+};
 
 
 let KeyEvent = null;
@@ -43,9 +50,12 @@ let Keyboard = (()=>{
 let Mouse = (()=>{
     'use strict';
 
+    //this toggles the cursor 0 is cross hairs, 1 is box, updated in onHover handler
+    let cursorNum = 0;
     let that = {
         clicks: [],
-        lemmingType: ''
+        lemmingTypeSelected: '',
+        position: {x:0, y:0}
     };
 
     function getMousePos(e) {
@@ -57,46 +67,91 @@ let Mouse = (()=>{
     }
 
     function clickDown(e) {
-        let location = getMousePos(e);
-        let lemmingType = that.lemmingType;
-        that.clicks.push({location, lemmingType, timeStamp: e.timeStamp});
     }
 
     function clickUp(e) {
-        that.clicks.pop(); // remove the oldest input click
+        let location = getMousePos(e);
+        let lemmingTypeSelected = that.lemmingTypeSelected;
+        that.clicks.push({location, lemmingTypeSelected, timeStamp: e.timeStamp});
+        //pop the click when it has been processed
     }
 
     function onHover(e) {
-        let mousePos = getMousePos(e);
-        // console.log(mousePos.x, mousePos.y);
-
-        // need to have access to the lemmings
-
-        // check though all the lemmings
+        //update the position of the mouse
+        that.position = getMousePos(e);
     }
+    //this is called in gameModel.render()
+    that.draw = ()=>{
+        //cursorNum should be 0 or 1
+        if(cursorNum !== 1 && cursorNum !== 0) {
+            console.log("invalid cursor type");
+        }
+        //draw the appropriate cursor at mouse position
+        if(cursor.ready) {
+            let scaledWidth = cursor.width * cursor.scaleFactor;
+            let scaledHeight = cursor.height * cursor.scaleFactor;
+            Graphics.drawSprite({
+                center: that.position,
+                image: cursorsImg,
+                sx: cursor.width * cursorNum,
+                sy: 0,
+                sw: cursor.width,
+                sh: cursor.height,
+                dx: that.position.x - scaledWidth/2,
+                dy: that.position.y - scaledHeight/2,
+                dw: scaledWidth,
+                dh: scaledHeight
+            });
+        }
+    };
 
+    let activeLemming = null; //the lemming which is being hovered over
     that.update = (spec)=>{
-        _.each(that.clicks, (click)=>{
-            _.each(spec.lemmings, (lemming)=>{
-                let left = lemming.center.x - (lemming.width / 2);
-                let right= lemming.center.x + (lemming.width / 2);
-                let top = lemming.center.y - (lemming.height / 2);
-                let bottom = lemming.center.y + (lemming.height / 2);
+        let found = false;
+        _.each(spec.lemmings, (lemming)=>{
+            let left   = lemming.center.x - (lemming.width >> 1);
+            let right  = lemming.center.x + (lemming.width >> 1);
+            let top    = lemming.center.y - (lemming.height >> 1);
+            let bottom = lemming.center.y + (lemming.height >> 1);
 
-                if(click.location.x > left && click.location.x < right &&
-                   click.location.y > top && click.location.y < bottom) {
-                    if(that.lemmingType !== '' && !_.has(lemming.type, that.lemmingType)) {
-                        lemming.type[that.lemmingType] = that.lemmingType;
-                        that.center = spec.center;
-                        console.log('click: ' + that.lemmingType);
-                    }
+            if(that.position.x > left && that.position.x < right &&
+                that.position.y > top && that.position.y < bottom) {
+                    activeLemming = lemming;
+                    cursorNum = 1;
+                    found = true;
+            }
+        });
+        //no lemming is being hovered
+        if(!found){
+            activeLemming = null;
+            cursorNum = 0;
+        }
+        _.each(that.clicks, (click)=>{
+            if(activeLemming !== null) {
+                console.log("clicked " + activeLemming.type + " lemming");
+                console.log(that.lemmingTypeSelected);
+                //this is for testing, should be done in the game model
+                if (that.lemmingTypeSelected !== "") {
+                    activeLemming.type = that.lemmingTypeSelected;
                 }
+                //if(that.lemmingTypeSelected !== '' && !_.has(lemming.possibleActions, that.lemmingTypeSelected)) {
+                //    //lemming.possibleActions.push(that.lemmingTypeSelected);
+                //    //that.center = spec.center;
+                //    //decrement from the game model the lemmingTypeSelected
+                //    //console.log('click: ' + that.lemmingTypeSelected);
+                //}
+            }
+            _.remove(that.clicks, (el)=>{
+                return el === click;
             });
         });
     };
 
     that.updateLemmingType = (type)=>{
-        that.lemmingType = (that.lemmingType === '' || that.lemmingType !== type) ? type : '';
+        that.lemmingTypeSelected = (that.lemmingTypeSelected === '' || that.lemmingTypeSelected !== type) ? type : '';
+        if(that.lemmingTypeSelected !== '') {
+            that.lemmingTypeSelected = that.lemmingTypeSelected.slice(8);
+        }
     };
 
     Globals.canvas.addEventListener('mousedown', clickDown);
@@ -111,8 +166,9 @@ let ButtonPress = (id, obj)=>{
 
     switch(id) {
         case 'pause-btn':
-            // TODO: call game's stop function
             console.log('game state pressed: ' + id);
+            //window alert stops the browser thread (i.e. it suspends the game loop)
+            window.alert("Game Paused");
             break;
         case 'hotkey-save':
             console.log("save pressed");

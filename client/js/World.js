@@ -1,10 +1,12 @@
-let _           = require("lodash");
-let Globals     = require("./Globals.js");
-let Graphics    = Globals.graphics;
-let sprites     = require('./config.js').sprites;
-let block       = sprites.block;
-let blocksImg   = document.getElementById('blocks');
-let blockNum    = 0; //this toggles the block 0 is cross hairs, 1 is box, updated in onHover handler
+let _               = require("lodash");
+let Globals         = require("./Globals.js");
+let Graphics        = Globals.graphics;
+let sprites         = require('./config.js').sprites;
+let block           = sprites.block;
+let entranceGate    = sprites.entranceGate;
+let exitGate        = sprites.exitGate;
+let blocksImg       = document.getElementById('blocks');
+let blockNum        = 0; //this toggles the block 0 is cross hairs, 1 is box, updated in onHover handler
 blocksImg.onload = ()=>{
     'use strict';
     block.ready = true;
@@ -33,29 +35,46 @@ let World = (()=>{
     };
 
     that.render = ()=>{
-        _.each(that.map, (row, y)=>{
-            _.each(row, (col, x)=>{
+        _.each(that.map, (row, j)=>{
+            var length = row.length;
+            _.each(row, (col, i)=>{
+
                 blockNum = Globals.blockTypes[col];
 
                 if(blockNum <= 0 && blockNum >= 9 && blockNum !== "") {
                     console.log("invalid block type");
                 }
 
-                x = (x * block.width) + (block.width / 2);
-                y = (y * block.height) + (block.height / 2);
+                let width = Globals.canvas.width / length;
+                let height = Globals.canvas.height / that.map.length;
 
-                //draw the appropriate block at mouse position
+                let x = (i * width) + (width / 2);
+                let y = (j * height) + (height / 2);
+                let dx = i * width;
+                let dy = j * height;
+
                 if(block.ready) {
-                    Graphics.drawSprite({
-                        center: {x, y},
-                        image: blocksImg,
-                        sx: block.width * blockNum,
-                        sy: 0,
-                        sw: block.width,
-                        sh: block.height,
-                        dw: block.width * block.scaleFactor,
-                        dh: block.height * block.scaleFactor
-                    });
+                    switch(col) {
+                        case 'start':
+
+                            break;
+                        case 'end':
+
+                            break;
+                        default:
+                            Graphics.drawSprite({
+                                center: {x, y},
+                                image: blocksImg,
+                                sx: width * blockNum,
+                                sy: 0,
+                                sw: width,
+                                sh: height,
+                                dx,
+                                dy,
+                                dw: width,
+                                dh: height
+                            });
+                    }
                 }
             });
         });

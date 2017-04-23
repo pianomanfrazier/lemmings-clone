@@ -82,12 +82,12 @@ sprites.trap_hanging = {
 };
 
 // ***** gates end/start *****
-sprites.entrance_gate = {
+sprites.entranceGate = {
     width: 100,
     height: 70,
     frames: 10
 };
-sprites.end_gate = {
+sprites.exitGate = {
     width: 100,
     height: 70,
     frames: 6,

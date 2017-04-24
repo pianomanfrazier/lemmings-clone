@@ -1,9 +1,14 @@
 {
   "name": "Lemmings",
   "author": "Seth Bertlshofer & Ryan Frazier",
+  "version": "1.0",
+  "scripts": {
+    "postinstall": "cd ./server && yarn"
+  },
   "dependencies": {
     "jquery": "^3.2.1",
-    "page": "^1.7.1"
+    "page": "^1.7.1",
+    "papaparse": "^4.2.0"
   },
   "devDependencies": {
     "browser-sync": "^2.18.8",

@@ -73,6 +73,8 @@ sprites.timeup = {
     height: 50,
     frames: 16
 };
+
+// ***** traps *****
 sprites.trap_10tons = {
     width: 192,
     height: 250,
@@ -83,16 +85,38 @@ sprites.trap_hanging = {
     height: 250,
     frames: 34
 };
-sprites.entrance_gate = {
+
+// ***** gates end/start *****
+sprites.entranceGate = {
     width: 100,
     height: 70,
     frames: 10
 };
-sprites.end_gate = {
+sprites.exitGate = {
     width: 100,
     height: 70,
     frames: 6,
     scaleFactor: 0.8
+};
+
+// ***** blocks *****
+sprites.block = {
+    width: 25,
+    height: 25,
+    ready: false
+};
+
+sprites.blockTypes = {
+    "grass_cement": 0,
+    "cement": 1,
+    "grass_dirt": 2,
+    "dirt": 3,
+    "bones": 4,
+    "jewels": 5,
+    "flower_yellow": 6,
+    "mushroom_red": 7,
+    "mushroom_white": 8,
+    "flower_white": 9
 };
 
 config.sprites = sprites;

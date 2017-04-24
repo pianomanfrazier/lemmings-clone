@@ -8,18 +8,22 @@ let settings         = require("./settings.js");
 let inputs           = require("./lib/inputs.js");
 let Graphics         = require("./Graphics.js");
 let Globals          = require("./Globals.js");
+let World            = require("./World.js");
 let graphics         = Graphics(Globals.canvas);
+let level1           = require("./levels/level1.js");
+let level2           = require("./levels/level2.js");
+let level3           = require("./levels/level3.js");
 
 let Lemmings = {};
 
 Lemmings.inputs = inputs;
 Lemmings.lemmings = []; //store all lemmings here
-//Lemmings.world = World(spec); //generate a level according to specs
 //need to detect collisions between lemmings and world objects and blockers
 Lemmings.score = 0;
 //get number of lemmings/types from level config
 //each level is 16x28 with 25px squares
 //have user choose the level they want and load it
+Lemmings.level = 1;
 Lemmings.lemmingCount = 25;
 Lemmings.lemmingsOut = 7;
 Lemmings.lemmingsIn = 4;
@@ -52,6 +56,9 @@ Lemmings.init = ()=>{
     //reset variables
     Lemmings.startTime = new Date().getTime();
     //get all the images
+
+    World.init(level1); // init will always be level1
+
 };
 //ajax call to server
 //POST to /api/score --> {user : "name", score : 1234}
@@ -144,17 +151,17 @@ Lemmings.update = (elapsedTime)=>{
         });
     }
     Lemmings.updateTimer(elapsedTime);
-    //Lemmings.world.update(elapsedTime);
+    World.update(elapsedTime);
 };
 Lemmings.render = ()=>{
     'use strict';
     graphics.clear();
+    World.render();
     _.each(Lemmings.lemmings, (lemming)=>{
         lemming.render();
     });
     //draw the cursor
     inputs.Mouse.draw();
-    //Lemmings.world.render();
 };
 
 module.exports = Lemmings;

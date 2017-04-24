@@ -7,8 +7,6 @@ Globals.canvas.height = 400;
 
 Globals.graphics = Graphics(Globals.canvas);
 
-Globals.graphics = Graphics(Globals.canvas);
-
 Globals.hotKeys = [
     {"id":"pause", "default": "P", "value":"A"},
     {"id":"atomicBomb", "default": "A", "value":"B"},

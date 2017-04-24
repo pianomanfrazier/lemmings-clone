@@ -90,7 +90,7 @@ sprites.trap_hanging = {
 sprites.entranceGate = {
     width: 100,
     height: 70,
-    scaleFactor: 0.6,
+    scaleFactor: 0.8,
     frames: 10
 };
 sprites.exitGate = {

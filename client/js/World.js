@@ -61,17 +61,20 @@ let World = (()=>{
                 numFrames: spriteSpec.frames,
                 animationRate: (spriteSpec.speed) ? spriteSpec.speed : spriteConfig.ANIMATION_SPEED
             }));
-                if(i === 1) {
-                    that.sprites[i].center = {
-                        x: that.finish.x * block.width  + (block.width / 2),
-                        y: that.finish.y * block.height + block.height - (spriteSpec.height * spriteSpec.scaleFactor / 2)
-                    };
-                } else if (i === 0) {
-                    that.sprites[i].center = {
-                        x: that.start.x * block.width  + (block.width / 2),
-                        y: that.start.y * block.height + block.height - (spriteSpec.height * spriteSpec.scaleFactor / 2)
-                    };
-                }
+
+            let x = 0;
+            let y = 0;
+            if(i === 0) {
+                x = that.start.x;
+                y = that.start.y;
+            } else if (i === 1) {
+                x = that.finish.x;
+                y = that.finish.y;
+            }
+            that.sprites[i].center = {
+                x: x * block.width  + (block.width / 2),
+                y: y * block.height + block.height - (spriteSpec.height * spriteSpec.scaleFactor / 2)
+            };
         });
     };
 

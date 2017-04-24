@@ -22,8 +22,6 @@ Lemmings.lemmings = []; //store all lemmings here
 Lemmings.score = 0;
 //get number of lemmings/types from level config
 //each level is 16x28 with 25px squares
-//have user choose the level they want and load it
-Lemmings.level = 1;
 Lemmings.lemmingCount = 25;
 Lemmings.lemmingsOut = 7;
 Lemmings.lemmingsIn = 4;
@@ -34,9 +32,8 @@ let eTimer = $("#timer");
 let eOut = $("#out");
 let eIn = $("#in");
 
-Lemmings.init = ()=>{
+Lemmings.init = (spec)=>{
     'use strict';
-    //load level
     //clear the lemmings if there from previous game
     Lemmings.lemmings = [];
     //some sample Lemmings for testing
@@ -50,15 +47,27 @@ Lemmings.init = ()=>{
     //TODO: reverse direction of walking lemming
     Lemmings.lemmings[3].type = "walking";
     Lemmings.lemmings[4].type = "umbrella";
-    Lemmings.lemmings[5].type = "exploding";
+    Lemmings.lemmings[5].type = "splatting";
     Lemmings.lemmings[6].type = "climbing";
     Lemmings.lemmings[7].type = "blocking";
     //reset variables
     Lemmings.startTime = new Date().getTime();
     //get all the images
 
-    World.init(level1); // init will always be level1
-
+    //load level
+    switch(spec.levelNum) {
+    case 1:
+        World.init(level1);
+        break;
+    case 2:
+        World.init(level2);
+        break;
+    case 3:
+        World.init(level3);
+        break;
+    default:
+        World.init(level1);
+    }
 };
 //ajax call to server
 //POST to /api/score --> {user : "name", score : 1234}

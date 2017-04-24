@@ -151,7 +151,7 @@ Lemmings.update = (elapsedTime)=>{
         });
     }
     Lemmings.updateTimer(elapsedTime);
-    //Lemmings.world.update(elapsedTime);
+    World.update(elapsedTime);
 };
 Lemmings.render = ()=>{
     'use strict';

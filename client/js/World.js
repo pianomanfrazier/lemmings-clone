@@ -1,8 +1,10 @@
 let _               = require("lodash");
+let $               = require("jquery");
 let Globals         = require("./Globals.js");
 let Graphics        = Globals.graphics;
-let sprites         = require('./config.js').sprites;
-let block           = sprites.block;
+let Sprite          = require("./Sprite.js");
+let spriteConfig    = require('./config.js').sprites;
+let block           = spriteConfig.block;
 let blocksImg       = document.getElementById('blocks');
 let blockNum        = 0; //this toggles the block 0 is cross hairs, 1 is box, updated in onHover handler
 blocksImg.onload = ()=>{
@@ -22,6 +24,7 @@ let World = (()=>{
         numLemmings: 0,
         lemmingGoal: 0,
         lemmingTypes: {},
+        sprites: [],
         map: []
     };
 
@@ -41,13 +44,49 @@ let World = (()=>{
             if(iS !== -1) { that.start  = {x: iS, y: j}; }
             if(iF !== -1) { that.finish = {x: iF, y: j}; }
         });
+        let gateImgs = $('#gates img');
+        console.log(gateImgs);
+        _.each(gateImgs, (img, i)=>{
+            console.log(img, i);
+            let spriteSpec = spriteConfig[img.id];
+            that.sprites.push(Sprite({
+                reverse: false,
+                img: img,
+                width: spriteSpec.width * ((spriteSpec.scaleFactor) ? spriteSpec.scaleFactor : spriteConfig.SCALE_FACTOR), //width to be drawn
+                height: spriteSpec.height * ((spriteSpec.scaleFactor) ? spriteSpec.scaleFactor : spriteConfig.SCALE_FACTOR), //height to be drawn
+                startX: (spriteSpec.startX) ? spriteSpec.startX : 0, //top left corner of sprite
+                startY: (spriteSpec.startY) ? spriteSpec.startY : 0,
+                frameWidth: spriteSpec.width, //width of image
+                frameHeight: spriteSpec.height,
+                numFrames: spriteSpec.frames,
+                animationRate: (spriteSpec.speed) ? spriteSpec.speed : spriteConfig.ANIMATION_SPEED
+            }));
+                if(i === 1) {
+                    that.sprites[i].center = {
+                        x: that.finish.x * block.width  + (block.width / 2),
+                        y: that.finish.y * block.height + block.height - (spriteSpec.height * spriteSpec.scaleFactor / 2)
+                    };
+                } else if (i === 0) {
+                    that.sprites[i].center = {
+                        x: that.start.x * block.width  + (block.width / 2),
+                        y: that.start.y * block.height + block.height - (spriteSpec.height * spriteSpec.scaleFactor / 2)
+                    };
+                }
+        });
     };
 
     that.update = (elapsedTime)=>{
-
+        //update the gates
+        _.each(that.sprites, (sprite)=>{
+            sprite.update(elapsedTime);
+        });
     };
 
     that.render = ()=>{
+        //render the gates
+        _.each(that.sprites, (sprite)=>{
+            sprite.render();
+        });
         _.each(that.map, (row, i)=>{
             _.each(row, (cell, j)=>{
                 if(cell === "" && cell === "start" && cell === "end") return;

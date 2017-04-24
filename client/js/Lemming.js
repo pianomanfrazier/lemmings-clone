@@ -43,35 +43,70 @@ let SCALE_FACTOR = 0.3;
 //hash of all the sprite strips
 let SpriteGen = require("./GenSpriteSet.js");
 
-function GenerateLemming() {
+function GenerateLemming(World) {
     'use strict';
     let that = {};
 
     let sprites = SpriteGen();
     //these can be dynamically changed
+    that.isAlive = true;
     that.type = "falling"; //defaults to falling
     that.center = {x:100, y:100}; //default
     //this is for testing, should be loaded from config.js lemming width/heigh * scaleFactor
     that.width = LEMMING_WIDTH * SCALE_FACTOR;
     that.height = LEMMING_HEIGHT * SCALE_FACTOR;
+    //available types the lemming can switch to
+    //these are set to true when user clicks from climber or umbrella
+    that.canClimb = false;
+    that.canUmbrella = false;
 
     let accumTime = 0;
-
 
     that.update = (elapsedTime)=>{
         let sprite = sprites[that.type];
         sprite.update(elapsedTime);
         sprite.center = that.center;
         accumTime+=elapsedTime;
-        //lemming logic goes here
+        /////////////////////////
+        //lemming switching logic
+        /////////////////////////
+        //FALLING/UMBRELLA
+        //if falling or umbrella -- check lemming.bottom collision
+        //check how far has been falling if too far splat, else that.type = walking
+        //if umbrella, that.type = walking
+
+        //WALKING
+        //check the bottom to see if start falling
+        //if that.type === "walking" && !sprite.reverse -- check lemming.right collision
+        //if that.type === "walking" && sprite.reverse -- check lemming.left collision
+
+        //CLIMBING
+        //if sprite.reverse check left side of lemming
+        //activate climb over reverse, then switch to walking left
+        //else check right side
+        //activate climb over, then switch to walking right
+
+        /////////////////////////
+        //lemming animation logic
+        /////////////////////////
         if(accumTime > sprite.speed) {
             accumTime = 0;
             if(that.type === "walking"){
-                that.center.x += 1;
-            }else if (that.type === "falling" || that.type === "umbrella") {
+                if(sprite.reverse){
+                    that.center.x -= 1;
+                } else {
+                    that.center.x += 1;
+                }
+                //if collision is on right of lemming
+                sprite.reverse = true;
+            }else if (that.type === "falling") {
+                that.center.y += 2;
+            }else if (that.type === "umbrella") {
                 that.center.y += 1;
             }else if (that.type === "climbing"){
                 that.center.y -= 1;
+                //if collision is on left side of lemming
+                sprite.reverse = true; //climb a right facing wall
             }
         }
     };

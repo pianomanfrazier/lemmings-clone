@@ -25,6 +25,7 @@ let Sprite = (spec)=>{
         // TODO: the following attributes can be taken out.  I was using them for
         // the inputs but these will need to be referred to in the Lemming's obj
     that.speed      = spec.animationRate;
+    that.reverse    = false;
 
     that.update = (elapsedTime)=>{
         accumTime += elapsedTime;
@@ -41,7 +42,7 @@ let Sprite = (spec)=>{
     that.render = ()=>{
         if(!that.center) return;//when switch between sprites 'that' is undefined
         Graphics.drawSprite({
-            reverse: spec.reverse,
+            reverse: that.reverse,
             center: that.center,
             image: spec.img,
             sx: spec.startX + (spec.frameWidth * frameNumber),

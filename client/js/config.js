@@ -106,6 +106,19 @@ sprites.block = {
     ready: false
 };
 
+sprites.blockTypes = {
+    "grass_cement": 0,
+    "cement": 1,
+    "grass_dirt": 2,
+    "dirt": 3,
+    "bones": 4,
+    "jewels": 5,
+    "flower_yellow": 6,
+    "mushroom_red": 7,
+    "mushroom_white": 8,
+    "flower_white": 9
+};
+
 config.sprites = sprites;
 
 module.exports = config;

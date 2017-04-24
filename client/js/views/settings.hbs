@@ -7,7 +7,8 @@
         {{#if hotKeys}}
             <ul>
             {{#each hotKeys}}
-                <label for="{{id}}">{{id}}: </label><input type="text" id="{{id}}" placeholder="{{default}}" value="{{value}}"/>
+                <li><label for="{{id}}">{{id}}: </label></li>
+                <li><input type="text" id="{{id}}" placeholder="{{default}}" value="{{value}}"/></li>
             {{/each}}
             </ul>
         {{/if}}

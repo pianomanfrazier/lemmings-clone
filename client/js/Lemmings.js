@@ -51,19 +51,11 @@ Lemmings.init = (spec)=>{
         World.init(level1);
     }
     //some sample Lemmings for testing
-    for(var i = 0; i < Lemmings.lemmingCount; i++) {
-        Lemmings.lemmings.push(GenerateLemming(World));
-        Lemmings.lemmings[i].center = {x: 100 + 10*i, y: 100};
-    }
-    //you can dynamically change the type of lemming displayed
-    //based on the type the lemming will move up/down/left/right
-    Lemmings.lemmings[0].center = {x:300,y:300};
-    //TODO: reverse direction of walking lemming
-    Lemmings.lemmings[3].type = "walking";
-    Lemmings.lemmings[4].type = "umbrella";
-    Lemmings.lemmings[5].type = "splatting";
-    Lemmings.lemmings[6].type = "climbing";
-    Lemmings.lemmings[7].type = "climb_over";
+    //for(var i = 0; i < Lemmings.lemmingCount; i++) {
+    //    Lemmings.lemmings.push(GenerateLemming(World));
+    //    Lemmings.lemmings[i].center = {x: 100 + 10*i, y: 100};
+    //}
+    Lemmings.lemmings.push(GenerateLemming(World));
     //reset variables
     Lemmings.startTime = new Date().getTime();
     //get all the images

@@ -27,7 +27,6 @@ function GenSpriteSet(){
         };
         sprites[type] = Sprite(spriteSpec);
     });
-    sprites.splatting.callback = ()=>{ console.log("splat done");};
     return sprites;
 }
 

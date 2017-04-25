@@ -9,6 +9,10 @@ let waves           = spriteConfig.waves;
 let wavesImg        = document.getElementById('waves');
 let blocksImg       = document.getElementById('blocks');
 let blockNum        = 0; //this toggles the block 0 is cross hairs, 1 is box, updated in onHover handler
+//load these from config somewhere
+let WORLD_SIZE_X = 28;
+let WORLD_SIZE_Y = 16;
+
 blocksImg.onload = ()=>{
     'use strict';
     // console.log("blocks ready");
@@ -28,6 +32,17 @@ let World = (()=>{
         lemmingTypes: {},
         sprites: [],
         map: []
+    };
+    //this takes a pixel point and return the string type of the block location
+    that.pointCollide = (point)=>{
+        let x = Math.floor(point.x / block.width);
+        let y = Math.floor(point.y / block.height);
+        //console.log(x,y);
+        //check out of bounds
+        if(y < 0 || y > WORLD_SIZE_Y || x < 0 || x > WORLD_SIZE_X){
+            return "";
+        }
+        return that.map[y][x];
     };
 
     that.init = (spec)=>{
@@ -67,7 +82,7 @@ let World = (()=>{
                         center: {
                             x: i * block.width  + (block.width / 2),
                             y: j * block.height + (block.height / 2)
-                        },
+                        }
                     }));
                 }
             });
@@ -82,7 +97,6 @@ let World = (()=>{
                 x = that.start.x;
                 y = that.start.y;
                 callback = ()=>{
-                    console.log("sprite done");
                 };
             } else if (i === 1) {
                 x = that.finish.x;

@@ -18,5 +18,4 @@ Globals.hotKeys = [
     {"id":"slowDown", "default": "D", "value":"H"}
 ];
 
-    "water" : 10
 module.exports = Globals;

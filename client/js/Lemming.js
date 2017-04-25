@@ -17,6 +17,7 @@ function GenerateLemming(World) {
     that.isAlive = true;
     that.isSaved = false;
     that.type = "falling"; //defaults to falling
+    //console.log(World.start);
     that.center = {x: 250, y: 300}; //default
     //this is for testing, should be loaded from config.js lemming width/heigh * scaleFactor
     that.width = LEMMING_WIDTH * SCALE_FACTOR;

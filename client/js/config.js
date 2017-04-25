@@ -2,7 +2,7 @@ let config = {};
 let sprites = {};
 
 //sprite sheet params, height width, image names
-sprites.ANIMATION_SPEED = 100;
+sprites.ANIMATION_SPEED = 60;
 sprites.SCALE_FACTOR = 0.3;
 sprites.cursor = {
     width: 50,

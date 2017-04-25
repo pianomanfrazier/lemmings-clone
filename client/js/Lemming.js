@@ -38,6 +38,7 @@ function GenerateLemming(World) {
     sprites.drowning.callback   = deathCallback;
     sprites.exploding.callback  = ()=>{
         console.log("exloding lemming");
+        that.isAlive = false;
         //destroy to the left and to the right of the lemming
         //if the blocks are dirt or diamond or bones
         //World.map[i-1][j] = "";
@@ -106,11 +107,14 @@ function GenerateLemming(World) {
 
         //WALKING
         //check the bottom to see if start falling
+        //also checks for drowing
         if(that.type === "walking"){
             let bottom = checkBottom();
             if(bottom === ""){
                 that.type = "falling";
-            }
+            } else if (bottom === "waves" || bottom === "water") {
+                that.type = "drowning";
+            } else {
                 let center = checkCenter();
                 if(_.includes(SAFE_LANDING, center)) {
                     if(that.canClimb){
@@ -126,6 +130,7 @@ function GenerateLemming(World) {
                         sprite.center.x -= 2;
                     }
                 }
+            }
         }
         //CLIMBING
         if(that.type === "climbing") {
@@ -134,10 +139,6 @@ function GenerateLemming(World) {
                 that.type = "climb_over";
             }
         }
-        //if sprite.reverse check left side of lemming
-        //activate climb over reverse, then switch to walking left
-        //else check right side
-        //activate climb over, then switch to walking right
 
         /////////////////////////
         //lemming animation logic

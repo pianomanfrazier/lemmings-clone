@@ -36,18 +36,40 @@
 //   release lemming at specified rate
 //  destination gate:
 //   on lemming contact start walking away animation, update score
-let LEMMING_HEIGHT = 50;
-let LEMMING_WIDTH = 50;
-let SCALE_FACTOR = 0.3;
 
 //hash of all the sprite strips
 let SpriteGen = require("./GenSpriteSet.js");
+let block     = require("./config.js").sprites.block;
+
+let LEMMING_HEIGHT = 50;
+let LEMMING_WIDTH = 50;
+let SCALE_FACTOR = 0.3;
+let LEMMING_FALL_DISTANCE = block.height * 2;
+
+
 
 function GenerateLemming(World) {
     'use strict';
     let that = {};
 
     let sprites = SpriteGen();
+    //set some callbacks on the terminating lemmings
+    let deathCallback = ()=>{
+        console.log("death done");
+        that.isAlive = false;
+    };
+    sprites.splatting.callback  = deathCallback;
+    sprites.drowning.callback   = deathCallback;
+    sprites.exploding.callback  = ()=>{
+        console.log("exloding lemming");
+        //destroy to the left and to the right of the lemming
+        //if the blocks are dirt or diamond or bones
+        //World.map[i-1][j] = "";
+        //World.map[i+1][j] = "";
+    };
+    sprites.climb_over.callback = ()=>{
+        that.type = "walking";
+    };
     //these can be dynamically changed
     that.isAlive = true;
     that.type = "falling"; //defaults to falling
@@ -61,6 +83,7 @@ function GenerateLemming(World) {
     that.canUmbrella = false;
 
     let accumTime = 0;
+    let accumFallDistance = 0;
 
     that.update = (elapsedTime)=>{
         let sprite = sprites[that.type];
@@ -97,12 +120,19 @@ function GenerateLemming(World) {
                 } else {
                     that.center.x += 1;
                 }
+                accumFallDistance = 0;
                 //if collision is on right of lemming
-                sprite.reverse = true;
+                //sprite.reverse = true;
             }else if (that.type === "falling") {
                 that.center.y += 2;
+                accumFallDistance += 2;
+                //splat on impact
+                if(accumFallDistance > LEMMING_FALL_DISTANCE) {
+                    that.type = "splatting";
+                }
             }else if (that.type === "umbrella") {
                 that.center.y += 1;
+                accumFallDistance = 0;
             }else if (that.type === "climbing"){
                 that.center.y -= 1;
                 //if collision is on left side of lemming

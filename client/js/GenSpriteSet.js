@@ -13,7 +13,7 @@ function GenSpriteSet(){
     spriteImgs.each((i, img)=>{
         let type = img.id.slice(8); //remove "lemming_" from id
         let spec = spriteConfig[type];
-        sprites[type] = Sprite({
+        let spriteSpec = {
             reverse: false,
             img: img,
             width: spec.width * ((spec.scaleFactor) ? spec.scaleFactor : spriteConfig.SCALE_FACTOR), //width to be drawn
@@ -24,7 +24,8 @@ function GenSpriteSet(){
             frameHeight: spec.height,
             numFrames: spec.frames,
             animationRate: (spec.speed) ? spec.speed : spriteConfig.ANIMATION_SPEED
-        });
+        };
+        sprites[type] = Sprite(spriteSpec);
     });
     return sprites;
 }

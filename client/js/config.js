@@ -2,7 +2,7 @@ let config = {};
 let sprites = {};
 
 //sprite sheet params, height width, image names
-sprites.ANIMATION_SPEED = 100;
+sprites.ANIMATION_SPEED = 60;
 sprites.SCALE_FACTOR = 0.3;
 sprites.cursor = {
     width: 50,
@@ -73,6 +73,11 @@ sprites.timeup = {
     height: 50,
     frames: 16
 };
+sprites.exit = {
+    width: 50,
+    height: 50,
+    frames: 8
+};
 
 // ***** traps *****
 sprites.trap_10tons = {
@@ -90,13 +95,15 @@ sprites.trap_hanging = {
 sprites.entranceGate = {
     width: 100,
     height: 70,
+    scaleFactor: 0.6,
     frames: 10
 };
 sprites.exitGate = {
     width: 100,
     height: 70,
     frames: 6,
-    scaleFactor: 0.8
+    scaleFactor: 0.8,
+    ready: false
 };
 
 // ***** blocks *****
@@ -104,6 +111,13 @@ sprites.block = {
     width: 25,
     height: 25,
     ready: false
+};
+
+sprites.waves = {
+    width: 25,
+    height: 25,
+    frames: 6,
+    scaleFactor: 1
 };
 
 sprites.blockTypes = {
@@ -116,7 +130,8 @@ sprites.blockTypes = {
     "flower_yellow": 6,
     "mushroom_red": 7,
     "mushroom_white": 8,
-    "flower_white": 9
+    "flower_white": 9,
+    "water" : 10
 };
 
 config.sprites = sprites;

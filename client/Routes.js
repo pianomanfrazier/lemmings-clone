@@ -39,12 +39,17 @@ $(document).on('click','#hotkey-save-btn', ()=>{
 $('#control-panel :button').each((i, button)=>{
     'use strict';
 
-    let regex =/lemming-\w{0,}/;
+    let regex =/lemming-(\w{0,})/;
     let match = regex.exec(button.id);
-    let type = (match) ? match[0] : button.id;
+    let typeId = (match) ? match[0] : button.id;
+    let typeCap = (match) ? match[1] : null;
+
+    if(typeCap) {
+        Globals.controlPanel[typeCap] = button;
+    }
 
     $(button).click(()=>{
-        inputs.ButtonPress(type);
+        inputs.ButtonPress(typeId);
     });
 });
 /////////////////////////////////////////////////////////

@@ -11,37 +11,29 @@ blocksImg.onload = ()=>{
     block.ready = true;
 };
 
-let World = (()=>{
+let World = (spec)=>{
     'use strict';
 
     let that = {
-        lemmingsSaved: 0,
-        level: 0,
-        start: {},
-        finish: {},
-        numLemmings: 0,
-        lemmingGoal: 0,
-        lemmingTypes: {},
-        map: []
+        lemmingsSaved: 0
     };
 
-    that.init = (spec)=>{
-        that.lemmingGoal        = spec.lemmingGoal;
-        that.lemmingTypes       = spec.lemmingTypes;
-        that.map                = spec.map;
+    that.lemmingGoal    = spec.lemmingGoal;
+    that.lemmingTypes   = spec.lemmingTypes;
+    that.lemmingCount   = spec.lemmingCount;
+    that.map            = spec.map;
 
-        _.each(that.map, (row, j)=>{
-            let iS = _.findIndex(row, (obj)=>{
-                return obj === 'start';
-            });
-            let iF = _.findIndex(row, (obj)=>{
-                return obj === 'end';
-            });
-
-            if(iS !== -1) { that.start  = {x: iS, y: j}; }
-            if(iF !== -1) { that.finish = {x: iF, y: j}; }
+    _.each(that.map, (row, j)=>{
+        let iS = _.findIndex(row, (obj)=>{
+            return obj === 'start';
         });
-    };
+        let iF = _.findIndex(row, (obj)=>{
+            return obj === 'end';
+        });
+
+        if(iS !== -1) { that.start  = {x: iS, y: j}; }
+        if(iF !== -1) { that.finish = {x: iF, y: j}; }
+    });
 
     that.update = (elapsedTime)=>{
 
@@ -79,6 +71,6 @@ let World = (()=>{
     };
 
     return that;
-})();
+};
 
 module.exports = World;

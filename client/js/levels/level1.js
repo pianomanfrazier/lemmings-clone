@@ -6,6 +6,7 @@ let level1 = {
         "climbing": 10,
         "umbrella": 10
     },
+    "lemmingCount": 25,
     "map": []
 };
 

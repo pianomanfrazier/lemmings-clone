@@ -1,6 +1,7 @@
 let Graphics = require("./Graphics.js");
 let Globals = {};
 
+Globals.controlPanel = {};
 Globals.canvas = document.getElementById('canvas');
 Globals.canvas.width = 700;
 Globals.canvas.height = 400;

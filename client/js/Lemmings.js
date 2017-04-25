@@ -24,7 +24,6 @@ Lemmings.score = 0;
 //each level is 16x28 with 25px squares
 //have user choose the level they want and load it
 Lemmings.level = 1;
-Lemmings.lemmingCount = 25;
 Lemmings.lemmingsOut = 7;
 Lemmings.lemmingsIn = 4;
 Lemmings.user = "";
@@ -34,13 +33,30 @@ let eTimer = $("#timer");
 let eOut = $("#out");
 let eIn = $("#in");
 
+function setup(spec) {
+    'use strict';
+
+    // setup control panel buttons
+    _.each(Globals.controlPanel, (button, type)=>{
+        let value = (spec.lemmingTypes[type]) ? spec.lemmingTypes[type] : 0;
+        $('#lemming-' + type + '-btn>.status').html(value);
+
+        if(value === 0) {
+            $(button).off('click');
+        }
+    });
+}
+
 Lemmings.init = ()=>{
     'use strict';
     //load level
+    Lemmings.world = World(level1);
+    setup(Lemmings.world);
+    // *********************** this is for testing purposes only ************************
     //clear the lemmings if there from previous game
     Lemmings.lemmings = [];
     //some sample Lemmings for testing
-    for(var i = 0; i < Lemmings.lemmingCount; i++) {
+    for(var i = 0; i < Lemmings.world.lemmingCount; i++) {
         Lemmings.lemmings.push(GenerateLemming());
         Lemmings.lemmings[i].center = {x: 100 + 10*i, y: 100};
     }
@@ -53,12 +69,11 @@ Lemmings.init = ()=>{
     Lemmings.lemmings[5].type = "exploding";
     Lemmings.lemmings[6].type = "climbing";
     Lemmings.lemmings[7].type = "blocking";
+    // *********************** this is for testing purposes only ************************
+
     //reset variables
     Lemmings.startTime = new Date().getTime();
     //get all the images
-
-    World.init(level1); // init will always be level1
-
 };
 //ajax call to server
 //POST to /api/score --> {user : "name", score : 1234}
@@ -102,7 +117,7 @@ Lemmings.updateOut = ()=>{
 //this should be called only when a lemming is saved
 Lemmings.updateIn = ()=>{
     'use strict';
-    eIn.html("IN : " + Math.floor(Lemmings.lemmingsIn/Lemmings.lemmingCount * 100) + "%");
+    eIn.html("IN : " + Math.floor(Lemmings.lemmingsIn/Lemmings.world.lemmingCount * 100) + "%");
 };
 Lemmings.update = (elapsedTime)=>{
     'use strict';
@@ -111,6 +126,10 @@ Lemmings.update = (elapsedTime)=>{
     });
     Lemmings.inputs.Mouse.update({elapsedTime, lemmings: Lemmings.lemmings});
     Lemmings.inputs.Keyboard.update(elapsedTime);
+
+    // _.each(Lemmings.world.lemmingTypes, (type)=>{
+
+    // });
 
     // check local storage
     if (settings.storage.hotKeysUpdate) {
@@ -151,12 +170,12 @@ Lemmings.update = (elapsedTime)=>{
         });
     }
     Lemmings.updateTimer(elapsedTime);
-    World.update(elapsedTime);
+    Lemmings.world.update(elapsedTime);
 };
 Lemmings.render = ()=>{
     'use strict';
     graphics.clear();
-    World.render();
+    Lemmings.world.render();
     _.each(Lemmings.lemmings, (lemming)=>{
         lemming.render();
     });

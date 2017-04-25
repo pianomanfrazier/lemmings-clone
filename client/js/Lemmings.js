@@ -23,8 +23,8 @@ Lemmings.score = 0;
 //get number of lemmings/types from level config
 //each level is 16x28 with 25px squares
 Lemmings.lemmingCount = 25;
-Lemmings.lemmingsOut = 7;
-Lemmings.lemmingsIn = 4;
+Lemmings.lemmingsOut = 0;
+Lemmings.lemmingsIn = 0;
 Lemmings.user = "";
 Lemmings.startTime = new Date().getTime();
 Lemmings.accumTime = 0;
@@ -153,12 +153,30 @@ Lemmings.update = (elapsedTime)=>{
     }
     Lemmings.updateTimer(elapsedTime);
     World.update(elapsedTime);
-    ////////////////////////
+
     //Clean up dead lemmings
-    ////////////////////////
     _.remove(Lemmings.lemmings, (lemming)=>{
         return !lemming.isAlive;
     });
+    //Clean up saved lemmings
+    _.remove(Lemmings.lemmings, (lemming)=>{
+        if(lemming.isSaved){
+            ///////////////////
+            //update score here
+            ///////////////////
+            Lemmings.lemmingsIn += 1;
+            Lemmings.updateIn();
+            return true;
+        }
+        return false;
+    });
+    //check if game is over
+    if(Lemmings.lemmings.length === 0){
+        //////////////////////
+        //GAME OVER
+        /////////////////////
+        //stop loop, send score to the server
+    }
 };
 Lemmings.render = ()=>{
     'use strict';

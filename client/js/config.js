@@ -73,6 +73,11 @@ sprites.timeup = {
     height: 50,
     frames: 16
 };
+sprites.exit = {
+    width: 50,
+    height: 50,
+    frames: 8
+};
 
 // ***** traps *****
 sprites.trap_10tons = {

@@ -15,6 +15,7 @@ function GenerateLemming(World) {
     let that = {};
     //these can be dynamically changed
     that.isAlive = true;
+    that.isSaved = false;
     that.type = "falling"; //defaults to falling
     that.center = {x: 250, y: 300}; //default
     //this is for testing, should be loaded from config.js lemming width/heigh * scaleFactor
@@ -33,6 +34,10 @@ function GenerateLemming(World) {
     let deathCallback = ()=>{
         console.log("death done");
         that.isAlive = false;
+    };
+    sprites.exit.callback = ()=>{
+        console.log("You saved a lemming");
+        that.isSaved = true;
     };
     sprites.splatting.callback  = deathCallback;
     sprites.drowning.callback   = deathCallback;
@@ -129,6 +134,8 @@ function GenerateLemming(World) {
                         sprite.reverse = !sprite.reverse;
                         sprite.center.x -= 2;
                     }
+                } else if (center === "end") {
+                    that.type = "exit";
                 }
             }
         }

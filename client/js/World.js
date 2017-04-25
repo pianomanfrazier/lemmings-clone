@@ -138,7 +138,7 @@ let World = (()=>{
         _.each(that.map, (row, i)=>{
             _.each(row, (cell, j)=>{
                 if(cell === "" && cell === "start" && cell === "end") return;
-                blockNum = Globals.blockTypes[cell];
+                blockNum = sprites.blockTypes[cell];
 
                 if(blockNum <= 0 && blockNum >= 10 && blockNum !== "") {
                     console.log("invalid block type");

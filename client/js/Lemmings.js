@@ -153,6 +153,12 @@ Lemmings.update = (elapsedTime)=>{
     }
     Lemmings.updateTimer(elapsedTime);
     World.update(elapsedTime);
+    ////////////////////////
+    //Clean up dead lemmings
+    ////////////////////////
+    _.remove(Lemmings.lemmings, (lemming)=>{
+        return !lemming.isAlive;
+    });
 };
 Lemmings.render = ()=>{
     'use strict';

@@ -5,7 +5,7 @@ let $                = require("jquery");
 let _                = require("lodash");
 let GenerateLemming  = require("./Lemming.js");
 let settings         = require("./settings.js");
-let inputs           = require("./lib/inputs.js");
+let Inputs           = require("./lib/inputs.js");
 let Graphics         = require("./Graphics.js");
 let Globals          = require("./Globals.js");
 let World            = require("./World.js");
@@ -16,7 +16,9 @@ let level3           = require("./levels/level3.js");
 
 let Lemmings = {};
 
-Lemmings.inputs = inputs;
+Lemmings.mouse      = Inputs.Mouse();
+Lemmings.keyboard   = Inputs.Keyboard();
+
 Lemmings.lemmings = []; //store all lemmings here
 //need to detect collisions between lemmings and world objects and blockers
 Lemmings.score = 0;
@@ -29,14 +31,16 @@ Lemmings.lemmingsIn = 4;
 Lemmings.user = "";
 Lemmings.startTime = new Date().getTime();
 Lemmings.accumTime = 0;
+
 let eTimer = $("#timer");
 let eOut = $("#out");
 let eIn = $("#in");
 
-Lemmings.init = ()=>{
+Lemmings.init = (spec)=>{
     'use strict';
     //load level
-    Lemmings.world = World(level3);
+    Lemmings.user = spec.user;
+    Lemmings.world = World(level1);
 
     // setup control panel buttons
     _.each(Globals.controlPanel, (button, type)=>{
@@ -117,11 +121,12 @@ Lemmings.updateIn = ()=>{
 };
 Lemmings.update = (elapsedTime)=>{
     'use strict';
+
     _.each(Lemmings.lemmings, (lemming)=>{
         lemming.update(elapsedTime);
     });
-    Lemmings.inputs.Mouse.update({elapsedTime, lemmings: Lemmings.lemmings, controlPanel: Lemmings.world.lemmingTypes});
-    Lemmings.inputs.Keyboard.update(elapsedTime);
+    Lemmings.mouse.update({elapsedTime, lemmings: Lemmings.lemmings, controlPanel: Lemmings.world.lemmingTypes});
+    Lemmings.keyboard.update(elapsedTime);
 
     // check local storage
     if (settings.storage.hotKeysUpdate) {
@@ -158,11 +163,14 @@ Lemmings.update = (elapsedTime)=>{
                 default:
             }
 
-            inputs.Keyboard.registerCommand(inputs.KeyEvent['DOM_VK_' + key.value], ()=>inputs.ButtonPress(type));
+            Lemmings.keyboard.registerCommand(Inputs.KeyEvent['DOM_VK_' + key.value], ()=>Inputs.ButtonPress({type, mouse: Lemmings.mouse, speed: Lemmings.speed}));
         });
     }
+
     Lemmings.updateTimer(elapsedTime);
     Lemmings.world.update(elapsedTime);
+    Lemmings.speed = Inputs.lemmingSpeed;
+    // console.log(Lemmings.speed);
 };
 Lemmings.render = ()=>{
     'use strict';
@@ -172,7 +180,7 @@ Lemmings.render = ()=>{
         lemming.render();
     });
     //draw the cursor
-    inputs.Mouse.draw();
+    Lemmings.mouse.draw();
 };
 
 module.exports = Lemmings;

@@ -10,10 +10,34 @@ cursorsImg.onload = ()=>{
     cursor.ready = true;
 };
 
+let Inputs = {};
 
-let KeyEvent = null;
+Inputs.lemmingSpeed = 50;
 
-let Keyboard = (()=>{
+Inputs.KeyEvent = null;
+
+let getHotKeys = ()=>{
+    'use strict';
+
+    let hotKeys = [];
+    $('#hot-keys :input').each((i, input)=>{
+        let id = $(input).attr('id');
+
+        if(id !== 'hotkey-save-btn') {
+            let value       = $(input).val().toUpperCase();
+            let myDefault   = Globals.hotKeys[i].default;
+
+            // check for empty values
+            value = (!_.isEmpty(value)) ? value : myDefault;
+
+            hotKeys.push({id, default: myDefault, value});
+        }
+    });
+
+    return hotKeys;
+};
+
+Inputs.Keyboard = ()=>{
     'use strict';
 
     let that = {
@@ -26,7 +50,8 @@ let Keyboard = (()=>{
     }
 
     function keyRelease(e) {
-        delete that.keys[e.keyCode];
+        _.remove(that.keys, (key)=>{ return key === e.keyCode; });
+        // delete that.keys[e.keyCode];
     }
 
     that.registerCommand = (key, handler)=>{
@@ -45,9 +70,9 @@ let Keyboard = (()=>{
     window.addEventListener('keyup', keyRelease);
 
     return that;
-})();
+};
 
-let Mouse = (()=>{
+Inputs.Mouse = ()=>{
     'use strict';
 
     //this toggles the cursor 0 is cross hairs, 1 is box, updated in onHover handler
@@ -163,14 +188,14 @@ let Mouse = (()=>{
     Globals.canvas.addEventListener('mousemove', onHover);
 
     return that;
-})();
+};
 
-let ButtonPress = (id, obj)=>{
+Inputs.ButtonPress = (spec)=>{
     'use strict';
 
-    switch(id) {
-        case 'pause-btn':
-            console.log('game state pressed: ' + id);
+    switch(spec.type) {
+        case "pause-btn":
+            console.log('game state pressed: ' + spec.type);
             //window alert stops the browser thread (i.e. it suspends the game loop)
             window.alert("Game Paused");
             break;
@@ -187,7 +212,6 @@ let ButtonPress = (id, obj)=>{
                         $('#error-message').addClass('active');
                         $('#' + keyi.id).addClass('error');
                         $('#' + keyj.id).addClass('error');
-
                     }
 
                     if(!isDuplicate) {
@@ -205,9 +229,15 @@ let ButtonPress = (id, obj)=>{
             break;
 
         case 'speed-up-btn':
+            Inputs.lemmingSpeed = (Inputs.lemmingSpeed+50 >= 100) ? 100 : Inputs.lemmingSpeed+50;
+            break;
+
         case 'speed-down-btn':
+            Inputs.lemmingSpeed = (Inputs.lemmingSpeed-50 <= 0) ? 0 : Inputs.lemmingSpeed-50;
+            break;
+
         case 'atomic-bomb-btn':
-            console.log('game state pressed: ' + id);
+            console.log('game state pressed: ' + spec.type);
             break;
 
         case 'lemming-pickaxe':
@@ -222,39 +252,18 @@ let ButtonPress = (id, obj)=>{
                 $(button).removeClass("active");
             });
 
-            $('#' + id + '-btn').addClass('active');
+            $('#' + spec.type + '-btn').addClass('active');
 
-            Mouse.updateLemmingType(id);
-            console.log('pressed: ' + id);
+            spec.mouse.updateLemmingType(spec.type);
+            console.log('pressed: ' + spec.type);
             break;
 
         case 'btn3':
-            console.log('misc. pressed: ' + id);
+            console.log('misc. pressed: ' + spec.type);
             break;
 
         default:
     }
-};
-
-let getHotKeys = ()=>{
-    'use strict';
-
-    let hotKeys = [];
-    $('#hot-keys :input').each((i, input)=>{
-        let id = $(input).attr('id');
-
-        if(id !== 'hotkey-save-btn') {
-            let value       = $(input).val().toUpperCase();
-            let myDefault   = Globals.hotKeys[i].default;
-
-            // check for empty values
-            value = (!_.isEmpty(value)) ? value : myDefault;
-
-            hotKeys.push({id, default: myDefault, value});
-        }
-    });
-
-    return hotKeys;
 };
 
 //------------------------------------------------------------------
@@ -262,8 +271,8 @@ let getHotKeys = ()=>{
 // Source: http://stackoverflow.com/questions/1465374/javascript-event-keycode-constants
 //
 //------------------------------------------------------------------
-if (KeyEvent === null) {
-    KeyEvent = {
+if (Inputs.KeyEvent === null) {
+    Inputs.KeyEvent = {
         DOM_VK_CANCEL: 3,
         DOM_VK_HELP: 6,
         DOM_VK_BACK_SPACE: 8,
@@ -382,4 +391,4 @@ if (KeyEvent === null) {
     };
 }
 
-module.exports = {KeyEvent, Keyboard, Mouse, ButtonPress, getHotKeys};
+module.exports = Inputs;

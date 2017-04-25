@@ -32,7 +32,7 @@ let inputs              = require("./js/lib/inputs.js");
 //see http://stackoverflow.com/questions/6658752/click-event-doesnt-work-on-dynamically-generated-elements
 $(document).on('click','#hotkey-save-btn', ()=>{
     'use strict';
-    inputs.ButtonPress('hotkey-save', inputs.getHotKeys());
+    inputs.ButtonPress({type:'hotkey-save'});
 });
 
 //not sure why this works and the other doesn't
@@ -48,8 +48,10 @@ $('#control-panel :button').each((i, button)=>{
         Globals.controlPanel[typeCap] = button;
     }
 
+    let obj = (typeId === 'speed-up-btn' || typeId === 'speed-down-btn') ? {type: typeId, mouse: Lemmings.mouse, speed: Lemmings.speed} : {type: typeId, mouse: Lemmings.mouse};
+
     $(button).click(()=>{
-        inputs.ButtonPress(typeId);
+        inputs.ButtonPress(obj);
     });
 });
 /////////////////////////////////////////////////////////
@@ -81,7 +83,7 @@ Routes.game = ()=>{
     eMainScreen.slideUp();
     eGameScreen.slideDown();
 
-    Lemmings.init({user:"Ryan"});
+    Lemmings.init({user:"Ryan", speed: 50});
     settings.storage.hotKeysUpdate = true;
     loop.run(Lemmings);
 };

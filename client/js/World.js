@@ -31,6 +31,19 @@ let World = (()=>{
     };
 
     that.init = (spec)=>{
+        //need to reset the world
+        //otherwise it's still there for another game
+        that = {
+            lemmingsSaved: 0,
+            level: 0,
+            start: {},
+            finish: {},
+            numLemmings: 0,
+            lemmingGoal: 0,
+            lemmingTypes: {},
+            sprites: [],
+            map: []
+        };
         that.lemmingGoal        = spec.lemmingGoal;
         that.lemmingTypes       = spec.lemmingTypes;
         that.map                = spec.map;

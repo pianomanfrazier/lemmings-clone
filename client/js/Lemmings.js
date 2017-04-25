@@ -33,25 +33,21 @@ let eTimer = $("#timer");
 let eOut = $("#out");
 let eIn = $("#in");
 
-function setup(spec) {
+Lemmings.init = ()=>{
     'use strict';
+    //load level
+    Lemmings.world = World(level1);
 
     // setup control panel buttons
     _.each(Globals.controlPanel, (button, type)=>{
-        let value = (spec.lemmingTypes[type]) ? spec.lemmingTypes[type] : 0;
+        let value = (Lemmings.world.lemmingTypes[type]) ? Lemmings.world.lemmingTypes[type] : 0;
         $('#lemming-' + type + '-btn>.status').html(value);
 
         if(value === 0) {
             $(button).off('click');
         }
     });
-}
 
-Lemmings.init = ()=>{
-    'use strict';
-    //load level
-    Lemmings.world = World(level1);
-    setup(Lemmings.world);
     // *********************** this is for testing purposes only ************************
     //clear the lemmings if there from previous game
     Lemmings.lemmings = [];
@@ -64,11 +60,11 @@ Lemmings.init = ()=>{
     //based on the type the lemming will move up/down/left/right
     Lemmings.lemmings[0].center = {x:300,y:300};
     //TODO: reverse direction of walking lemming
-    Lemmings.lemmings[3].type = "walking";
-    Lemmings.lemmings[4].type = "umbrella";
-    Lemmings.lemmings[5].type = "exploding";
-    Lemmings.lemmings[6].type = "climbing";
-    Lemmings.lemmings[7].type = "blocking";
+    Lemmings.lemmings[3].activeType = "walking";
+    Lemmings.lemmings[4].activeType = "umbrella";
+    Lemmings.lemmings[5].activeType = "exploding";
+    Lemmings.lemmings[6].activeType = "climbing";
+    Lemmings.lemmings[7].activeType = "blocking";
     // *********************** this is for testing purposes only ************************
 
     //reset variables
@@ -124,12 +120,8 @@ Lemmings.update = (elapsedTime)=>{
     _.each(Lemmings.lemmings, (lemming)=>{
         lemming.update(elapsedTime);
     });
-    Lemmings.inputs.Mouse.update({elapsedTime, lemmings: Lemmings.lemmings});
+    Lemmings.inputs.Mouse.update({elapsedTime, lemmings: Lemmings.lemmings, controlPanel: Lemmings.world.lemmingTypes});
     Lemmings.inputs.Keyboard.update(elapsedTime);
-
-    // _.each(Lemmings.world.lemmingTypes, (type)=>{
-
-    // });
 
     // check local storage
     if (settings.storage.hotKeysUpdate) {

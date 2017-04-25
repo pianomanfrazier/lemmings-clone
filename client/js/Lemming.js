@@ -1,3 +1,4 @@
+let _           = require('lodash');
 //A Lemming will contain:
 // sprites -- access the sprite hash from Game Model
 // state: umbrella, climbing, walking, blocking, falling(count how long, set some thresh-hold then splat on impact)
@@ -49,7 +50,8 @@ function GenerateLemming() {
 
     let sprites = SpriteGen();
     //these can be dynamically changed
-    that.type = "falling"; //defaults to falling
+    that.activeType = "falling"; //defaults to falling
+    that.availableTypes = [];
     that.center = {x:100, y:100}; //default
     //this is for testing, should be loaded from config.js lemming width/heigh * scaleFactor
     that.width = LEMMING_WIDTH * SCALE_FACTOR;
@@ -59,24 +61,29 @@ function GenerateLemming() {
 
 
     that.update = (elapsedTime)=>{
-        let sprite = sprites[that.type];
+        let sprite = sprites[that.activeType];
         sprite.update(elapsedTime);
         sprite.center = that.center;
         accumTime+=elapsedTime;
         //lemming logic goes here
         if(accumTime > sprite.speed) {
             accumTime = 0;
-            if(that.type === "walking"){
+
+            if(that.activeType === "falling" && _.indexOf(that.availableTypes, "umbrella") >= 0) {
+                that.activeType = "umbrella";
+            }
+
+            if(that.activeType === "walking"){
                 that.center.x += 1;
-            }else if (that.type === "falling" || that.type === "umbrella") {
+            }else if (that.activeType === "falling" || that.activeType === "umbrella") {
                 that.center.y += 1;
-            }else if (that.type === "climbing"){
+            }else if (that.activeType === "climbing"){
                 that.center.y -= 1;
             }
         }
     };
     that.render = ()=>{
-        sprites[that.type].render();
+        sprites[that.activeType].render();
     };
     return that;
 }

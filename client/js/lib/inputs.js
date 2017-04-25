@@ -105,7 +105,6 @@ let Mouse = (()=>{
         }
     };
 
-    let activeLemming = null; //the lemming which is being hovered over
     that.update = (spec)=>{
         let found = false;
         _.each(spec.lemmings, (lemming)=>{
@@ -116,35 +115,36 @@ let Mouse = (()=>{
 
             if(that.position.x > left && that.position.x < right &&
                 that.position.y > top && that.position.y < bottom) {
-                    activeLemming = lemming;
                     cursorNum = 1;
                     found = true;
+                    _.each(that.clicks, (click)=>{
+                        console.log("clicked " + lemming.activeType + " lemming");
+                        console.log(that.lemmingTypeSelected);
+
+                        //this is for testing, should be done in the game model
+                        if (that.lemmingTypeSelected !== '' && _.indexOf(lemming.availableTypes, that.lemmingTypeSelected) < 0) {
+                            let value = spec.controlPanel[that.lemmingTypeSelected];
+
+                            if(value > 0){
+                                lemming.availableTypes.push(that.lemmingTypeSelected);
+                                spec.controlPanel[that.lemmingTypeSelected]--;
+                                $('#lemming-' + that.lemmingTypeSelected + '-btn>.status').html(spec.controlPanel[that.lemmingTypeSelected]);
+
+                            } else {
+                                $(Globals.controlPanel[that.lemmingTypeSelected]).off('click');
+                            }
+                        }
+                        _.remove(that.clicks, (el)=>{
+                            return el === click;
+                        });
+                    });
             }
         });
+
         //no lemming is being hovered
         if(!found){
-            activeLemming = null;
             cursorNum = 0;
         }
-        _.each(that.clicks, (click)=>{
-            if(activeLemming !== null) {
-                console.log("clicked " + activeLemming.type + " lemming");
-                console.log(that.lemmingTypeSelected);
-                //this is for testing, should be done in the game model
-                if (that.lemmingTypeSelected !== "") {
-                    activeLemming.type = that.lemmingTypeSelected;
-                }
-                //if(that.lemmingTypeSelected !== '' && !_.has(lemming.possibleActions, that.lemmingTypeSelected)) {
-                //    //lemming.possibleActions.push(that.lemmingTypeSelected);
-                //    //that.center = spec.center;
-                //    //decrement from the game model the lemmingTypeSelected
-                //    //console.log('click: ' + that.lemmingTypeSelected);
-                //}
-            }
-            _.remove(that.clicks, (el)=>{
-                return el === click;
-            });
-        });
     };
 
     that.updateLemmingType = (type)=>{

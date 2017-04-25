@@ -45,11 +45,22 @@ let World = (()=>{
             if(iF !== -1) { that.finish = {x: iF, y: j}; }
         });
         let gateImgs = $('#gates img');
-        console.log(gateImgs);
         _.each(gateImgs, (img, i)=>{
-            console.log(img, i);
             let spriteSpec = spriteConfig[img.id];
-            that.sprites.push(Sprite({
+            let x = 0;
+            let y = 0;
+            let callback;
+            if(i === 0) {
+                x = that.start.x;
+                y = that.start.y;
+                callback = ()=>{
+                    console.log("sprite done");
+                };
+            } else if (i === 1) {
+                x = that.finish.x;
+                y = that.finish.y;
+            }
+            let spec = {
                 reverse: false,
                 img: img,
                 width: spriteSpec.width * ((spriteSpec.scaleFactor) ? spriteSpec.scaleFactor : spriteConfig.SCALE_FACTOR), //width to be drawn
@@ -59,22 +70,14 @@ let World = (()=>{
                 frameWidth: spriteSpec.width, //width of image
                 frameHeight: spriteSpec.height,
                 numFrames: spriteSpec.frames,
-                animationRate: (spriteSpec.speed) ? spriteSpec.speed : spriteConfig.ANIMATION_SPEED
-            }));
-
-            let x = 0;
-            let y = 0;
-            if(i === 0) {
-                x = that.start.x;
-                y = that.start.y;
-            } else if (i === 1) {
-                x = that.finish.x;
-                y = that.finish.y;
-            }
-            that.sprites[i].center = {
-                x: x * block.width  + (block.width / 2),
-                y: y * block.height + block.height - (spriteSpec.height * spriteSpec.scaleFactor / 2)
+                animationRate: (spriteSpec.speed) ? spriteSpec.speed : spriteConfig.ANIMATION_SPEED,
+                center: {
+                    x: x * block.width  + (block.width / 2),
+                    y: y * block.height + block.height - (spriteSpec.height * spriteSpec.scaleFactor / 2)
+                },
+                callback: callback
             };
+            that.sprites.push(Sprite(spec));
         });
     };
 

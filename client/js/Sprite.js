@@ -26,15 +26,22 @@ let Sprite = (spec)=>{
         // the inputs but these will need to be referred to in the Lemming's obj
     that.speed      = spec.animationRate;
     that.reverse    = false;
+    that.center     = spec.center;
+    that.isFinished = false;
 
     that.update = (elapsedTime)=>{
-        accumTime += elapsedTime;
-        if (accumTime > spec.animationRate) {
-            accumTime = 0;
-            if (frameNumber < numFrames - 1) {
-                frameNumber++;
-            } else {
-                frameNumber = 0;
+        if(!that.isFinished){
+            accumTime += elapsedTime;
+            if (accumTime > spec.animationRate) {
+                accumTime = 0;
+                if (frameNumber < numFrames - 1) {
+                    frameNumber++;
+                } else if(spec.callback) {
+                    that.isFinished = true;
+                    spec.callback();
+                } else {
+                    frameNumber = 0;
+                }
             }
         }
     };

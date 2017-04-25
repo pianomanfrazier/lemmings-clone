@@ -107,6 +107,9 @@ let Mouse = (()=>{
 
     that.update = (spec)=>{
         let found = false;
+        let value = spec.controlPanel[that.lemmingTypeSelected];
+        let removeClick = [];
+
         _.each(spec.lemmings, (lemming)=>{
             let left   = lemming.center.x - (lemming.width >> 1);
             let right  = lemming.center.x + (lemming.width >> 1);
@@ -117,28 +120,29 @@ let Mouse = (()=>{
                 that.position.y > top && that.position.y < bottom) {
                     cursorNum = 1;
                     found = true;
+
                     _.each(that.clicks, (click)=>{
-                        console.log("clicked " + lemming.activeType + " lemming");
-                        console.log(that.lemmingTypeSelected);
-
                         //this is for testing, should be done in the game model
-                        if (that.lemmingTypeSelected !== '' && _.indexOf(lemming.availableTypes, that.lemmingTypeSelected) < 0) {
-                            let value = spec.controlPanel[that.lemmingTypeSelected];
+                        if (value > 0 && that.lemmingTypeSelected !== '' && _.indexOf(lemming.availableTypes, that.lemmingTypeSelected) < 0) {
+                            console.log("clicked " + lemming.activeType + " lemming");
+                            console.log(that.lemmingTypeSelected);
 
-                            if(value > 0){
-                                lemming.availableTypes.push(that.lemmingTypeSelected);
-                                spec.controlPanel[that.lemmingTypeSelected]--;
-                                $('#lemming-' + that.lemmingTypeSelected + '-btn>.status').html(spec.controlPanel[that.lemmingTypeSelected]);
+                            lemming.availableTypes.push(that.lemmingTypeSelected);
+                            spec.controlPanel[that.lemmingTypeSelected]--;
+                            $('#lemming-' + that.lemmingTypeSelected + '-btn>.status').html(spec.controlPanel[that.lemmingTypeSelected]);
 
-                            } else {
-                                $(Globals.controlPanel[that.lemmingTypeSelected]).off('click');
-                            }
+                        } else {
+                            removeClick.push(Globals.controlPanel[that.lemmingTypeSelected]);
                         }
                         _.remove(that.clicks, (el)=>{
                             return el === click;
                         });
                     });
             }
+        });
+
+        _.each(removeClick, (button)=>{
+            $(button).off('click');
         });
 
         //no lemming is being hovered

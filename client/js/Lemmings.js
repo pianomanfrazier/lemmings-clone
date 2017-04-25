@@ -36,7 +36,7 @@ let eIn = $("#in");
 Lemmings.init = ()=>{
     'use strict';
     //load level
-    Lemmings.world = World(level1);
+    Lemmings.world = World(level3);
 
     // setup control panel buttons
     _.each(Globals.controlPanel, (button, type)=>{

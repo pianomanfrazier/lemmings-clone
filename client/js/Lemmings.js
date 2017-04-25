@@ -37,7 +37,27 @@ let eIn = $("#in");
 Lemmings.init = (spec)=>{
     'use strict';
     Lemmings.user = spec.user;
-    Lemmings.world = World(level1);
+
+    // *********************** this is for testing purposes only ************************
+    //clear the lemmings if there from previous game
+    Lemmings.lemmings = [];
+    //load level
+    let level = "";
+    switch(spec.levelNum) {
+        case 1:
+            level = level1;
+            break;
+        case 2:
+            level = level2;
+            break;
+        case 3:
+            level = level3;
+            break;
+        default:
+            level = level1;
+    }
+
+    Lemmings.world = World(level);
 
     // setup control panel buttons
     _.each(Globals.controlPanel, (button, type)=>{
@@ -48,30 +68,12 @@ Lemmings.init = (spec)=>{
             $(button).off('click');
         }
     });
-
-    // *********************** this is for testing purposes only ************************
-    //clear the lemmings if there from previous game
-    Lemmings.lemmings = [];
-    //load level
-    switch(spec.levelNum) {
-    case 1:
-        World.init(level1);
-        break;
-    case 2:
-        World.init(level2);
-        break;
-    case 3:
-        World.init(level3);
-        break;
-    default:
-        World.init(level1);
-    }
     //some sample Lemmings for testing
     //for(var i = 0; i < Lemmings.lemmingCount; i++) {
     //    Lemmings.lemmings.push(GenerateLemming(World));
     //    Lemmings.lemmings[i].center = {x: 100 + 10*i, y: 100};
     //}
-    Lemmings.lemmings.push(GenerateLemming(World));
+    Lemmings.lemmings.push(GenerateLemming(Lemmings.world));
     // *********************** this is for testing purposes only ************************
 
     //reset variables
@@ -128,6 +130,7 @@ Lemmings.update = (elapsedTime)=>{
     _.each(Lemmings.lemmings, (lemming)=>{
         lemming.update(elapsedTime);
     });
+
     Lemmings.mouse.update({elapsedTime, lemmings: Lemmings.lemmings, controlPanel: Lemmings.world.lemmingTypes});
     Lemmings.keyboard.update(elapsedTime);
 
@@ -191,7 +194,7 @@ Lemmings.update = (elapsedTime)=>{
         return false;
     });
     //check if game is over
-    if(Lemmings.lemmings.length === 0){
+    if(Lemmings.lemmings.length === 0) {
         //////////////////////
         //GAME OVER
         /////////////////////

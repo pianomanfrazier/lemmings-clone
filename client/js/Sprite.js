@@ -27,6 +27,7 @@ let Sprite = (spec)=>{
     that.speed      = spec.animationRate;
     that.reverse    = false;
     that.center     = spec.center;
+    that.callback   = spec.callback; //when defined animation will cycle once and terminate with the callback
     that.isFinished = false;
 
     that.update = (elapsedTime)=>{
@@ -36,9 +37,9 @@ let Sprite = (spec)=>{
                 accumTime = 0;
                 if (frameNumber < numFrames - 1) {
                     frameNumber++;
-                } else if(spec.callback) {
+                } else if(that.callback) {
                     that.isFinished = true;
-                    spec.callback();
+                    that.callback();
                 } else {
                     frameNumber = 0;
                 }

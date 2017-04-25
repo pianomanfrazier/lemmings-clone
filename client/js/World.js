@@ -5,6 +5,8 @@ let Graphics        = Globals.graphics;
 let Sprite          = require("./Sprite.js");
 let spriteConfig    = require('./config.js').sprites;
 let block           = spriteConfig.block;
+let waves           = spriteConfig.waves;
+let wavesImg        = document.getElementById('waves');
 let blocksImg       = document.getElementById('blocks');
 let blockNum        = 0; //this toggles the block 0 is cross hairs, 1 is box, updated in onHover handler
 blocksImg.onload = ()=>{
@@ -34,21 +36,34 @@ let World = (()=>{
         that.map                = spec.map;
 
         _.each(that.map, (row, j)=>{
-            let iS = _.findIndex(row, (obj)=>{
-                return obj === 'start';
+            _.each(row, (item, i)=>{
+                if(item === "start") { that.start  = {x: i, y: j}; }
+                if(item === "end") { that.finish = {x: i, y: j}; }
+                if(item === "waves") {
+                    let spriteSpec = waves;
+                    that.sprites.push(Sprite({
+                        img: wavesImg,
+                        width: spriteSpec.width * ((spriteSpec.scaleFactor) ? spriteSpec.scaleFactor : spriteConfig.SCALE_FACTOR), //width to be drawn
+                        height: spriteSpec.height * ((spriteSpec.scaleFactor) ? spriteSpec.scaleFactor : spriteConfig.SCALE_FACTOR), //height to be drawn
+                        startX: (spriteSpec.startX) ? spriteSpec.startX : 0, //top left corner of sprite
+                        startY: (spriteSpec.startY) ? spriteSpec.startY : 0,
+                        frameWidth: spriteSpec.width, //width of image
+                        frameHeight: spriteSpec.height,
+                        numFrames: spriteSpec.frames,
+                        animationRate: (spriteSpec.speed) ? spriteSpec.speed : spriteConfig.ANIMATION_SPEED,
+                        center: {
+                            x: i * block.width  + (block.width / 2),
+                            y: j * block.height + (block.height / 2)
+                        },
+                    }));
+                }
             });
-            let iF = _.findIndex(row, (obj)=>{
-                return obj === 'end';
-            });
-
-            if(iS !== -1) { that.start  = {x: iS, y: j}; }
-            if(iF !== -1) { that.finish = {x: iF, y: j}; }
         });
         let gateImgs = $('#gates img');
         _.each(gateImgs, (img, i)=>{
             let spriteSpec = spriteConfig[img.id];
-            let x = 0;
-            let y = 0;
+            let x;
+            let y;
             let callback;
             if(i === 0) {
                 x = that.start.x;
@@ -98,7 +113,7 @@ let World = (()=>{
                 if(cell === "" && cell === "start" && cell === "end") return;
                 blockNum = Globals.blockTypes[cell];
 
-                if(blockNum <= 0 && blockNum >= 9 && blockNum !== "") {
+                if(blockNum <= 0 && blockNum >= 10 && blockNum !== "") {
                     console.log("invalid block type");
                 }
 

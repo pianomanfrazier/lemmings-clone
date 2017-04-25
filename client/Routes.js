@@ -71,14 +71,32 @@ Routes.index = (callback)=>{
         settings.storage.add('hotKeys', Globals.hotKeys);
     }
 };
+function getLevel() {
+    'use strict';
+    let levelNum = window.prompt("Pick a level 1,2, or 3", "1");
+    if (levelNum === null) {
+        return -1;
+    }
+    levelNum = parseInt(levelNum);
+    if(levelNum < 1 || levelNum > 3 || isNaN(levelNum) ) {
+        window.alert("invalid level");
+        return getLevel();
+    }
+    return levelNum;
+}
 Routes.game = ()=>{
     'use strict';
-    eMainScreen.slideUp();
-    eGameScreen.slideDown();
+    let levelNum = getLevel();
+    if (levelNum === -1) {
+        page.redirect("/");
+    } else {
+        eMainScreen.slideUp();
+        eGameScreen.slideDown();
 
-    Lemmings.init({user:"Ryan"});
-    settings.storage.hotKeysUpdate = true;
-    loop.run(Lemmings);
+        Lemmings.init({user:"Ryan", levelNum: levelNum});
+        settings.storage.hotKeysUpdate = true;
+        loop.run(Lemmings);
+    }
 };
 Routes.gameExit = ()=>{
     'use strict';

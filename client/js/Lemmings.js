@@ -22,11 +22,9 @@ Lemmings.lemmings = []; //store all lemmings here
 Lemmings.score = 0;
 //get number of lemmings/types from level config
 //each level is 16x28 with 25px squares
-//have user choose the level they want and load it
-Lemmings.level = 1;
 Lemmings.lemmingCount = 25;
-Lemmings.lemmingsOut = 7;
-Lemmings.lemmingsIn = 4;
+Lemmings.lemmingsOut = 0;
+Lemmings.lemmingsIn = 0;
 Lemmings.user = "";
 Lemmings.startTime = new Date().getTime();
 Lemmings.accumTime = 0;
@@ -34,30 +32,33 @@ let eTimer = $("#timer");
 let eOut = $("#out");
 let eIn = $("#in");
 
-Lemmings.init = ()=>{
+Lemmings.init = (spec)=>{
     'use strict';
-    //load level
     //clear the lemmings if there from previous game
     Lemmings.lemmings = [];
-    //some sample Lemmings for testing
-    for(var i = 0; i < Lemmings.lemmingCount; i++) {
-        Lemmings.lemmings.push(GenerateLemming());
-        Lemmings.lemmings[i].center = {x: 100 + 10*i, y: 100};
+    //load level
+    switch(spec.levelNum) {
+    case 1:
+        World.init(level1);
+        break;
+    case 2:
+        World.init(level2);
+        break;
+    case 3:
+        World.init(level3);
+        break;
+    default:
+        World.init(level1);
     }
-    //you can dynamically change the type of lemming displayed
-    //based on the type the lemming will move up/down/left/right
-    Lemmings.lemmings[0].center = {x:300,y:300};
-    //TODO: reverse direction of walking lemming
-    Lemmings.lemmings[3].type = "walking";
-    Lemmings.lemmings[4].type = "umbrella";
-    Lemmings.lemmings[5].type = "exploding";
-    Lemmings.lemmings[6].type = "climbing";
-    Lemmings.lemmings[7].type = "blocking";
+    //some sample Lemmings for testing
+    //for(var i = 0; i < Lemmings.lemmingCount; i++) {
+    //    Lemmings.lemmings.push(GenerateLemming(World));
+    //    Lemmings.lemmings[i].center = {x: 100 + 10*i, y: 100};
+    //}
+    Lemmings.lemmings.push(GenerateLemming(World));
     //reset variables
     Lemmings.startTime = new Date().getTime();
     //get all the images
-
-    World.init(level1); // init will always be level1
 
 };
 //ajax call to server
@@ -152,6 +153,30 @@ Lemmings.update = (elapsedTime)=>{
     }
     Lemmings.updateTimer(elapsedTime);
     World.update(elapsedTime);
+
+    //Clean up dead lemmings
+    _.remove(Lemmings.lemmings, (lemming)=>{
+        return !lemming.isAlive;
+    });
+    //Clean up saved lemmings
+    _.remove(Lemmings.lemmings, (lemming)=>{
+        if(lemming.isSaved){
+            ///////////////////
+            //update score here
+            ///////////////////
+            Lemmings.lemmingsIn += 1;
+            Lemmings.updateIn();
+            return true;
+        }
+        return false;
+    });
+    //check if game is over
+    if(Lemmings.lemmings.length === 0){
+        //////////////////////
+        //GAME OVER
+        /////////////////////
+        //stop loop, send score to the server
+    }
 };
 Lemmings.render = ()=>{
     'use strict';

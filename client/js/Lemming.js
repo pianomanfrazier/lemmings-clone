@@ -5,7 +5,7 @@ let LEMMING_HEIGHT          = 50;
 let LEMMING_WIDTH           = 50;
 let SCALE_FACTOR            = 0.3;
 let LEMMING_FALL_DISTANCE   = block.height * 3.3;
-let SAFE_LANDING            = ['grass_cement', 'cement', 'grass_dirt', 'dirt', 'bones', 'jewels'];
+let SAFE_LANDING            = ['blocking', 'grass_cement', 'cement', 'grass_dirt', 'dirt', 'bones', 'jewels'];
 
 function GenerateLemming(World) {
     'use strict';
@@ -41,8 +41,7 @@ function GenerateLemming(World) {
         that.isAlive = false;
         //destroy to the left and to the right of the lemming
         //if the blocks are dirt or diamond or bones
-        //World.map[i-1][j] = "";
-        //World.map[i+1][j] = "";
+        World.explodeAtPoint(that.center);
     };
     sprites.climb_over.callback = ()=>{
         that.activeType = "walking";
@@ -121,7 +120,7 @@ function GenerateLemming(World) {
             } else {
                 let center = checkCenter();
                 if(_.includes(SAFE_LANDING, center)) {
-                    if(_.indexOf(that.availableTypes, 'climbing') >= 0){
+                    if(_.includes(that.availableTypes, 'climbing') && center !== "blocking"){
                         that.activeType = "climbing";
                         sprites.climbing.reverse = sprite.reverse;
                         sprites.climb_over.reverse = sprite.reverse;
@@ -147,6 +146,11 @@ function GenerateLemming(World) {
             if(center === "") {
                 that.activeType = "climb_over";
             }
+        }
+
+        //BLOCKING
+        if(that.activeType === "blocking") {
+            World.setBlockingAtPoint(that.center);
         }
 
         /////////////////////////

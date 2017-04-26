@@ -21,6 +21,7 @@ Lemmings.keyboard       = Inputs.Keyboard();
 Lemmings.lemmings       = []; //store all lemmings here
 //need to detect collisions between lemmings and world objects and blockers
 Lemmings.score          = 0;
+Lemmings.speed          = 50;
 //get number of lemmings/types from level config
 //each level is 16x28 with 25px squares
 Lemmings.lemmingsOut    = 0;
@@ -64,6 +65,10 @@ Lemmings.init = (spec)=>{
         $('#lemming-' + type + '-btn>.status').html(value);
     });
     //some sample Lemmings for testing
+    for(var i = 0; i < Lemmings.world.lemmingCount; i++) {
+        Lemmings.lemmings.push(GenerateLemming(Lemmings.world));
+        Lemmings.lemmings[i].center = {x: 100 + 10*i, y: 100};
+    }
     Lemmings.lemmings.push(GenerateLemming(Lemmings.world));
     // *********************** this is for testing purposes only ************************
 
@@ -115,6 +120,7 @@ Lemmings.updateIn = ()=>{
     'use strict';
     eIn.html("IN : " + Math.floor(Lemmings.lemmingsIn/Lemmings.world.lemmingCount * 100) + "%");
 };
+
 Lemmings.update = (elapsedTime)=>{
     'use strict';
 
@@ -160,14 +166,20 @@ Lemmings.update = (elapsedTime)=>{
                 default:
             }
 
-            Lemmings.keyboard.registerCommand(Inputs.KeyEvent['DOM_VK_' + key.value], ()=>Inputs.ButtonPress({type, mouse: Lemmings.mouse, speed: Lemmings.speed}));
+            Lemmings.keyboard.registerCommand(
+                Inputs.KeyEvent['DOM_VK_' + key.value],
+                ()=>Inputs.ButtonPress({
+                    type,
+                    mouse: Lemmings.mouse
+                }
+            ));
         });
     }
 
     Lemmings.updateTimer(elapsedTime);
     Lemmings.world.update(elapsedTime);
-    Lemmings.speed = Inputs.lemmingSpeed;
-    // console.log(Lemmings.speed);
+    //console.log(Lemmings.speed);
+    Lemmings.speed = Inputs.speed;
     //Clean up dead lemmings
     _.remove(Lemmings.lemmings, (lemming)=>{
         return !lemming.isAlive;

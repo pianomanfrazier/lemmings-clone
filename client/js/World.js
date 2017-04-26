@@ -12,6 +12,7 @@ let blockNum        = 0; //this toggles the block 0 is cross hairs, 1 is box, up
 //load these from config somewhere
 let WORLD_SIZE_X = 28;
 let WORLD_SIZE_Y = 16;
+let EXPLODABLE = ["grass_dirt", "dirt", "bones", "jewels"];
 
 blocksImg.onload = ()=>{
     'use strict';
@@ -40,6 +41,39 @@ let World = (spec)=>{
             return "";
         }
         return that.map[y][x];
+    };
+    that.setBlockingAtPoint = (point)=>{
+        let x = Math.floor(point.x / block.width);
+        let y = Math.floor(point.y / block.height);
+        //console.log(x,y);
+        //check out of bounds
+        if(y < 0 || y > WORLD_SIZE_Y || x < 0 || x > WORLD_SIZE_X){
+            return;
+        }
+        that.map[y][x] = "blocking";
+    };
+    //this sets the current block to ""
+    //it also removes the left/right neighbor blocks if they are not concrete
+    that.explodeAtPoint = (point)=>{
+        let x = Math.floor(point.x / block.width);
+        let y = Math.floor(point.y / block.height);
+        //console.log(x,y);
+        //check out of bounds
+        if(y < 0 || y > WORLD_SIZE_Y || x < 0 || x > WORLD_SIZE_X){
+            return;
+        }
+        that.map[y][x] = "";
+        //check and remove neighbors
+        if(x - 1 > 0){
+            if(_.includes(EXPLODABLE, that.map[y][x-1])){
+                that.map[y][x-1] = "";
+            }
+        }
+        if(x + 1 < WORLD_SIZE_X){
+            if(_.includes(EXPLODABLE, that.map[y][x+1])){
+                that.map[y][x+1] = "";
+            }
+        }
     };
 
     that.lemmingGoal    = spec.lemmingGoal;

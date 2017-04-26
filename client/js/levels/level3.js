@@ -3,9 +3,10 @@ let Papa = require("papaparse");
 let level3 = {
     "lemmingGoal": 10,
     "lemmingTypes": {
+        "climbing":25,
         "blocking": 4,
-        "umbrella": 10,
-        "exploding": 2
+        "umbrella": 25,
+        "exploding": 4
     },
     "lemmingCount": 25,
     "map": []

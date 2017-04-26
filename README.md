@@ -9,20 +9,20 @@ A Lemmings clone using HTML5 and Javascript
 
 # check list
 - [ ] -(25) (required) Gameplay
-- [ ] -(10) (required) Menuing
-- [ ] -(10) (required) Reconfigurable keyboard controls
+- [x] -(10) (required) Menuing
+- [x] -(10) (required) Reconfigurable keyboard controls
 - [ ] -(15) (required) Particle effects
-- [ ] -(10) Animation, spritesheet or otherwise
+- [x] -(10) Animation, spritesheet or otherwise
 - [ ] -(5) Sound & music
 - [ ] (15) AI: Pathfinding or Attract Mode
 - [ ] (50) Multiplayer; server-based game model with connected clients
-- [ ] -(10) Server-based persistent high scores
-- [ ] -(15) Tile rendering
+- [x] -(10) Server-based persistent high scores
+- [x] -(15) Tile rendering
 - [ ] -(10) Generalized collision detection
-- [ ] (20) Procedural level generation
+- [x] (20) Procedural level generation
 - [ ] (20) Physics integration
 
-0 / 150
+75 / 150
 
 # working
 
@@ -60,21 +60,21 @@ A Lemmings clone using HTML5 and Javascript
   - speed 150
 - timeup
   - 50x50 with 16 frames
-  
+
 ### Trap sprites
 
 - 10tons
   - 192x250 with 12 frames
 - hanging
   - 107x250 with 34 frames
-  
+
 ### GATES
 
 - opening
   - 100x70 with 10 frames
 - closing
   - 100x70 with 6 frames
-  
+
 ### BLOCKS
 
 10 32 x 32 square images
@@ -108,7 +108,7 @@ lemming.on('hover').drawBox()
 
 - TYPE
   - through surfaces
-    - digger 
+    - digger
     - picker
     - basher
   - builder -- num of bricks
@@ -116,20 +116,20 @@ lemming.on('hover').drawBox()
   - umbrella -- activate when falling
   - climber -- activate when hits a wall
   - bomb -- can be chosen at any time, explodes with countdown, activates explosion particles
-  
+
 - GAME CONTROLS
   - pause game
   - quit game -- A-bomb
   - release rate
     - increase
     - decrease
-    
+
 - Ways to die
   - drown (ie contact with water)
   - fall and splat
   - suicide bomb
   - traps
-  
+
 - BLOCKS
   - dirt
   - stone
@@ -137,14 +137,14 @@ lemming.on('hover').drawBox()
   - water
   - trap
   - ornamental (no collision detection) (trees, clouds, ...)
-  
+
 - WORLD representation
   - json config
   - 2d array of types
   - pan view with mouse
   - on click and drag
   - on click show grab hand
-  
+
 - mini-map
   - need abstract representation of world (lemmings, platforms)
   - pass in game model

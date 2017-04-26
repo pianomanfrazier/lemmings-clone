@@ -160,9 +160,8 @@ Inputs.Mouse = ()=>{
                             spec.controlPanel[that.lemmingTypeSelected]--;
                             $('#lemming-' + that.lemmingTypeSelected + '-btn>.status').html(spec.controlPanel[that.lemmingTypeSelected]);
 
-                        } else {
-                            removeClick.push(Globals.controlPanel[that.lemmingTypeSelected]);
                         }
+
                         _.remove(that.clicks, (el)=>{
                             return el === click;
                         });

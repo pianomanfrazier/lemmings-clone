@@ -10,15 +10,14 @@ let Graphics         = require("./Graphics.js");
 let Globals          = require("./Globals.js");
 let World            = require("./World.js");
 let graphics         = Graphics(Globals.canvas);
-let level1           = require("./levels/level1.js");
-let level2           = require("./levels/level2.js");
-let level3           = require("./levels/level3.js");
+let Level            = require("./levels/Level.js");
 
 let Lemmings = {};
 
 Lemmings.mouse          = Inputs.Mouse();
 Lemmings.keyboard       = Inputs.Keyboard();
 Lemmings.lemmings       = []; //store all lemmings here
+Lemmings.ready          = false;
 //need to detect collisions between lemmings and world objects and blockers
 Lemmings.score          = 0;
 Lemmings.speed          = 50;
@@ -38,34 +37,10 @@ let eIn     = $("#in");
 Lemmings.init = (spec)=>{
     'use strict';
     Lemmings.user = spec.user;
-
-    //load level
-    let level = "";
-    switch(spec.levelNum) {
-        case 1:
-            level = level1;
-            break;
-        case 2:
-            level = level2;
-            break;
-        case 3:
-            level = level3;
-            break;
-        default:
-            level = level1;
-    }
-
-    Lemmings.world = World(level);
-
-    // setup control panel buttons
-    _.each(Globals.controlPanel, (button, type)=>{
-        let value = (Lemmings.world.lemmingTypes[type]) ? Lemmings.world.lemmingTypes[type] : 0;
-        $('#lemming-' + type + '-btn>.status').html(value);
-    });
-
     //reset variables
     //clear the lemmings if there from previous game
     Lemmings.lemmings       = [];
+    Lemmings.ready          = false;
     Lemmings.score          = 0;
     Lemmings.speed          = 50;
     Inputs.lemmingSpeed     = 50;
@@ -73,7 +48,17 @@ Lemmings.init = (spec)=>{
     Lemmings.lemmingsOut    = 0;
     Lemmings.lemmingsIn     = 0;
     Lemmings.startTime      = new Date().getTime();
-    //get all the images
+
+    //load level
+    let level = Level(spec.levelNum, ()=>{
+        Lemmings.world = World(level);
+        // setup control panel buttons
+        _.each(Globals.controlPanel, (button, type)=>{
+            let value = (Lemmings.world.lemmingTypes[type]) ? Lemmings.world.lemmingTypes[type] : 0;
+            $('#lemming-' + type + '-btn>.status').html(value);
+        });
+        Lemmings.ready = true;
+    });
 };
 //ajax call to server
 //POST to /api/score --> {user : "name", score : 1234}
@@ -112,7 +97,7 @@ Lemmings.updateTimer = (elapsedTime)=>{
 //this should only be called when a new lemming is put into the level
 Lemmings.updateOut = ()=>{
     'use strict';
-    eOut.html("OUT : " + Lemmings.lemmingsOut);
+    eOut.html("OUT : " + Lemmings.lemmings.length);
 };
 //this should be called only when a lemming is saved
 Lemmings.updateIn = ()=>{
@@ -122,6 +107,7 @@ Lemmings.updateIn = ()=>{
 
 Lemmings.update = (elapsedTime)=>{
     'use strict';
+    if(!Lemmings.ready) return;
 
     _.each(Lemmings.lemmings, (lemming)=>{
         lemming.update(elapsedTime);
@@ -196,7 +182,11 @@ Lemmings.update = (elapsedTime)=>{
     }
     //Clean up dead lemmings
     _.remove(Lemmings.lemmings, (lemming)=>{
-        return !lemming.isAlive;
+        if(!lemming.isAlive){
+            Lemmings.updateOut();
+            return true;
+        }
+        return false;
     });
     //Clean up saved lemmings
     _.remove(Lemmings.lemmings, (lemming)=>{
@@ -206,6 +196,7 @@ Lemmings.update = (elapsedTime)=>{
             ///////////////////
             Lemmings.lemmingsIn += 1;
             Lemmings.updateIn();
+            Lemmings.updateOut();
             return true;
         }
         return false;
@@ -226,6 +217,7 @@ Lemmings.update = (elapsedTime)=>{
 };
 Lemmings.render = ()=>{
     'use strict';
+    if(!Lemmings.ready) return;
     graphics.clear();
     Lemmings.world.render();
     _.each(Lemmings.lemmings, (lemming)=>{

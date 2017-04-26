@@ -45,6 +45,7 @@ function GenerateLemming(World) {
     };
     sprites.climb_over.callback = ()=>{
         that.activeType = "walking";
+        that.center.y -= 5;
     };
 
     that.update = (elapsedTime)=>{
@@ -60,7 +61,13 @@ function GenerateLemming(World) {
             };
             return World.pointCollide(point);
         }
-
+        function checkTop() {
+            let point = {
+                x: that.center.x,
+                y: that.center.y - (LEMMING_HEIGHT * SCALE_FACTOR) / 2
+            };
+            return World.pointCollide(point);
+        }
         function checkLeft() {
             let point = {
                 x: that.center.x - (LEMMING_WIDTH * SCALE_FACTOR),
@@ -68,7 +75,6 @@ function GenerateLemming(World) {
             };
             return World.pointCollide(point);
         }
-
         function checkCenter(){
             let point = {
                 x: that.center.x,
@@ -76,7 +82,6 @@ function GenerateLemming(World) {
             };
             return World.pointCollide(point);
         }
-
         function checkRight() {
             let point = {
                 x: that.center.x + (LEMMING_WIDTH * SCALE_FACTOR),
@@ -88,9 +93,6 @@ function GenerateLemming(World) {
         //lemming switching logic
         /////////////////////////
         //FALLING/UMBRELLA
-        //if falling or umbrella -- check lemming.bottom collision
-        //check how far has been falling if too far splat, else that.activeType = walking
-        //if umbrella, that.activeType = walking
         if(that.activeType === "falling" || that.activeType === "umbrella") {
             if((accumFallDistance > LEMMING_FALL_DISTANCE / 2) && (_.includes(that.availableTypes, 'umbrella'))) {
                 that.activeType = "umbrella";
@@ -108,7 +110,7 @@ function GenerateLemming(World) {
 
         //WALKING
         //check the bottom to see if start falling
-        //also checks for drowing
+        //also checks for drowning
         if(that.activeType === "walking"){
             let bottom = checkBottom();
             if(bottom === ""){

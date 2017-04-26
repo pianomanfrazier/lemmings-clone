@@ -11,15 +11,15 @@ function GenerateLemming(World) {
     'use strict';
     let that = {};
     //these can be dynamically changed
-    that.activeType = "falling"; //defaults to falling
-    that.availableTypes = [];
-    that.isAlive = true;
-    that.isSaved = false;
+    that.activeType         = "falling"; //defaults to falling
+    that.availableTypes     = [];
+    that.isAlive            = true;
+    that.isSaved            = false;
     //console.log(World.start);
-    that.center = {x: 250, y: 300}; //default
+    that.center             = {x: 250, y: 300}; //default
     //this is for testing, should be loaded from config.js lemming width/heigh * scaleFactor
-    that.width = LEMMING_WIDTH * SCALE_FACTOR;
-    that.height = LEMMING_HEIGHT * SCALE_FACTOR;
+    that.width              = LEMMING_WIDTH * SCALE_FACTOR;
+    that.height             = LEMMING_HEIGHT * SCALE_FACTOR;
 
     let accumTime = 0;
     let accumFallDistance = 0;

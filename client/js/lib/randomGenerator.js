@@ -1,32 +1,34 @@
 
-let Random = (()=>{
+let Random = ()=>{
     'use strict';
 
-    function nextDouble() {
-        return Math.random();
-    }
+    let that = {};
 
-    function nextRange(min, max) {
+    that.nextDouble = ()=>{
+        return Math.random();
+    };
+
+    that.nextRange = (min, max)=>{
         let range = max - min + 1;
 
         return Math.floor((Math.random() * range) + min);
-    }
+    };
 
-    function nextCircleVector() {
+    that.nextCircleVector = ()=>{
         let angle = Math.random() * 2 * Math.PI;
 
         return {
             x: Math.cos(angle),
             y: Math.sin(angle)
         };
-    }
+    };
 
     // This is used to give a small performance optimization in generating gaussian random numbers.
     let usePrevious = false,
         y2;
 
     // Generate a normally distributed random number.
-    function nextGaussian(mean, stdDev) {
+    that.nextGaussian = (mean, stdDev)=>{
         if (usePrevious) {
             usePrevious = false;
 
@@ -51,14 +53,9 @@ let Random = (()=>{
         y2 = x2 * z;
 
         return mean + y1 * stdDev;
-    }
-
-    return {
-        nextDouble,
-        nextRange,
-        nextCircleVector,
-        nextGaussian
     };
-});
+
+    return that;
+};
 
 module.exports = Random;

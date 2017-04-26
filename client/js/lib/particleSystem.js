@@ -1,7 +1,8 @@
-var random = require('./random-generator');
-var _ = require('lodash');
+var _           = require('lodash');
+var Random      = require('./randomGenerator');
+let Graphics    = require("./Graphics.js");
 
-function ParticleSystem(spec, graphics) {
+let ParticleSystem = (spec)=>{
     'use strict';
 
     let that = {},
@@ -13,7 +14,7 @@ function ParticleSystem(spec, graphics) {
 
         that.draw = ()=>{
             _.each(particles, (particle)=>{
-                graphics.DrawTextures(particle);
+                Graphics.DrawTextures(particle);
             });
         };
     };
@@ -23,12 +24,12 @@ function ParticleSystem(spec, graphics) {
     that.create = ()=>{
         let particle = {
             image: spec.image,
-            size: random.nextGaussian(10, 4),
+            size: Random.nextGaussian(10, 4),
             center: {x: spec.center.x, y: spec.center.y},
-            direction: random.nextCircleVector(),
-            speed: random.nextGaussian(spec.speed.mean, spec.speed.stdev), // pixels per second
+            direction: Random.nextCircleVector(),
+            speed: Random.nextGaussian(spec.speed.mean, spec.speed.stdev), // pixels per second
             rotation: 0,
-            lifetime: random.nextGaussian(spec.lifetime.mean, spec.lifetime.stdev),	// How long the particle should live, in seconds
+            lifetime: Random.nextGaussian(spec.lifetime.mean, spec.lifetime.stdev),	// How long the particle should live, in seconds
             alive: 0	// How long the particle has been alive, in seconds
         };
 
@@ -70,4 +71,6 @@ function ParticleSystem(spec, graphics) {
     that.draw = ()=>{};
 
     return that;
-}
+};
+
+module.exports = ParticleSystem;

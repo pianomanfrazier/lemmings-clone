@@ -16,23 +16,22 @@ let level3           = require("./levels/level3.js");
 
 let Lemmings = {};
 
-Lemmings.mouse      = Inputs.Mouse();
-Lemmings.keyboard   = Inputs.Keyboard();
-
-Lemmings.lemmings = []; //store all lemmings here
+Lemmings.mouse          = Inputs.Mouse();
+Lemmings.keyboard       = Inputs.Keyboard();
+Lemmings.lemmings       = []; //store all lemmings here
 //need to detect collisions between lemmings and world objects and blockers
-Lemmings.score = 0;
+Lemmings.score          = 0;
 //get number of lemmings/types from level config
 //each level is 16x28 with 25px squares
-Lemmings.lemmingsOut = 0;
-Lemmings.lemmingsIn = 0;
-Lemmings.user = "";
-Lemmings.startTime = new Date().getTime();
-Lemmings.accumTime = 0;
+Lemmings.lemmingsOut    = 0;
+Lemmings.lemmingsIn     = 0;
+Lemmings.user           = "";
+Lemmings.startTime      = new Date().getTime();
+Lemmings.accumTime      = 0;
 
-let eTimer = $("#timer");
-let eOut = $("#out");
-let eIn = $("#in");
+let eTimer  = $("#timer");
+let eOut    = $("#out");
+let eIn     = $("#in");
 
 Lemmings.init = (spec)=>{
     'use strict';

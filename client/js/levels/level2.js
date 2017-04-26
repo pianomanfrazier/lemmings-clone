@@ -5,6 +5,7 @@ let level2 = {
     "lemmingTypes": {
         "blocking": 5
     },
+    "lemmingCount": 25,
     "map": []
 };
 

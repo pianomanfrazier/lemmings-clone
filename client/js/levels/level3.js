@@ -7,6 +7,7 @@ let level3 = {
         "umbrella": 10,
         "exploding": 2
     },
+    "lemmingCount": 25,
     "map": []
 };
 

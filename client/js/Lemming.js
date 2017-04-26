@@ -1,12 +1,11 @@
-let _           = require("lodash");
-let SpriteGen   = require("./GenSpriteSet.js");
-let block       = require("./config.js").sprites.block;
-
-let LEMMING_HEIGHT = 50;
-let LEMMING_WIDTH = 50;
-let SCALE_FACTOR = 0.3;
-let LEMMING_FALL_DISTANCE = block.height * 3.3;
-let SAFE_LANDING = ['grass_cement', 'cement', 'grass_dirt', 'dirt', 'bones', 'jewels'];
+let _                       = require("lodash");
+let SpriteGen               = require("./GenSpriteSet.js");
+let block                   = require("./config.js").sprites.block;
+let LEMMING_HEIGHT          = 50;
+let LEMMING_WIDTH           = 50;
+let SCALE_FACTOR            = 0.3;
+let LEMMING_FALL_DISTANCE   = block.height * 3.3;
+let SAFE_LANDING            = ['grass_cement', 'cement', 'grass_dirt', 'dirt', 'bones', 'jewels'];
 
 function GenerateLemming(World) {
     'use strict';
@@ -115,8 +114,10 @@ function GenerateLemming(World) {
             let bottom = checkBottom();
             if(bottom === ""){
                 that.activeType = "falling";
+
             } else if (bottom === "waves" || bottom === "water") {
                 that.activeType = "drowning";
+
             } else {
                 let center = checkCenter();
                 if(_.includes(SAFE_LANDING, center)) {
@@ -124,14 +125,17 @@ function GenerateLemming(World) {
                         that.activeType = "climbing";
                         sprites.climbing.reverse = sprite.reverse;
                         sprites.climb_over.reverse = sprite.reverse;
+
                     } else if (sprite.reverse){
                         sprite.reverse = !sprite.reverse;
                         //this is to avoid getting stuck in walls
                         sprite.center.x += 2;
+
                     } else {
                         sprite.reverse = !sprite.reverse;
                         sprite.center.x -= 2;
                     }
+
                 } else if (center === "end") {
                     that.activeType = "exit";
                 }

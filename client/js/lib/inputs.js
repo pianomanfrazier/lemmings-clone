@@ -152,6 +152,10 @@ Inputs.Mouse = ()=>{
                             console.log("clicked " + lemming.activeType + " lemming");
                             console.log(that.lemmingTypeSelected);
 
+                            if(that.lemmingTypeSelected === 'blocking' && lemming.activeType === 'walking') {
+                                lemming.activeType = 'blocking';
+                            }
+
                             lemming.availableTypes.push(that.lemmingTypeSelected);
                             spec.controlPanel[that.lemmingTypeSelected]--;
                             $('#lemming-' + that.lemmingTypeSelected + '-btn>.status').html(spec.controlPanel[that.lemmingTypeSelected]);
@@ -164,10 +168,6 @@ Inputs.Mouse = ()=>{
                         });
                     });
             }
-        });
-
-        _.each(removeClick, (button)=>{
-            $(button).off('click');
         });
 
         //no lemming is being hovered

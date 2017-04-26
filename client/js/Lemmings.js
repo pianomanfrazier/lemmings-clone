@@ -63,16 +63,8 @@ Lemmings.init = (spec)=>{
     _.each(Globals.controlPanel, (button, type)=>{
         let value = (Lemmings.world.lemmingTypes[type]) ? Lemmings.world.lemmingTypes[type] : 0;
         $('#lemming-' + type + '-btn>.status').html(value);
-
-        if(value === 0) {
-            $(button).off('click');
-        }
     });
     //some sample Lemmings for testing
-    //for(var i = 0; i < Lemmings.lemmingCount; i++) {
-    //    Lemmings.lemmings.push(GenerateLemming(World));
-    //    Lemmings.lemmings[i].center = {x: 100 + 10*i, y: 100};
-    //}
     Lemmings.lemmings.push(GenerateLemming(Lemmings.world));
     // *********************** this is for testing purposes only ************************
 

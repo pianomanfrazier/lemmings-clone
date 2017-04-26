@@ -92,12 +92,12 @@ function GenerateLemming(World) {
         //check how far has been falling if too far splat, else that.activeType = walking
         //if umbrella, that.activeType = walking
         if(that.activeType === "falling" || that.activeType === "umbrella") {
-            if((accumFallDistance > LEMMING_FALL_DISTANCE / 2) && (_.indexOf(that.availableTypes, 'umbrella') >= 0)) {
+            if((accumFallDistance > LEMMING_FALL_DISTANCE / 2) && (_.includes(that.availableTypes, 'umbrella'))) {
                 that.activeType = "umbrella";
             }
             let collision = checkBottom();
-            if(collision !== "") console.log(collision);
-            if(_.includes(SAFE_LANDING, collision)) {
+            //if(collision !== "") console.log(collision);
+            if(_.includes(SAFE_LANDING, collision) && collision !== "blocking") {
                 if(accumFallDistance < LEMMING_FALL_DISTANCE || that.activeType === "umbrella") {
                     that.activeType = "walking";
                 } else {

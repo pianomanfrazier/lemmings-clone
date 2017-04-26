@@ -69,6 +69,7 @@ Lemmings.init = (spec)=>{
     Lemmings.score          = 0;
     Lemmings.speed          = 50;
     Inputs.lemmingSpeed     = 50;
+    Inputs.ABomb            = false;
     Lemmings.lemmingsOut    = 0;
     Lemmings.lemmingsIn     = 0;
     Lemmings.startTime      = new Date().getTime();
@@ -179,8 +180,8 @@ Lemmings.update = (elapsedTime)=>{
     Lemmings.world.update(elapsedTime);
     //console.log(Lemmings.speed);
     Lemmings.speed = Inputs.lemmingSpeed;
-    //release lemmings
 
+    //release lemmings
     if(Lemmings.lemmingsOut < Lemmings.world.lemmingCount) {
         Lemmings.releaseTimer += elapsedTime;
         if(Lemmings.releaseTimer > (100 - Lemmings.speed) * 50) {
@@ -209,6 +210,12 @@ Lemmings.update = (elapsedTime)=>{
         }
         return false;
     });
+    //ABOMB
+    if(Inputs.ABomb) {
+        _.each(Lemmings.lemmings, (lemming)=>{
+            lemming.activeType = "exploding";
+        });
+    }
     //check if game is over
     if(Lemmings.lemmings.length === 0) {
         //////////////////////

@@ -10,11 +10,11 @@ cursorsImg.onload = ()=>{
     cursor.ready = true;
 };
 
-let Inputs = {};
+let Inputs          = {};
 
 Inputs.lemmingSpeed = 50;
-
-Inputs.KeyEvent = null;
+Inputs.KeyEvent     = null;
+Inputs.ABomb       = false;
 
 let getHotKeys = ()=>{
     'use strict';
@@ -246,6 +246,7 @@ Inputs.ButtonPress = (spec)=>{
 
         case 'atomic-bomb-btn':
             console.log('game state pressed: ' + spec.type);
+            Inputs.ABomb = true;
             break;
 
         case 'lemming-pickaxe':

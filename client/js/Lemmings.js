@@ -29,6 +29,7 @@ Lemmings.lemmingsIn     = 0;
 Lemmings.user           = "";
 Lemmings.startTime      = new Date().getTime();
 Lemmings.accumTime      = 0;
+Lemmings.releaseTimer   = 0;
 
 let eTimer  = $("#timer");
 let eOut    = $("#out");
@@ -38,9 +39,6 @@ Lemmings.init = (spec)=>{
     'use strict';
     Lemmings.user = spec.user;
 
-    // *********************** this is for testing purposes only ************************
-    //clear the lemmings if there from previous game
-    Lemmings.lemmings = [];
     //load level
     let level = "";
     switch(spec.levelNum) {
@@ -64,16 +62,16 @@ Lemmings.init = (spec)=>{
         let value = (Lemmings.world.lemmingTypes[type]) ? Lemmings.world.lemmingTypes[type] : 0;
         $('#lemming-' + type + '-btn>.status').html(value);
     });
-    //some sample Lemmings for testing
-    for(var i = 0; i < Lemmings.world.lemmingCount; i++) {
-        Lemmings.lemmings.push(GenerateLemming(Lemmings.world));
-        Lemmings.lemmings[i].center = {x: 100 + 10*i, y: 100};
-    }
-    Lemmings.lemmings.push(GenerateLemming(Lemmings.world));
-    // *********************** this is for testing purposes only ************************
 
     //reset variables
-    Lemmings.startTime = new Date().getTime();
+    //clear the lemmings if there from previous game
+    Lemmings.lemmings       = [];
+    Lemmings.score          = 0;
+    Lemmings.speed          = 50;
+    Inputs.lemmingSpeed     = 50;
+    Lemmings.lemmingsOut    = 0;
+    Lemmings.lemmingsIn     = 0;
+    Lemmings.startTime      = new Date().getTime();
     //get all the images
 };
 //ajax call to server
@@ -170,7 +168,8 @@ Lemmings.update = (elapsedTime)=>{
                 Inputs.KeyEvent['DOM_VK_' + key.value],
                 ()=>Inputs.ButtonPress({
                     type,
-                    mouse: Lemmings.mouse
+                    mouse: Lemmings.mouse,
+                    speed: Lemmings.speed
                 }
             ));
         });
@@ -179,7 +178,21 @@ Lemmings.update = (elapsedTime)=>{
     Lemmings.updateTimer(elapsedTime);
     Lemmings.world.update(elapsedTime);
     //console.log(Lemmings.speed);
-    Lemmings.speed = Inputs.speed;
+    Lemmings.speed = Inputs.lemmingSpeed;
+    //release lemmings
+
+    if(Lemmings.lemmingsOut < Lemmings.world.lemmingCount) {
+        Lemmings.releaseTimer += elapsedTime;
+        if(Lemmings.releaseTimer > (100 - Lemmings.speed) * 50) {
+            let lemming = GenerateLemming(Lemmings.world);
+            lemming.center = Lemmings.world.getStartPoint();
+            Lemmings.lemmings.push(lemming);
+
+            Lemmings.lemmingsOut += 1;
+            Lemmings.updateOut();
+            Lemmings.releaseTimer = 0;
+        }
+    }
     //Clean up dead lemmings
     _.remove(Lemmings.lemmings, (lemming)=>{
         return !lemming.isAlive;

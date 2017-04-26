@@ -52,6 +52,12 @@ let World = (spec)=>{
         }
         that.map[y][x] = "blocking";
     };
+    that.getStartPoint = ()=>{
+        return {
+            x: that.start.x * block.width,
+            y: that.start.y * block.height
+        };
+    };
     //this sets the current block to ""
     //it also removes the left/right neighbor blocks if they are not concrete
     that.explodeAtPoint = (point)=>{
@@ -82,7 +88,7 @@ let World = (spec)=>{
     that.map            = spec.map;
 
     _.each(that.map, (row, j)=>{
-        _.each(row, (item, i)=>{
+       _.each(row, (item, i)=>{
             if(item === "start") { that.start  = {x: i, y: j}; }
             if(item === "end") { that.finish = {x: i, y: j}; }
             if(item === "waves") {

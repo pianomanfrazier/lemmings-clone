@@ -9,6 +9,7 @@ let Inputs           = require("./lib/inputs.js");
 let Graphics         = require("./Graphics.js");
 let Globals          = require("./Globals.js");
 let World            = require("./World.js");
+let ParticleSystem   = require("./lib/particleSystem.js");
 let graphics         = Graphics(Globals.canvas);
 let level1           = require("./levels/level1.js");
 let level2           = require("./levels/level2.js");
@@ -70,6 +71,9 @@ Lemmings.init = (spec)=>{
     //reset variables
     Lemmings.startTime = new Date().getTime();
     //get all the images
+
+    // load particle system
+    Lemmings.particleSys = ParticleSystem.CreateEffectSnow();
 };
 //ajax call to server
 //POST to /api/score --> {user : "name", score : 1234}
@@ -164,6 +168,8 @@ Lemmings.update = (elapsedTime)=>{
         });
     }
 
+    Lemmings.particleSys.particleSys.update(elapsedTime);
+    Lemmings.particleSys.update(elapsedTime);
     Lemmings.updateTimer(elapsedTime);
     Lemmings.world.update(elapsedTime);
     Lemmings.speed = Inputs.lemmingSpeed;
@@ -201,6 +207,7 @@ Lemmings.render = ()=>{
     });
     //draw the cursor
     Lemmings.mouse.draw();
+    Lemmings.particleSys.particleSys.draw(ParticleSystem);
 };
 
 module.exports = Lemmings;

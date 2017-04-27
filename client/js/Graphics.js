@@ -55,6 +55,22 @@ var Graphics = (canvas)=>{
         context.restore();
     };
 
+    that.DrawTextures = (spec)=>{
+        context.save();
+
+        context.translate(spec.center.x, spec.center.y);
+        context.rotate(spec.rotation);
+        context.translate(-spec.center.x, -spec.center.y);
+
+        context.drawImage(
+            spec.image,
+            spec.center.x - spec.size / 2,
+            spec.center.y - spec.size / 2,
+            spec.size, spec.size);
+
+        context.restore();
+    };
+
     that.drawImage = (spec)=>{
         context.save();
 

@@ -34,7 +34,7 @@ Hotkeys work, however on the speed up and slow down there is a bug where it will
 - install all node_modules (we use yarn `yarn` at project root)
 - go to server/ run `nodemon`
 - open a new terminal, go to project root and run `gulp`
-- open your browser to `localhost:3001`
+- open your browser to `localhost:3001` (if it automatially opens your browser manually refresh the page once to make sure everything is loaded)
 
 
 ## Sprite Sheets

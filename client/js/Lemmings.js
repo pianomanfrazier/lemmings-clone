@@ -52,6 +52,8 @@ Lemmings.init = (levelNum)=>{
     Lemmings.percentIn      = 0;
     Lemmings.startTime      = new Date().getTime();
 
+
+
     //load level
     let level = Level(levelNum, ()=>{
         Lemmings.world = World(level);
@@ -61,6 +63,9 @@ Lemmings.init = (levelNum)=>{
             $('#lemming-' + type + '-btn>.status').html(value);
         });
         Lemmings.ready = true;
+        //refresh dom elements
+        $("#speed-up-btn .status").html("50");
+        $("#speed-down-btn .status").html("50");
     });
 };
 //ajax call to server

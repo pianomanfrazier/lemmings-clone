@@ -145,7 +145,8 @@ levels.level1 = {
         "umbrella": 10
     },
     "lemmingCount": 10,
-    "csv": "/levels/level1.csv"
+    "csv": "/levels/level1.csv",
+    "music": "/music/dizzy_spells.mp3"
 };
 
 levels.level2 = {
@@ -154,7 +155,8 @@ levels.level2 = {
         "blocking": 5
     },
     "lemmingCount": 25,
-    "csv": "/levels/level2.csv"
+    "csv": "/levels/level2.csv",
+    "music": "/music/underclocked.mp3"
 };
 levels.level3 = {
     "lemmingGoal": 15,
@@ -165,7 +167,8 @@ levels.level3 = {
         "exploding": 4
     },
     "lemmingCount": 25,
-    "csv": "/levels/level3.csv"
+    "csv": "/levels/level3.csv",
+    "music": "/music/jumpshot.mp3"
 };
 
 config.levels = levels;

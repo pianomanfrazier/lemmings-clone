@@ -15,6 +15,7 @@ var eGameScreen         = $("#GameScreen");
 var eAboutScreen        = $("#AboutScreen");
 var eSettingScreen      = $("#SettingsScreen");
 var eHighScoresScreen   = $("#HighScoresScreen");
+var eMusic              = document.getElementById("music");
 
 var screens             = [eGameScreen, eAboutScreen, eSettingScreen, eHighScoresScreen];
 
@@ -101,14 +102,16 @@ Routes.game = ()=>{
         eMainScreen.slideUp();
         eGameScreen.slideDown();
 
-    Lemmings.init(levelNum);
+        Lemmings.init(levelNum);
         settings.storage.hotKeysUpdate = true;
         loop.run(Lemmings);
     }
 };
 Routes.gameExit = ()=>{
     'use strict';
+
     loop.stop();
+    eMusic.pause();
     Routes.index();
 };
 Routes.about = ()=>{

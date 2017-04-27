@@ -11,6 +11,13 @@ $yellow: #EEFD4E;
 #GameScreen, #AboutScreen, #HelpScreen, #HighScoresScreen, #SettingsScreen {
     display: none;
 }
+
+audio {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    padding: 1em;
+}
 #highscores-table {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;

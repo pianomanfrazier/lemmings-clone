@@ -30,7 +30,12 @@ A Lemmings clone using HTML5 and Javascript
 # not working
 Hotkeys work, however on the speed up and slow down there is a bug where it will change out of control
 
-# notes
+# run project
+- install all node_modules (we use yarn `yarn` at project root)
+- go to server/ run `nodemon`
+- open a new terminal, go to project root and run `gulp`
+- open your browser to `localhost:3001`
+
 
 ## Sprite Sheets
 

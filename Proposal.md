@@ -10,10 +10,10 @@
 We will be implementing the [Lemmings game](https://www.youtube.com/watch?v=xIuxB1oR2WQ)
 
 # run project
-- install all node_modules (we use yarn `yarn` at project root and in server/)
+- install all node_modules (we use yarn `yarn` at project root)
 - go to server/ run `nodemon`
 - open a new terminal, go to project root and run `gulp`
-- open your browser to `localhost:3000`
+- open your browser to `localhost:3001`
 
 ## Milestone Points
 

@@ -8,22 +8,26 @@ router.get('/', function(req, res) {
 
 // CREATE
 router.post('/score', function(req, res, next) {
-var score = new Score({
-    score : req.body.score,
-    user : req.body.user
-});
-score.save((err) => {
-    if (err) {
-        return next(err);
-    }
-    console.log("score saved!");
-    res.json(score);
-});
+    'use strict';
+    var score = new Score({
+        user : req.body.user,
+        percent : req.body.percent,
+        level : req.body.level,
+        time : req.body.time
+    });
+    score.save((err) => {
+        if (err) {
+            return next(err);
+        }
+        console.log("score saved!");
+        res.json(score);
+    });
 });
 
 // READ
 router.get('/highscores', function(req, res, next) {
-    Score.find({}).sort({score: -1}).limit(5).exec(
+    'use strict';
+    Score.find({}).sort({level: 1}).exec(
         function(err, scores) {
             if (err) {
                 return next(err);

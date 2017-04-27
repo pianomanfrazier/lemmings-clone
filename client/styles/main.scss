@@ -11,6 +11,30 @@ $yellow: #EEFD4E;
 #GameScreen, #AboutScreen, #HelpScreen, #HighScoresScreen, #SettingsScreen {
     display: none;
 }
+#highscores-table {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    background-color: white;
+    width: 100%;
+}
+
+#highscores-table td, #highscores-table th{
+    border: 1px solid #555;
+    padding: 8px;
+}
+
+#highscores-table tr:nth-child(even){background-color: #EEE;}
+
+#highscores-table tr:hover {background-color: #DDD;}
+
+#highscores-table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    background-color: #00AA2F;
+    color: white;
+}
+
 
 #SettingsScreen {
     ul {

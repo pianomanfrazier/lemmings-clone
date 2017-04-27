@@ -3,6 +3,7 @@
 ////////////////////////////////////////////////
 let $                = require("jquery");
 let _                = require("lodash");
+let Page             = require("page");
 let GenerateLemming  = require("./Lemming.js");
 let settings         = require("./settings.js");
 let Inputs           = require("./lib/inputs.js");
@@ -19,13 +20,14 @@ Lemmings.keyboard       = Inputs.Keyboard();
 Lemmings.lemmings       = []; //store all lemmings here
 Lemmings.ready          = false;
 //need to detect collisions between lemmings and world objects and blockers
-Lemmings.score          = 0;
+Lemmings.lemmingsRemoved= 0;
 Lemmings.speed          = 50;
 //get number of lemmings/types from level config
 //each level is 16x28 with 25px squares
 Lemmings.lemmingsOut    = 0;
 Lemmings.lemmingsIn     = 0;
-Lemmings.user           = "";
+Lemmings.percentIn      = 0;
+Lemmings.timerString    = "";
 Lemmings.startTime      = new Date().getTime();
 Lemmings.accumTime      = 0;
 Lemmings.releaseTimer   = 0;
@@ -34,23 +36,24 @@ let eTimer  = $("#timer");
 let eOut    = $("#out");
 let eIn     = $("#in");
 
-Lemmings.init = (spec)=>{
+Lemmings.init = (levelNum)=>{
     'use strict';
-    Lemmings.user = spec.user;
+    Lemmings.level = levelNum;
     //reset variables
     //clear the lemmings if there from previous game
     Lemmings.lemmings       = [];
     Lemmings.ready          = false;
-    Lemmings.score          = 0;
+    Lemmings.lemmingsRemoved= 0;
     Lemmings.speed          = 50;
     Inputs.lemmingSpeed     = 50;
     Inputs.ABomb            = false;
     Lemmings.lemmingsOut    = 0;
     Lemmings.lemmingsIn     = 0;
+    Lemmings.percentIn      = 0;
     Lemmings.startTime      = new Date().getTime();
 
     //load level
-    let level = Level(spec.levelNum, ()=>{
+    let level = Level(levelNum, ()=>{
         Lemmings.world = World(level);
         // setup control panel buttons
         _.each(Globals.controlPanel, (button, type)=>{
@@ -62,18 +65,25 @@ Lemmings.init = (spec)=>{
 };
 //ajax call to server
 //POST to /api/score --> {user : "name", score : 1234}
-Lemmings.storeScore = ()=>{
+Lemmings.storeScore = (userName)=>{
     'use strict';
+    let data = {
+        user: userName,
+        time: Lemmings.timerString,
+        percent: Lemmings.percentIn,
+        level: parseInt(Lemmings.level)
+    };
+    console.log("posting data: ", data);
     $.ajax({
         type: "POST",
         dataType: 'json',
-        data: {user: Lemmings.user, score: Lemmings.score},
+        data: data,
         url: '/api/score',
         error: (e)=>{
             console.log(e);
         }
     }).done( (data)=>{
-        console.log(data);
+        console.log("POST data: ", data);
     });
 };
 Lemmings.updateTimer = (elapsedTime)=>{
@@ -91,6 +101,7 @@ Lemmings.updateTimer = (elapsedTime)=>{
         if(minutes < 10){
             minutes = "0" + minutes.toString();
         }
+        Lemmings.timerString = minutes + ":" + seconds;
         eTimer.html("Time : " + minutes + ":" + seconds);
     }
 };
@@ -102,6 +113,7 @@ Lemmings.updateOut = ()=>{
 //this should be called only when a lemming is saved
 Lemmings.updateIn = ()=>{
     'use strict';
+    Lemmings.percentIn = Math.floor(Lemmings.lemmingsIn/Lemmings.world.lemmingCount * 100);
     eIn.html("IN : " + Math.floor(Lemmings.lemmingsIn/Lemmings.world.lemmingCount * 100) + "%");
 };
 
@@ -184,6 +196,7 @@ Lemmings.update = (elapsedTime)=>{
     _.remove(Lemmings.lemmings, (lemming)=>{
         if(!lemming.isAlive){
             Lemmings.updateOut();
+            Lemmings.lemmingsRemoved++;
             return true;
         }
         return false;
@@ -195,6 +208,7 @@ Lemmings.update = (elapsedTime)=>{
             //update score here
             ///////////////////
             Lemmings.lemmingsIn += 1;
+            Lemmings.lemmingsRemoved++;
             Lemmings.updateIn();
             Lemmings.updateOut();
             return true;
@@ -208,11 +222,17 @@ Lemmings.update = (elapsedTime)=>{
         });
     }
     //check if game is over
-    if(Lemmings.lemmings.length === 0) {
+    if(Lemmings.lemmingsRemoved === Lemmings.world.lemmingCount) {
         //////////////////////
         //GAME OVER
         /////////////////////
         //stop loop, send score to the server
+        let userName = window.prompt("Congratulations!\nEnter your name: ");
+        if(userName !== "" || userName !== null) {
+            Lemmings.storeScore(userName);
+            Lemmings.lemmingsRemoved = -1;
+            Page.redirect("/");
+        }
     }
 };
 Lemmings.render = ()=>{

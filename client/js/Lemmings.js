@@ -35,6 +35,7 @@ Lemmings.releaseTimer   = 0;
 let eTimer  = $("#timer");
 let eOut    = $("#out");
 let eIn     = $("#in");
+var eMusic              = document.getElementById("music");
 
 Lemmings.init = (levelNum)=>{
     'use strict';
@@ -66,6 +67,9 @@ Lemmings.init = (levelNum)=>{
         //refresh dom elements
         $("#speed-up-btn .status").html("50");
         $("#speed-down-btn .status").html("50");
+        //load the music
+        eMusic.src = level.music;
+        eMusic.play();
     });
 };
 //ajax call to server

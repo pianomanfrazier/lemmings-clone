@@ -15,9 +15,10 @@ var eGameScreen         = $("#GameScreen");
 var eAboutScreen        = $("#AboutScreen");
 var eSettingScreen      = $("#SettingsScreen");
 var eHighScoresScreen   = $("#HighScoresScreen");
+var eChooseLevelScreen  = $("#ChooseLevelScreen");
 var eMusic              = document.getElementById("music");
 
-var screens             = [eGameScreen, eAboutScreen, eSettingScreen, eHighScoresScreen];
+var screens             = [eGameScreen, eAboutScreen, eSettingScreen, eHighScoresScreen, eChooseLevelScreen];
 
 var Lemmings            = require("./js/Lemmings.js");
 var loop                = require("./js/GameLoop.js");
@@ -80,32 +81,21 @@ Routes.index = (callback)=>{
         settings.storage.add('hotKeys', Globals.hotKeys);
     }
 };
-function getLevel() {
+Routes.chooseLevel = ()=>{
     'use strict';
-    let levelNum = window.prompt("Pick a level 1,2, or 3", "1");
-    if (levelNum === null) {
-        return -1;
-    }
-    levelNum = parseInt(levelNum);
-    if(levelNum < 1 || levelNum > 3 || isNaN(levelNum) ) {
-        window.alert("invalid level");
-        return getLevel();
-    }
-    return levelNum;
-}
-Routes.game = ()=>{
+    eMainScreen.slideUp();
+    eChooseLevelScreen.slideDown();
+};
+Routes.game = (ctx)=>{
     'use strict';
-    let levelNum = getLevel();
-    if (levelNum === -1) {
-        page.redirect("/");
-    } else {
-        eMainScreen.slideUp();
-        eGameScreen.slideDown();
+    let levelNum = ctx.params.levelNum;
+    //console.log("levelNum: ", levelNum);
+    eChooseLevelScreen.slideUp();
+    eGameScreen.slideDown();
 
-        Lemmings.init(levelNum);
-        settings.storage.hotKeysUpdate = true;
-        loop.run(Lemmings);
-    }
+    Lemmings.init(levelNum);
+    settings.storage.hotKeysUpdate = true;
+    loop.run(Lemmings);
 };
 Routes.gameExit = ()=>{
     'use strict';

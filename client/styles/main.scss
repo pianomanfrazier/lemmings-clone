@@ -8,7 +8,7 @@ $mini-map-scale: 0.2;
 $green: #00AD2F;
 $yellow: #EEFD4E;
 
-#GameScreen, #AboutScreen, #HelpScreen, #HighScoresScreen, #SettingsScreen {
+#GameScreen, #AboutScreen, #HelpScreen, #HighScoresScreen, #SettingsScreen, #ChooseLevelScreen {
     display: none;
 }
 
@@ -257,4 +257,31 @@ button.active {
     text-align: left;
     margin-top: 3em;
     color: black;
+}
+#ChooseLevelScreen {
+    text-align: center;
+    img {
+        width: 300px;
+        border: black 2px solid;
+        box-shadow: 2px 2px 4px black;
+        border-radius: 10px;
+        position: relative;
+    }
+    img:hover {
+        position: relative;
+        top: -2px;
+        right: -2px;
+        box-shadow: 2px 2px 4px white;
+        opacity: 0.4;
+    }
+    ul>li {
+        display: inline-block;
+        padding: 0;
+    }
+    ul {
+        text-align: center;
+        list-style-type: none;
+        margin: auto;
+        padding: 0;
+    }
 }

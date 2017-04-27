@@ -32,13 +32,13 @@ We will be implementing the [Lemmings game](https://www.youtube.com/watch?v=xIux
 - (10) Game Menu system
   - Choose Level
   - Settings
-    - Music
-    - Sounds
+    - Music - seen during gameplay (not in menu)
+    - Sounds - seen during gameplay (not in menu)
     - Controls
   - High Scores
   - Credits
 - (25) Gameplay
-  - multiple levels (maybe generate levels)
+  - multiple levels (we currently have 3 levels implemented)
   - control panel
     - decrease lemming release speed
     - increase lemming release speed
@@ -48,26 +48,20 @@ We will be implementing the [Lemmings game](https://www.youtube.com/watch?v=xIux
     - blocker
     - pause
     - atomic bomb
-  - mini map?
   - status bar (lemmings out, % complete, timer)
   - click lemming
   - (10) key shortcuts for types of lemmings (reconfigurable)
 - (15) Particle effects
-  - flames for exit
-  - water tile overlay
-  - clouds in sky?
+  - Snows on all levels (We like snow)
 - (10) Sprite sheets
-  - every lemming and trap refers to a sprite sheet
+  - every lemming and water refers to a sprite sheet
 - (5) Sound and Music
   - sound effects for lemming motions
-    - exploding
-    - splatting
-    - drowning
   - separate music theme for each level
 - (10) persistant scores with MongoLab mongodb
 - (15) tile rendering
 - (10) collision detection
-- (20) level generation (haven't planned out how this is going to work yet)
+- (20) level generation (we create this from a csv file, you can create your own levels in excel!)
 
 **Total: 130/134**
 

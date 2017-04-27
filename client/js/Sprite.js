@@ -28,21 +28,17 @@ let Sprite = (spec)=>{
     that.reverse    = false;
     that.center     = spec.center;
     that.callback   = spec.callback; //when defined animation will cycle once and terminate with the callback
-    that.isFinished = false;
 
     that.update = (elapsedTime)=>{
-        if(!that.isFinished){
-            accumTime += elapsedTime;
-            if (accumTime > spec.animationRate) {
-                accumTime = 0;
-                if (frameNumber < numFrames - 1) {
-                    frameNumber++;
-                } else if(that.callback) {
-                    that.isFinished = true;
-                    that.callback();
-                } else {
-                    frameNumber = 0;
-                }
+        accumTime += elapsedTime;
+        if (accumTime > spec.animationRate) {
+            accumTime = 0;
+            if (frameNumber < numFrames - 1) {
+                frameNumber++;
+            } else if(that.callback) {
+                that.callback();
+            } else {
+                frameNumber = 0;
             }
         }
     };

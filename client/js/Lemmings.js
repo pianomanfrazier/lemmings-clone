@@ -10,6 +10,7 @@ let Inputs           = require("./lib/inputs.js");
 let Graphics         = require("./Graphics.js");
 let Globals          = require("./Globals.js");
 let World            = require("./World.js");
+let ParticleSystem   = require("./lib/particleSystem.js");
 let graphics         = Graphics(Globals.canvas);
 let Level            = require("./levels/Level.js");
 
@@ -71,6 +72,9 @@ Lemmings.init = (levelNum)=>{
         eMusic.src = level.music;
         eMusic.play();
     });
+
+    // load particle system
+    Lemmings.particleSys = ParticleSystem.CreateEffectSnow();
 };
 //ajax call to server
 //POST to /api/score --> {user : "name", score : 1234}
@@ -183,6 +187,8 @@ Lemmings.update = (elapsedTime)=>{
         });
     }
 
+    Lemmings.particleSys.particleSys.update(elapsedTime);
+    Lemmings.particleSys.update(elapsedTime);
     Lemmings.updateTimer(elapsedTime);
     Lemmings.world.update(elapsedTime);
     //console.log(Lemmings.speed);
@@ -254,6 +260,7 @@ Lemmings.render = ()=>{
     });
     //draw the cursor
     Lemmings.mouse.draw();
+    Lemmings.particleSys.particleSys.draw(ParticleSystem);
 };
 
 module.exports = Lemmings;

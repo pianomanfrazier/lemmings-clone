@@ -1,5 +1,5 @@
 
-let Random = ()=>{
+let Random = (()=>{
     'use strict';
 
     let that = {};
@@ -56,6 +56,6 @@ let Random = ()=>{
     };
 
     return that;
-};
+})();
 
 module.exports = Random;

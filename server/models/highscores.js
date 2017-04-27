@@ -1,12 +1,21 @@
 var mongoose = require('mongoose');
 
 var scoreSchema = mongoose.Schema({
-    score : {
+    time : {
+        type: String, //min:sec string
+        required: true
+    },
+    percent : {
         type: Number,
-        required: [ true, "Note cannot be empty" ]
+        required: true
+    },
+    level : {
+        type : Number,
+        required: true
     },
     user : {
-        type : String, required : true
+        type : String,
+        required : true
     },
     created_at : Date
 });

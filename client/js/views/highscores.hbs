@@ -4,11 +4,22 @@
     <h1>{{title}}</h1>
 
 {{#if highscores}}
-    <ol>
-        {{#each highscores}}
-            <li>{{this.user}} ....... {{this.score}}</li>
-        {{/each}}
-    </ol>
+    <table id="highscores-table">
+        <tr>
+            <th>User</th>
+            <th>Level</th>
+            <th>Percent Saved</th>
+            <th>Time</th>
+        </tr>
+    {{#each highscores}}
+        <tr>
+            <td>{{this.user}}</td>
+            <td>{{this.level}}</td>
+            <td>{{this.percent}}</td>
+            <td>{{this.time}}</td>
+        </tr>
+    {{/each}}
+    </table>
 {{else if error}}
     <p>
         {{error}}

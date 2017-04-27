@@ -136,4 +136,38 @@ sprites.blockTypes = {
 
 config.sprites = sprites;
 
+let levels = {};
+
+levels.level1 = {
+    "lemmingGoal": 10,
+    "lemmingTypes": {
+        "climbing": 10,
+        "umbrella": 10
+    },
+    "lemmingCount": 10,
+    "csv": "/levels/level1.csv"
+};
+
+levels.level2 = {
+    "lemmingGoal": 10,
+    "lemmingTypes": {
+        "blocking": 5
+    },
+    "lemmingCount": 25,
+    "csv": "/levels/level2.csv"
+};
+levels.level3 = {
+    "lemmingGoal": 15,
+    "lemmingTypes": {
+        "climbing":25,
+        "blocking": 4,
+        "umbrella": 25,
+        "exploding": 4
+    },
+    "lemmingCount": 25,
+    "csv": "/levels/level3.csv"
+};
+
+config.levels = levels;
+
 module.exports = config;

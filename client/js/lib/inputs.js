@@ -10,11 +10,11 @@ cursorsImg.onload = ()=>{
     cursor.ready = true;
 };
 
-let Inputs = {};
+let Inputs          = {};
 
 Inputs.lemmingSpeed = 50;
-
-Inputs.KeyEvent = null;
+Inputs.KeyEvent     = null;
+Inputs.ABomb       = false;
 
 let getHotKeys = ()=>{
     'use strict';
@@ -152,8 +152,11 @@ Inputs.Mouse = ()=>{
                             console.log("clicked " + lemming.activeType + " lemming");
                             console.log(that.lemmingTypeSelected);
 
+
                             if(that.lemmingTypeSelected === 'blocking' && lemming.activeType === 'walking') {
                                 lemming.activeType = 'blocking';
+                            } else if(that.lemmingTypeSelected === 'exploding'){
+                                lemming.activeType = 'exploding';
                             }
 
                             lemming.availableTypes.push(that.lemmingTypeSelected);
@@ -228,15 +231,22 @@ Inputs.ButtonPress = (spec)=>{
             break;
 
         case 'speed-up-btn':
-            Inputs.lemmingSpeed = (Inputs.lemmingSpeed+50 >= 100) ? 100 : Inputs.lemmingSpeed+50;
+            Inputs.lemmingSpeed = (Inputs.lemmingSpeed+1 >= 99) ? 99 : Inputs.lemmingSpeed+1;
+            //update the dom
+            $("#speed-up-btn .status").html(Inputs.lemmingSpeed);
+            $("#speed-down-btn .status").html(Inputs.lemmingSpeed);
             break;
 
         case 'speed-down-btn':
-            Inputs.lemmingSpeed = (Inputs.lemmingSpeed-50 <= 0) ? 0 : Inputs.lemmingSpeed-50;
+            Inputs.lemmingSpeed = (Inputs.lemmingSpeed-1 <= 1) ? 1 : Inputs.lemmingSpeed-1;
+            //update the dom
+            $("#speed-down-btn .status").html(Inputs.lemmingSpeed);
+            $("#speed-up-btn .status").html(Inputs.lemmingSpeed);
             break;
 
         case 'atomic-bomb-btn':
             console.log('game state pressed: ' + spec.type);
+            Inputs.ABomb = true;
             break;
 
         case 'lemming-pickaxe':

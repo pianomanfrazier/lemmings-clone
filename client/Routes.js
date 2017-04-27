@@ -72,6 +72,7 @@ Routes.index = (callback)=>{
         screen.slideUp();
     });
     eMainScreen.slideDown();
+    loop.stop();
 
     let hotKeys = settings.storage.retrieve('hotKeys');
     if(hotKeys === null || hotKeys === []) {
@@ -100,7 +101,7 @@ Routes.game = ()=>{
         eMainScreen.slideUp();
         eGameScreen.slideDown();
 
-    Lemmings.init({levelNum, user:"Ryan", speed: 50});
+    Lemmings.init(levelNum);
         settings.storage.hotKeysUpdate = true;
         loop.run(Lemmings);
     }

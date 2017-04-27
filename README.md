@@ -8,12 +8,12 @@ A Lemmings clone using HTML5 and Javascript
  - Ryan Frazier
 
 # check list
-- [ ] -(25) (required) Gameplay
+- [x] -(25) (required) Gameplay
 - [x] -(10) (required) Menuing
 - [x] -(10) (required) Reconfigurable keyboard controls
-- [ ] -(15) (required) Particle effects
+- [x] -(15) (required) Particle effects
 - [x] -(10) Animation, spritesheet or otherwise
-- [ ] -(5) Sound & music
+- [x] -(5) Sound & music
 - [ ] (15) AI: Pathfinding or Attract Mode
 - [ ] (50) Multiplayer; server-based game model with connected clients
 - [x] -(10) Server-based persistent high scores
@@ -22,13 +22,13 @@ A Lemmings clone using HTML5 and Javascript
 - [x] (20) Procedural level generation
 - [ ] (20) Physics integration
 
-75 / 150
+120 / 150
 
 # working
 
 
 # not working
-
+Hotkeys work, however on the speed up and slow down there is a bug where it will change out of control
 
 # notes
 

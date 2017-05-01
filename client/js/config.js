@@ -138,7 +138,9 @@ config.sprites = sprites;
 
 let levels = {};
 
-levels.level1 = {
+levels.level1 = ()=>{
+    'use strict';
+    return {
     "lemmingGoal": 10,
     "lemmingTypes": {
         "climbing": 10,
@@ -147,9 +149,12 @@ levels.level1 = {
     "lemmingCount": 10,
     "csv": "/levels/level1.csv",
     "music": "/music/dizzy_spells.mp3"
+    };
 };
 
-levels.level2 = {
+levels.level2 = ()=>{
+    'use strict';
+    return {
     "lemmingGoal": 10,
     "lemmingTypes": {
         "blocking": 5
@@ -157,8 +162,11 @@ levels.level2 = {
     "lemmingCount": 25,
     "csv": "/levels/level2.csv",
     "music": "/music/underclocked.mp3"
+    };
 };
-levels.level3 = {
+levels.level3 = ()=>{
+    'use strict';
+    return {
     "lemmingGoal": 15,
     "lemmingTypes": {
         "climbing":25,
@@ -169,6 +177,7 @@ levels.level3 = {
     "lemmingCount": 25,
     "csv": "/levels/level3.csv",
     "music": "/music/jumpshot.mp3"
+    };
 };
 
 config.levels = levels;

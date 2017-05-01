@@ -4,7 +4,7 @@ let levelConfigs = require("../config.js").levels;
 function Level(levelNum, callback) {
     'use strict';
     console.log("load level " + levelNum);
-    let level = levelConfigs["level" + levelNum];
+    let level = levelConfigs["level" + levelNum]();
     level.map = [];
     Papa.parse(level.csv, {
         delimiter: ",",

@@ -3,8 +3,8 @@
 A Lemmings clone using HTML5 and Javascript
 
 # Contributors
- - Seth Bertlshofer
- - Ryan Frazier
+ - Seth Bertlshofer [ironLink21](https://github.com/ironlink21)
+ - Ryan Frazier [pianomanfrazier](https://github.com/pianomanfrazier)
 
 # run project for development
 - install all node_modules (we use yarn `yarn` at project root)

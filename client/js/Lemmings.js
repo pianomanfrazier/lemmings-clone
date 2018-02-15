@@ -54,8 +54,6 @@ Lemmings.init = (levelNum)=>{
     Lemmings.percentIn      = 0;
     Lemmings.startTime      = new Date().getTime();
 
-
-
     //load level
     let level = Level(levelNum, ()=>{
         Lemmings.world = World(level);
@@ -71,10 +69,13 @@ Lemmings.init = (levelNum)=>{
         //load the music
         eMusic.src = level.music;
         eMusic.play();
+        // needed to clear out old score in DOM
+        Lemmings.updateIn();
     });
 
     // load particle system
     Lemmings.particleSys = ParticleSystem.CreateEffectSnow();
+
 };
 //ajax call to server
 //POST to /api/score --> {user : "name", score : 1234}
@@ -127,7 +128,7 @@ Lemmings.updateOut = ()=>{
 Lemmings.updateIn = ()=>{
     'use strict';
     Lemmings.percentIn = Math.floor(Lemmings.lemmingsIn/Lemmings.world.lemmingCount * 100);
-    eIn.html("IN : " + Math.floor(Lemmings.lemmingsIn/Lemmings.world.lemmingCount * 100) + "%");
+    eIn.html("IN : " + Lemmings.percentIn + "%");
 };
 
 Lemmings.update = (elapsedTime)=>{

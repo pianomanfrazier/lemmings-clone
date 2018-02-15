@@ -2,6 +2,8 @@
 
 A Lemmings clone using HTML5 and Javascript
 
+View a demo [here](https://youtu.be/knKsHbLo6Yc).
+
 # Contributors
  - Ryan Frazier [pianomanfrazier](https://github.com/pianomanfrazier)
  - Seth Bertlshofer [ironLink21](https://github.com/ironlink21)
@@ -11,9 +13,17 @@ A Lemmings clone using HTML5 and Javascript
 - [Express](https://expressjs.com)
 - [Handlebars](handlebars.js) frontend templates
 - Sass
-- [Papaparse](papaparse.com) for parsing csv level maps (edit level maps in excel and export to csv)
+- [Papaparse](papaparse.com) for parsing csv level maps (edit level maps in excel and export to csv).
 - [Page.js](https://visionmedia.github.io/page.js/) for front end routing
 - [Mongoose](mongoosejs.com) for Mongo ORM
+
+# Configuration
+
+The level maps are found in `server/public/levels`. The corresponding lemming resources (*i.e.* number of lemmings, bombers, umbrella, ...) is found in `client/js/config.js`. Placing meta-data in the csv was difficult to parse so it is separate for now.
+
+## TODO:
+
+Allow user to upload user maps and meta data for level.
 
 
 # External Dependencies

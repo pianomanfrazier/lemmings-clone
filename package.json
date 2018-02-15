@@ -1,7 +1,8 @@
 {
   "name": "Lemmings",
   "author": "Seth Bertlshofer & Ryan Frazier",
-  "version": "1.0",
+  "version": "1.0.0",
+  "license": "CC-BY-NC-SA-2.5",
   "scripts": {
     "postinstall": "cd ./server && yarn"
   },

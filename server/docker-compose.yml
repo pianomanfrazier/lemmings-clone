@@ -2,9 +2,9 @@ version: '3'
 services:
     web:
         #build new image from source
-        build: .
+        #build: .
         #use pre-build image
-        #image: "pianomanfrazier/lemmings"
+        image: "pianomanfrazier/lemmings"
         ports:  
             - "3000:3000"
         depends_on:

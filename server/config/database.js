@@ -1,9 +1,6 @@
 module.exports = {
-    //local dev server
-    // 'url' : 'mongodb://localhost/lemmings'
-    //local network
-    //'url' : 'mongodb://lemming:32oYN445&v15@192.168.0.4:27017/lemmings'
-    'url' : 'mongodb://lemming:32oYN445&v15@localhost:27017/lemmings'
-    //the wild wwww
-    //'url' : 'mongodb://lemming:32oYN445&v15@pianomanfrazier.duckdns.org:27017/lemmings'
+    // start a mongo instance with `docker run --name lemmings-mongo -p 27017:27017 -d mongo`
+    'url' : 'mongodb://localhost/lemmings'
+    // or set up authentication
+    //'url' : 'mongodb://lemming:SuperSecret12345@localhost:27017/lemmings'
 };

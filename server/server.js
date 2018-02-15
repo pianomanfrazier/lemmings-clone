@@ -12,7 +12,7 @@ var app = express();
 var api = require('./routes/api');
 
 var port = process.argv[2] || 3000;
-var host = '192.168.0.4';
+var host = 'localhost';
 
 app.use(logger('dev'));
 app.use(bodyParser.json());

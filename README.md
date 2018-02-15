@@ -4,6 +4,15 @@ A Lemmings clone using HTML5 and Javascript
 
 View a demo [here](https://youtu.be/knKsHbLo6Yc).
 
+To try it out locally with docker-compose:
+
+```
+cd ./server
+docker-compose up
+```
+
+This sets up a mongo database for you.
+
 # Contributors
  - Ryan Frazier [pianomanfrazier](https://github.com/pianomanfrazier)
  - Seth Bertlshofer [ironLink21](https://github.com/ironlink21)

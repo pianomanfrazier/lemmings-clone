@@ -2,16 +2,17 @@
 
 A Lemmings clone using HTML5 and Javascript
 
-View a demo [here](https://youtu.be/knKsHbLo6Yc).
+View a demo on YouTube [here](https://youtu.be/knKsHbLo6Yc).
 
-To try it out locally with docker-compose:
+![Game Play](screenshots/screen5.png)
+
+Try it out locally with docker-compose:
 
 ```
-cd ./server
+# download docker-compose.yml
+wget https://raw.githubusercontent.com/pianomanfrazier/lemmings-clone/master/server/docker-compose.yml
 docker-compose up
 ```
-
-This sets up a mongo database for you.
 
 # Contributors
  - Ryan Frazier [pianomanfrazier](https://github.com/pianomanfrazier)
@@ -21,7 +22,7 @@ This sets up a mongo database for you.
 
 - [Express](https://expressjs.com)
 - [Handlebars](handlebars.js) frontend templates
-- Sass
+- [Sass](sass-lang.com) css preprocessor
 - [Papaparse](papaparse.com) for parsing csv level maps (edit level maps in excel and export to csv).
 - [Page.js](https://visionmedia.github.io/page.js/) for front end routing
 - [Mongoose](mongoosejs.com) for Mongo ORM
@@ -57,4 +58,3 @@ The Node server needs a MongoDB to connect to save scores and users. The game wi
 ![High Scores](screenshots/screen2.png)
 ![Configuration](screenshots/screen3.png)
 ![Choose Level](screenshots/screen4.png)
-![Game Play](screenshots/screen5.png)
